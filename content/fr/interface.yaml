@@ -18,6 +18,15 @@ langue:
   code: EN
   libelle: English version
 
+# Légende commune : les trois strates
+strates:
+  libelle: Strates touchées
+  surfaces: surfaces
+  designSystem: design system
+  modele: modèle
+  touchee: touchée
+  nonTouchee: non touchée
+
 contact:
   titre: Contact
   email: f.butour@gmail.com

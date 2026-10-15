@@ -21,6 +21,14 @@ const interfaceTextes = defineCollection({
       code: z.string(),
       libelle: z.string(),
     }),
+    strates: z.object({
+      libelle: z.string(),
+      surfaces: z.string(),
+      designSystem: z.string(),
+      modele: z.string(),
+      touchee: z.string(),
+      nonTouchee: z.string(),
+    }),
     contact: z.object({
       titre: z.string(),
       email: z.email(),

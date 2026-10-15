@@ -1,0 +1,68 @@
+---
+/**
+ * « Strates touchées » (cadre Figma présent dans les entrées de projet et d'écrit)
+ * Les trois strates de la légende, chacune On ou Off.
+ * Vertical : colonne de 260 px (entrée de projet). Horizontal : bandeaux de 140 px (entrée d'écrit).
+ * Sur mobile, les bandeaux passent à la ligne.
+ */
+import Strate from './Strate.astro';
+import { getInterface } from '../i18n/ui';
+import type { Locale } from '../i18n/routes';
+import { STRATES, type Strates } from '../lib/strates';
+
+interface Props {
+  locale: Locale;
+  strates: Strates;
+  orientation?: 'verticale' | 'horizontale';
+}
+
+const { locale, strates, orientation = 'verticale' } = Astro.props;
+const ui = (await getInterface(locale)).strates;
+---
+
+<ul class:list={['strates-touchees', `strates-touchees--${orientation}`]} role="list" aria-label={ui.libelle}>
+  {
+    STRATES.map((key) => (
+      <li>
+        <Strate etat={strates[key]} etatTexte={strates[key] ? ui.touchee : ui.nonTouchee}>
+          {ui[key]}
+        </Strate>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .strates-touchees {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .strates-touchees--verticale {
+    flex-direction: column;
+    width: var(--layout-strates-width);
+  }
+
+  .strates-touchees--horizontale li {
+    width: 8.75rem;
+  }
+
+  @media (max-width: 39.99rem) {
+    .strates-touchees--verticale {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: auto;
+    }
+
+    .strates-touchees--horizontale {
+      flex-wrap: wrap;
+    }
+
+    .strates-touchees li {
+      width: auto;
+      flex: 1 0 auto;
+    }
+  }
+</style>

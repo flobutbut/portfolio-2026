@@ -18,6 +18,15 @@ langue:
   code: FR
   libelle: Version française
 
+# Shared legend: the three layers
+strates:
+  libelle: Layers involved
+  surfaces: surfaces
+  designSystem: design system
+  modele: model
+  touchee: involved
+  nonTouchee: not involved
+
 contact:
   titre: Contact
   email: f.butour@gmail.com

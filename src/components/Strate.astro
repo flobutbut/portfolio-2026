@@ -1,0 +1,38 @@
+---
+/**
+ * Strates/Strate (Figma 2:494)
+ * Bandeau d'étiquette. On : aplat bleu, texte blanc atténué. Off : neutres.
+ * L'état est aussi donné en texte aux technologies d'assistance (`etatTexte`).
+ */
+interface Props {
+  etat?: boolean;
+  /** Texte lu après le libellé, par exemple « touchée » ou « non touchée ». */
+  etatTexte?: string;
+}
+
+const { etat = true, etatTexte } = Astro.props;
+---
+
+<span class:list={['strate', 'text-caption', etat ? 'strate--on' : 'strate--off']}>
+  <slot />{etatTexte && <span class="visually-hidden"> ({etatTexte})</span>}
+</span>
+
+<style>
+  .strate {
+    display: block;
+    padding: 0.375rem 0.5rem;
+    /* Bandeau d'une ligne : interligne serré du style Label */
+    line-height: var(--text-label-leading);
+    white-space: nowrap;
+  }
+
+  .strate--on {
+    background: var(--color-background-brand);
+    color: var(--color-text-on-brand-muted);
+  }
+
+  .strate--off {
+    background: var(--color-surface-inactive);
+    color: var(--color-text-muted);
+  }
+</style>

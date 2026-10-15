@@ -8,6 +8,7 @@ Principe directeur : **retirer avant d'ajouter**. Pas de dépendance, de script 
 
 ```bash
 npm run dev       # serveur de développement, http://localhost:4321
+npm run dev:clean # idem après avoir vidé le cache de contenu (à faire après un changement de schéma)
 npm run build     # astro check (types) puis build statique dans dist/
 npm run preview   # sert dist/ localement
 npm run check     # vérification des types seule
@@ -55,6 +56,8 @@ docs/                      Notes de décision et guides
 - `prefers-reduced-motion` : `--motion-duration` passe à 0 ; tout s'affiche dans son état final.
 
 ### Composants
+- Catalogue (noms Figma de la page « Composants ») : `Bouton` (plein, contour), `Strate` (On/Off), `StratesTouchees` (les trois strates, verticale ou horizontale), `Navigation`, `EnTeteDeSection`, `EntreeDeProjet` (avec ou sans visuel), `PilierDeMethode`, `EntreeDEcrit`, `Contact`.
+- Banc d'essai en développement : http://localhost:4321/systeme/composants (aucune page générée en production).
 - Styles limités au composant (`<style>` Astro) ; classes en BEM léger (`bloc__element--variante`).
 - Scripts : `<script>` natifs dans le composant, en amélioration progressive. La page doit fonctionner sans JavaScript.
 - Aucun framework client tant qu'aucun besoin interactif ne l'exige (l'intégration Vue n'est pas installée).
@@ -81,4 +84,4 @@ Vercel (`vercel.json` : adresses propres, sans barre finale). Nouveau projet, au
 
 ## Méthode de travail
 
-Étapes : 1. pile ✔ · 2. squelette, jetons, navigation, pied de page ✔ · 3. composants Figma · 4. gabarits et contenus de démonstration · 5. i18n (détection de langue, mémoire du choix) · 6. animations · 7. passe qualité. Pause et démonstration à la fin de chaque étape.
+Étapes : 1. pile ✔ · 2. squelette, jetons, navigation, pied de page ✔ · 3. composants Figma ✔ · 4. gabarits et contenus de démonstration · 5. i18n (détection de langue, mémoire du choix) · 6. animations · 7. passe qualité. Pause et démonstration à la fin de chaque étape.

@@ -1,0 +1,149 @@
+---
+/**
+ * Entrée de projet (Figma 2:489 sans visuel, 9:1600 avec visuel)
+ * Titre, description, contexte et strates touchées. Toute la ligne mène au cas.
+ * Sans visuel : retrait de 304 px, strates en colonne à droite du texte.
+ * Avec visuel : visuel 400 × 300 à gauche, strates sous le texte.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import StratesTouchees from './StratesTouchees.astro';
+import type { Locale } from '../i18n/routes';
+import type { Strates } from '../lib/strates';
+
+interface Props {
+  locale: Locale;
+  titre: string;
+  description: string;
+  /** Entreprise · domaine */
+  meta: string;
+  strates: Strates;
+  href: string;
+  /** Visuel optionnel ; sans `src`, un aplat réserve la place. */
+  visuel?: { src?: ImageMetadata; alt: string };
+  niveau?: 2 | 3;
+}
+
+const { locale, titre, description, meta, strates, href, visuel, niveau = 3 } = Astro.props;
+const Titre = `h${niveau}` as 'h2' | 'h3';
+---
+
+<article class:list={['entree-projet', { 'entree-projet--visuel': visuel }]}>
+  {
+    visuel && (
+      <div class="entree-projet__visuel">
+        {visuel.src && <Image src={visuel.src} alt={visuel.alt} widths={[400, 800]} sizes="(min-width: 40rem) 400px, 100vw" />}
+      </div>
+    )
+  }
+  <div class="entree-projet__corps">
+    <div class="entree-projet__texte">
+      <Titre class="text-heading-40">
+        <a class="entree-projet__lien" href={href}>{titre}</a>
+      </Titre>
+      <p class="entree-projet__description text-body">{description}</p>
+      <p class="entree-projet__meta text-caption">{meta}</p>
+    </div>
+    {visuel && <StratesTouchees locale={locale} strates={strates} />}
+  </div>
+  {!visuel && <StratesTouchees locale={locale} strates={strates} />}
+</article>
+
+<style>
+  .entree-projet {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;
+    padding-block: 2.75rem;
+    padding-left: var(--layout-offset);
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .entree-projet--visuel {
+    padding-left: 0;
+  }
+
+  .entree-projet__visuel {
+    flex: 0 0 25rem;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface-placeholder);
+  }
+
+  .entree-projet__visuel :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .entree-projet__corps {
+    flex: 1 1 0;
+    max-width: 45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-width: 0;
+  }
+
+  .entree-projet__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .entree-projet__lien {
+    text-decoration: none;
+  }
+
+  /* Toute la ligne est cliquable */
+  .entree-projet__lien::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (hover: hover) {
+    .entree-projet:hover .entree-projet__lien {
+      text-decoration: underline;
+      text-decoration-thickness: 0.06em;
+      text-underline-offset: 0.12em;
+    }
+  }
+
+  .entree-projet__description {
+    color: var(--color-text-secondary);
+  }
+
+  .entree-projet__meta {
+    color: var(--color-text-muted);
+  }
+
+  /* Tablette : plus de retrait, visuel réduit */
+  @media (max-width: 63.99rem) {
+    .entree-projet {
+      padding-left: 0;
+    }
+
+    .entree-projet__visuel {
+      flex-basis: 40%;
+    }
+  }
+
+  /* Mobile : une colonne */
+  @media (max-width: 39.99rem) {
+    .entree-projet {
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-block: 2rem;
+    }
+
+    .entree-projet__visuel {
+      flex-basis: auto;
+      width: 100%;
+    }
+
+    .entree-projet__corps {
+      gap: 1.5rem;
+    }
+  }
+</style>

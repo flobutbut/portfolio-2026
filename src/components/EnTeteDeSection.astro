@@ -1,0 +1,26 @@
+---
+/**
+ * Strates/En-tête de section (Figma 2:488)
+ * Titre Display/64 posé sur un filet encre de 3 px. Utilisé pour Travaux, Méthode, Écrits…
+ */
+interface Props {
+  titre: string;
+  /** Niveau du titre : h1 en tête de page, h2 dans une section. */
+  niveau?: 1 | 2;
+  id?: string;
+}
+
+const { titre, niveau = 2, id } = Astro.props;
+const Titre = `h${niveau}` as 'h1' | 'h2';
+---
+
+<div class="en-tete-de-section">
+  <Titre class="text-display" id={id}>{titre}</Titre>
+</div>
+
+<style>
+  .en-tete-de-section {
+    padding-bottom: 1.25rem;
+    border-bottom: 3px solid var(--color-border-ink);
+  }
+</style>
