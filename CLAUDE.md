@@ -41,7 +41,7 @@ docs/                      Notes de décision et guides
 
 - **Figma** `AqUur6HhWyKnXAJwEwx1Ol` (MCP Figma officiel disponible) : accueil `1:14`, travaux `9:1314`, écrits `9:1861`, parcours `9:1964`, cas `27:316`, écrit `28:342`, page « Composants » `9:773`.
 - Quand une maquette contredit le brief ou une règle ci-dessous : **signaler, ne pas trancher seul**.
-- Arbitrages déjà rendus : intitulé « Senior Product Designer » ; `text/muted` = #737373 (et non #8A8A8A) ; Caption en 13 px ; marge unique de 56 px ; sélecteur de langue « EN / FR » après Contact ; favicon « FB. » sur carré bleu.
+- Arbitrages déjà rendus : intitulé « Senior Product Designer » ; `text/muted` = #737373 (et non #8A8A8A) ; Caption en 13 px ; marge unique de 56 px ; sélecteur de langue « EN / FR » après Contact ; favicon « FB. » sur carré bleu ; strates du brief (surfaces, design system, modèle) partout ; strate Off en `text/supporting` #5C5C59 ; bandeaux de strate de 28 px ; interligne UI 20 px.
 
 ## Conventions
 
@@ -50,7 +50,8 @@ docs/                      Notes de décision et guides
 - Un seul accent : le bleu `--color-background-brand`, en aplat. Sur le bleu, jamais `--color-text-muted`.
 - Texte : classes `.text-display`, `.text-heading-40`, `.text-heading-24`, `.text-lead`, `.text-body`, `.text-body-strong`, `.text-ui`, `.text-caption`, `.text-label` (mêmes noms que les styles Figma).
 - Les capitales passent par `.text-label`, jamais tapées dans le contenu.
-- Échelle fluide entre 375 et 1 440 px ; Body (17), UI (15), Caption (13, interligne 160 %) et Label (12) ne descendent jamais sous leur taille.
+- Échelle fluide entre 375 et 1 440 px ; Body (17), UI (15), Caption (13/20) et Label (12) ne descendent jamais sous leur taille.
+- **Toutes les dimensions en pixels sont des nombres pairs** (tailles, interlignes, espacements, bordures).
 - Une seule marge latérale : `--layout-gutter`, 56 px sur desktop, 20 px sur mobile.
 - Points de rupture : mobile `< 40rem`, tablette `40rem–64rem`, desktop au-delà.
 - `prefers-reduced-motion` : `--motion-duration` passe à 0 ; tout s'affiche dans son état final.

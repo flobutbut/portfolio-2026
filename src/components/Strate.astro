@@ -20,9 +20,9 @@ const { etat = true, etatTexte } = Astro.props;
 <style>
   .strate {
     display: block;
+    /* 6 + 16 + 6 = 28 px de haut */
     padding: 0.375rem 0.5rem;
-    /* Bandeau d'une ligne : interligne serré du style Label */
-    line-height: var(--text-label-leading);
+    line-height: 1rem;
     white-space: nowrap;
   }
 
@@ -33,6 +33,7 @@ const { etat = true, etatTexte } = Astro.props;
 
   .strate--off {
     background: var(--color-surface-inactive);
-    color: var(--color-text-muted);
+    /* text/supporting : contraste AA sur surface/inactive (5,4:1) */
+    color: var(--color-text-supporting);
   }
 </style>

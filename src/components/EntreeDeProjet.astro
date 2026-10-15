@@ -2,6 +2,7 @@
 /**
  * Entrée de projet (Figma 2:489 sans visuel, 9:1600 avec visuel)
  * Titre, description, contexte et strates touchées. Toute la ligne mène au cas.
+ * Survol : voir « Entrées de liste » dans global.css.
  * Sans visuel : retrait de 304 px, strates en colonne à droite du texte.
  * Avec visuel : visuel 400 × 300 à gauche, strates sous le texte.
  */
@@ -28,7 +29,7 @@ const { locale, titre, description, meta, strates, href, visuel, niveau = 3 } = 
 const Titre = `h${niveau}` as 'h2' | 'h3';
 ---
 
-<article class:list={['entree-projet', { 'entree-projet--visuel': visuel }]}>
+<article class:list={['entree', 'entree-projet', { 'entree-projet--visuel': visuel }]}>
   {
     visuel && (
       <div class="entree-projet__visuel">
@@ -100,14 +101,6 @@ const Titre = `h${niveau}` as 'h2' | 'h3';
     content: '';
     position: absolute;
     inset: 0;
-  }
-
-  @media (hover: hover) {
-    .entree-projet:hover .entree-projet__lien {
-      text-decoration: underline;
-      text-decoration-thickness: 0.06em;
-      text-underline-offset: 0.12em;
-    }
   }
 
   .entree-projet__description {

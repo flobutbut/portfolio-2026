@@ -2,6 +2,7 @@
  * Jetons du système « Strates ».
  * Source : variables du fichier Figma AqUur6HhWyKnXAJwEwx1Ol.
  * Un seul mode, pas de mode sombre. Les composants n'utilisent que ces rôles.
+ * Toutes les dimensions en pixels sont des nombres pairs (tailles, interlignes, espacements).
  */
 
 :root {
@@ -16,6 +17,7 @@
   --color-text-primary: #0d0d0d;
   --color-text-secondary: #2a2a2a;
   --color-text-muted: #737373;
+  --color-text-supporting: #5c5c59;
   --color-text-inverse: #ffffff;
   --color-text-on-brand-secondary: #daddff;
   --color-text-on-brand-muted: rgb(255 255 255 / 0.8);
@@ -50,10 +52,10 @@
   --text-body-leading: 1.5294;                                           /* 26 / 17 */
 
   --text-ui-size: 0.9375rem;                                             /* 15 */
-  --text-ui-leading: 1.2667;                                             /* 19 / 15 */
+  --text-ui-leading: 1.3333;                                             /* 20 / 15 */
 
   --text-caption-size: 0.8125rem;                                        /* 13 */
-  --text-caption-leading: 1.6;                                           /* 160 % */
+  --text-caption-leading: 1.5385;                                        /* 20 / 13 */
 
   --text-label-size: 0.75rem;                                            /* 12 */
   --text-label-leading: 1.1667;                                          /* 14 / 12 */
@@ -67,11 +69,13 @@
 
   /* Mouvement */
   --motion-duration: 200ms;
+  --motion-duration-long: 400ms;
   --motion-ease: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --motion-duration: 0ms;
+    --motion-duration-long: 0ms;
   }
 }

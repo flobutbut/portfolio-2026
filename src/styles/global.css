@@ -130,6 +130,64 @@ a {
   padding-inline: var(--layout-gutter);
 }
 
+/*
+ * Entrées de liste (projets, écrits) : survol et focus clavier.
+ * Le filet du bas se trace en bleu de gauche à droite, et les strates touchées
+ * s'avancent l'une après l'autre : le survol montre où le cas agit dans le système.
+ */
+.entree::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--color-background-brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-duration-long) var(--motion-ease);
+}
+
+.entree .strate--on {
+  transition:
+    padding-left var(--motion-duration) var(--motion-ease),
+    color var(--motion-duration) var(--motion-ease);
+}
+
+.entree li:nth-child(2) .strate--on {
+  transition-delay: 60ms;
+}
+
+.entree li:nth-child(3) .strate--on {
+  transition-delay: 120ms;
+}
+
+.entree:focus-within::before {
+  transform: scaleX(1);
+}
+
+.entree:focus-within .strate--on {
+  padding-left: 1rem;
+  color: var(--color-text-inverse);
+}
+
+@media (hover: hover) {
+  .entree:hover::before {
+    transform: scaleX(1);
+  }
+
+  .entree:hover .strate--on {
+    padding-left: 1rem;
+    color: var(--color-text-inverse);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entree .strate--on {
+    transition-delay: 0ms !important;
+  }
+}
+
 /* Contenu « À compléter » : visible seulement en développement */
 .todo {
   color: var(--color-text-muted);
