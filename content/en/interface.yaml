@@ -1,0 +1,39 @@
+# Interface strings, English version.
+# Any value starting with "À compléter" is shown in grey during development.
+
+lienEvitement: Skip to content
+
+navigation:
+  libelle: Main navigation
+  accueil: Florian Butour, home
+  travaux: Work
+  ecrits: Writing
+  parcours: Background
+  contact: Contact
+  ouvrirMenu: Open menu
+  fermerMenu: Close menu
+
+# Link to the other language
+langue:
+  code: FR
+  libelle: Version française
+
+contact:
+  titre: Contact
+  email: f.butour@gmail.com
+  copier: Copy email address
+  copie: Address copied
+  signature: Florian Butour — Senior Product Designer
+  linkedin:
+    libelle: LinkedIn
+    url: "À compléter : adresse du profil LinkedIn"
+  cv:
+    libelle: Résumé (PDF)
+    url: "À compléter : fichier du CV anglais"
+  ecrits: Writing
+  localisation: Nantes · fully remote
+
+pageIntrouvable:
+  titre: Page not found
+  texte: This address does not lead to any page.
+  retour: Back to home

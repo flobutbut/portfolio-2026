@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import Contact from '../components/Contact.astro';
+import { otherLocale, type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale: Locale;
+  /** Adresse de la page équivalente dans l'autre langue. */
+  alternate?: string;
+}
+
+const { title, description, locale, alternate } = Astro.props;
+const ui = await getInterface(locale);
+
+const site = Astro.site ?? new URL('https://florianbutour.com');
+const canonical = new URL(Astro.url.pathname, site).href;
+const alternateUrl = alternate ? new URL(alternate, site).href : undefined;
+const urls = { [locale]: canonical, ...(alternateUrl && { [otherLocale(locale)]: alternateUrl }) } as Partial<
+  Record<Locale, string>
+>;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    {urls.fr && <link rel="alternate" hreflang="fr" href={urls.fr} />}
+    {urls.en && <link rel="alternate" hreflang="en" href={urls.en} />}
+    {urls.fr && <link rel="alternate" hreflang="x-default" href={urls.fr} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/archivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#ffffff" />
+  </head>
+  <body>
+    <a class="lien-evitement text-ui" href="#contenu">{ui.lienEvitement}</a>
+    <Navigation locale={locale} alternate={alternate} />
+    <main id="contenu" tabindex="-1">
+      <slot />
+    </main>
+    <Contact locale={locale} />
+  </body>
+</html>
+
+<style>
+  .lien-evitement {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: var(--layout-gutter);
+    padding: 0.75rem 1rem;
+    background: var(--color-background-brand);
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    transform: translateY(-100%);
+  }
+
+  .lien-evitement:focus {
+    transform: none;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>

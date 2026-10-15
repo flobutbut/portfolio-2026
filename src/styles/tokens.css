@@ -1,0 +1,75 @@
+/*
+ * Jetons du système « Strates ».
+ * Source : variables du fichier Figma AqUur6HhWyKnXAJwEwx1Ol.
+ * Un seul mode, pas de mode sombre. Les composants n'utilisent que ces rôles.
+ */
+
+:root {
+  /* Couleurs : --color-<groupe>-<nom> */
+  --color-background-canvas: #ffffff;
+  --color-background-brand: #1f2be0;
+  --color-background-inverse: #0d0d0d;
+
+  --color-surface-inactive: #e7e7e7;
+  --color-surface-placeholder: #d4d4d4;
+
+  --color-text-primary: #0d0d0d;
+  --color-text-secondary: #2a2a2a;
+  --color-text-muted: #737373;
+  --color-text-inverse: #ffffff;
+  --color-text-on-brand-secondary: #daddff;
+  --color-text-on-brand-muted: rgb(255 255 255 / 0.8);
+  --color-text-on-dark-muted: #9a9a9a;
+
+  --color-border-default: #e7e7e7;
+  --color-border-ink: #0d0d0d;
+  --color-border-white: #ffffff;
+  --color-border-on-dark: #333333;
+
+  /* Familles */
+  --font-heading: 'Archivo', 'Arial Black', system-ui, sans-serif;
+  --font-body: 'Schibsted Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /*
+   * Échelle typographique fluide, interpolée entre 375 px et 1 440 px de large.
+   * Les valeurs maximales sont celles de Figma ; Body, UI, Caption et Label restent fixes.
+   */
+  --text-display-size: clamp(2.5rem, 1.972rem + 2.254vw, 4rem);         /* 40 → 64 */
+  --text-display-leading: 0.9375;                                        /* 60 / 64 */
+  --text-display-tracking: -0.06em;
+
+  --text-heading-40-size: clamp(1.75rem, 1.486rem + 1.127vw, 2.5rem);   /* 28 → 40 */
+  --text-heading-24-size: clamp(1.25rem, 1.162rem + 0.376vw, 1.5rem);   /* 20 → 24 */
+  --text-heading-leading: 1;
+  --text-heading-tracking: -0.035em;
+
+  --text-lead-size: clamp(1.1875rem, 1.121rem + 0.282vw, 1.375rem);     /* 19 → 22 */
+  --text-lead-leading: 1.3636;                                           /* 30 / 22 */
+
+  --text-body-size: 1.0625rem;                                           /* 17 */
+  --text-body-leading: 1.5294;                                           /* 26 / 17 */
+
+  --text-ui-size: 0.9375rem;                                             /* 15 */
+  --text-ui-leading: 1.2667;                                             /* 19 / 15 */
+
+  --text-caption-size: 0.8125rem;                                        /* 13 */
+  --text-caption-leading: 1.6;                                           /* 160 % */
+
+  --text-label-size: 0.75rem;                                            /* 12 */
+  --text-label-leading: 1.1667;                                          /* 14 / 12 */
+
+  /* Mise en page */
+  --layout-max: 90rem;                                                   /* 1 440 */
+  --layout-gutter: clamp(1.25rem, 0.458rem + 3.38vw, 3.5rem);            /* 20 → 56, marge unique */
+  --layout-nav-height: 5.375rem;                                         /* 86 */
+
+  /* Mouvement */
+  --motion-duration: 200ms;
+  --motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration: 0ms;
+  }
+}

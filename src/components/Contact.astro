@@ -1,0 +1,187 @@
+---
+/**
+ * Strates/Contact (Figma 2:492)
+ * Adresse en grand, copiable en un clic ; signature, liens et localisation.
+ * Sans JavaScript, l'adresse reste un lien mailto.
+ */
+import type { Locale } from '../i18n/routes';
+import { path } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+import { isTodo } from '../lib/todo';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { contact } = await getInterface(locale);
+
+const liens = [
+  { libelle: contact.linkedin.libelle, url: contact.linkedin.url, externe: true },
+  { libelle: contact.cv.libelle, url: contact.cv.url, externe: false },
+  { libelle: contact.ecrits, url: path('ecrits', locale), externe: false },
+];
+---
+
+<footer id="contact" class="contact" aria-labelledby="contact-titre">
+  <div class="contact__inner container">
+    <h2 id="contact-titre" class="visually-hidden">{contact.titre}</h2>
+
+    <div class="contact__email-bloc">
+      <a
+        class="contact__email text-display"
+        href={`mailto:${contact.email}`}
+        data-copy={contact.email}
+        data-copy-label={contact.copier}
+        data-copied={contact.copie}>{contact.email}</a
+      >
+      <p class="contact__status text-caption" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="contact__meta text-caption">
+      <p class="contact__col">{contact.signature}</p>
+      <p class="contact__col contact__col--centre">
+        {
+          liens.map((lien, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true"> · </span>}
+              {isTodo(lien.url) ? (
+                <span class="todo" title={lien.url}>
+                  {lien.libelle}
+                </span>
+              ) : (
+                <a href={lien.url} rel={lien.externe ? 'me noopener' : undefined}>
+                  {lien.libelle}
+                </a>
+              )}
+            </>
+          ))
+        }
+      </p>
+      <p class="contact__col contact__col--fin">{contact.localisation}</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Remplace le lien mailto par un bouton qui copie l'adresse, si le presse-papiers est disponible.
+  const link = document.querySelector<HTMLAnchorElement>('.contact__email[data-copy]');
+  const status = document.querySelector<HTMLElement>('.contact__status');
+
+  if (link && status && navigator.clipboard) {
+    const { copy = '', copyLabel = '', copied = '' } = link.dataset;
+    const button = document.createElement('button');
+    // Reprend la classe et l'attribut de portée CSS d'Astro, sans le href.
+    for (const { name, value } of link.attributes) {
+      if (name !== 'href') button.setAttribute(name, value);
+    }
+    button.type = 'button';
+    button.textContent = link.textContent;
+    button.setAttribute('aria-label', `${copy}, ${copyLabel}`);
+    link.replaceWith(button);
+
+    let timer: number | undefined;
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(copy);
+        status.textContent = copied;
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => (status.textContent = ''), 2400);
+      } catch {
+        window.location.href = `mailto:${copy}`;
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact {
+    background: var(--color-background-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  .contact__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    padding-top: 6rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .contact__email-bloc {
+    position: relative;
+  }
+
+  .contact__email {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    /* L'adresse doit tenir sur une ligne jusqu'à 320 px de large */
+    font-size: clamp(1.75rem, 8.5vw, var(--text-display-size));
+  }
+
+  .contact__status {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .contact__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border-on-dark);
+    color: var(--color-text-on-dark-muted);
+  }
+
+  .contact__col {
+    flex: 1 0 0;
+  }
+
+  .contact__col--centre {
+    text-align: center;
+  }
+
+  .contact__col--fin {
+    text-align: right;
+  }
+
+  .contact__meta a {
+    text-decoration: none;
+  }
+
+  .contact__meta a:hover {
+    color: var(--color-text-inverse);
+    text-decoration: underline;
+  }
+
+  .contact__meta .todo {
+    color: var(--color-text-on-dark-muted);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 39.99rem) {
+    .contact__inner {
+      gap: 3rem;
+      padding-top: 4rem;
+    }
+
+    .contact__meta {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .contact__col--centre,
+    .contact__col--fin {
+      text-align: left;
+    }
+  }
+</style>

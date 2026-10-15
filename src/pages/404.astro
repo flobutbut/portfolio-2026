@@ -1,0 +1,36 @@
+---
+/** Page 404 commune aux deux langues : français d'abord, anglais en dessous. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { path } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+
+const fr = (await getInterface('fr')).pageIntrouvable;
+const en = (await getInterface('en')).pageIntrouvable;
+---
+
+<BaseLayout title={`${fr.titre} · ${en.titre}`} locale="fr">
+  <div class="container introuvable">
+    <p class="text-label introuvable__code">404</p>
+    <h1 class="text-display">{fr.titre}</h1>
+    <p class="text-lead">{fr.texte} <a href={path('accueil', 'fr')}>{fr.retour}</a></p>
+    <p class="text-lead" lang="en">{en.texte} <a href={path('accueil', 'en')}>{en.retour}</a></p>
+  </div>
+</BaseLayout>
+
+<style>
+  .introuvable {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-block: 8.75rem;
+  }
+
+  .introuvable__code {
+    color: var(--color-text-muted);
+  }
+
+  .introuvable .text-lead {
+    max-width: 40rem;
+    color: var(--color-text-secondary);
+  }
+</style>
