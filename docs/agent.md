@@ -150,7 +150,7 @@ Version complète : https://florianbutour.com/travaux/desoutter.md
 - Proposition de commencer par un design system partagé, organisé en quatre niveaux : tokens, composants, patterns, bibliothèques par surface.
 - Identification des objets manipulés par les utilisateurs et de leur représentation commune à toutes les surfaces.
 - Trois règles de déclinaison : objets et vocabulaire constants ; interaction adaptée au contexte ; une nouvelle surface expose des usages existants sans recréer le produit.
-- Répartition exacte entre le travail de Florian et celui de l'équipe : À compléter.
+- Répartition du travail : Florian était lead sur le design et la refonte des produits.
 
 **Collectif**
 - Le modèle de données préexistait côté back-end.
