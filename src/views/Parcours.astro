@@ -22,19 +22,22 @@ const sep = locale === 'fr' ? ' : ' : ': ';
 ---
 
 <BaseLayout title={p.titre} description={p.description} locale={locale} alternate={path('parcours', otherLocale(locale))}>
-  <div class="container container--etroit page-tete parcours-tete">
-    <EnTeteDeSection titre={p.titre} niveau={1} espace="page" filet={false} />
-  </div>
-
-  <section class="intro" aria-label={p.titre}>
-    <div class="container container--etroit intro__inner">
-      <p class="text-lead intro__texte">{p.introduction}</p>
-      <div class="intro__actions">
-        <Bouton href={path('travaux', locale)}>{p.voirTravaux}</Bouton>
-        {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{p.cv}</span> : <Bouton apparence="contour" href={cv}>{p.cv}</Bouton>}
-      </div>
+  <!-- Navigation + titre + bande noire = hauteur de l'écran ; le titre garde sa hauteur, la bande noire s'étire -->
+  <div class="parcours-ecran">
+    <div class="container container--etroit page-tete parcours-tete">
+      <EnTeteDeSection titre={p.titre} niveau={1} espace="page" filet={false} />
     </div>
-  </section>
+
+    <section class="intro" aria-label={p.titre}>
+      <div class="container container--etroit intro__inner">
+        <p class="text-lead intro__texte">{p.introduction}</p>
+        <div class="intro__actions">
+          <Bouton href={path('travaux', locale)}>{p.voirTravaux}</Bouton>
+          {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{p.cv}</span> : <Bouton apparence="contour" href={cv}>{p.cv}</Bouton>}
+        </div>
+      </div>
+    </section>
+  </div>
 
   <section class="bloc" data-apparition>
     <ol class="container container--etroit lignes" role="list">
@@ -98,7 +101,17 @@ const sep = locale === 'fr' ? ' : ' : ': ';
 </BaseLayout>
 
 <style>
+  .parcours-ecran {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--layout-nav-height));
+  }
+
   .intro {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     background: var(--color-background-inverse);
     color: var(--color-text-inverse);
   }

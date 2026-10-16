@@ -149,14 +149,18 @@ const cv = ui.contact.cv.url;
 
 <style>
   /* ---------- Hero ---------- */
+  /* Navigation + hero = hauteur de l'écran (au minimum) : le bloc blanc et bleu absorbe l'espace */
   .hero {
     --bord: max(var(--layout-gutter), calc((100% - var(--layout-max)) / 2 + var(--layout-gutter)));
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--layout-nav-height));
   }
 
   .hero__haut {
+    flex: 1;
     display: grid;
     grid-template-columns: minmax(0, 996fr) minmax(0, 444fr);
-    min-height: clamp(30rem, calc(100svh - var(--layout-nav-height) - 7.75rem), 42.25rem);
   }
 
   .hero__surface {
@@ -209,7 +213,7 @@ const cv = ui.contact.cv.url;
   @media (max-width: 63.99rem) {
     .hero__haut {
       grid-template-columns: minmax(0, 1fr);
-      min-height: 0;
+      grid-template-rows: 1fr auto;
     }
 
     .hero__surface {
