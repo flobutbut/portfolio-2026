@@ -391,7 +391,12 @@ const cv = ui.contact.cv.url;
     transform: none;
   }
 
+  /* Chaque pilier occupe une bonne part d'écran : la figure a le temps de rester collée */
   .methode--collee .methode__pilier {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 70svh;
     opacity: 0.35;
     transition: opacity var(--motion-duration-long) var(--motion-ease);
   }
