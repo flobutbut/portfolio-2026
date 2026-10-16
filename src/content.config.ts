@@ -188,6 +188,7 @@ const interfaceTextes = defineCollection({
       ecrits: z.string(),
       parcours: z.string(),
       contact: z.string(),
+      accueilMenu: z.string(),
       ouvrirMenu: z.string(),
       fermerMenu: z.string(),
     }),

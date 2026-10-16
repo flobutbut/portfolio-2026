@@ -10,6 +10,8 @@ navigation:
   ecrits: Writing
   parcours: Background
   contact: Contact
+  # Premier item du menu mobile uniquement
+  accueilMenu: Home
   ouvrirMenu: Open menu
   fermerMenu: Close menu
 

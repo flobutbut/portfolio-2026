@@ -10,6 +10,8 @@ navigation:
   ecrits: Écrits
   parcours: Parcours
   contact: Contact
+  # Premier item du menu mobile uniquement
+  accueilMenu: Accueil
   ouvrirMenu: Ouvrir le menu
   fermerMenu: Fermer le menu
 

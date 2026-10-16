@@ -27,6 +27,7 @@ const sections = (['travaux', 'ecrits', 'parcours', 'contact'] as const).map((ke
   return { href, label: ui.navigation[key], ariaCurrent };
 });
 
+const accueil = path('accueil', locale);
 const target = otherLocale(locale);
 ---
 
@@ -58,6 +59,11 @@ const target = otherLocale(locale);
         </div>
 
         <ul class="navigation__list" role="list">
+          <li class="navigation__item-accueil">
+            <a class="navigation__link" href={accueil} aria-current={current === accueil ? 'page' : undefined}>
+              {ui.navigation.accueilMenu}
+            </a>
+          </li>
           {
             sections.map(({ href, label, ariaCurrent }) => (
               <li>
@@ -171,8 +177,10 @@ const target = otherLocale(locale);
       align-self: stretch;
     }
 
+    /* « Accueil » n'existe que dans le menu mobile : sur desktop, le logo suffit (maquette) */
     .navigation__burger,
-    .navigation__menu-tete {
+    .navigation__menu-tete,
+    .navigation__list .navigation__item-accueil {
       display: none;
     }
 
