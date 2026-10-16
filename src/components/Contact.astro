@@ -112,18 +112,45 @@ const liens = [
     position: relative;
   }
 
+  /* Survol : le texte passe en bleu de gauche à droite (dégradé à arrêt net découpé par le texte) */
   .contact__email {
     display: inline-block;
     padding: 0;
     border: 0;
-    background: none;
-    color: inherit;
+    background: linear-gradient(
+        to right,
+        var(--color-background-brand) 50%,
+        var(--color-text-inverse) 50%
+      )
+      100% 0 / 200% 100% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     text-align: left;
     text-decoration: none;
     cursor: pointer;
     overflow-wrap: anywhere;
+    transition: background-position var(--motion-duration-long) var(--motion-ease);
     /* L'adresse doit tenir sur une ligne jusqu'à 320 px de large */
     font-size: clamp(1.75rem, 8.5vw, var(--text-display-size));
+  }
+
+  .contact__email:focus-visible {
+    background-position: 0 0;
+  }
+
+  @media (hover: hover) {
+    .contact__email:hover {
+      background-position: 0 0;
+    }
+  }
+
+  /* Mode contraste forcé : le texte découpé disparaîtrait, on revient à une couleur pleine */
+  @media (forced-colors: active) {
+    .contact__email {
+      background: none;
+      color: LinkText;
+    }
   }
 
   .contact__status {
