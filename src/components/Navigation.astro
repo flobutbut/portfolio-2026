@@ -119,8 +119,33 @@ const target = otherLocale(locale);
     min-height: var(--layout-nav-height);
   }
 
+  /* Survol : « FB. » passe en bleu de gauche à droite, dans la lettre (dégradé à arrêt net découpé par le texte) */
   .navigation__logo {
+    background: linear-gradient(to right, var(--color-background-brand) 50%, var(--color-text-primary) 50%) 100% 0 / 200%
+      100% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     text-decoration: none;
+    transition: background-position var(--motion-duration-long) var(--motion-ease);
+  }
+
+  .navigation__logo:focus-visible {
+    background-position: 0 0;
+  }
+
+  @media (hover: hover) {
+    .navigation__logo:hover {
+      background-position: 0 0;
+    }
+  }
+
+  /* Mode contraste forcé : le texte découpé disparaîtrait, on revient à une couleur pleine */
+  @media (forced-colors: active) {
+    .navigation__logo {
+      background: none;
+      color: LinkText;
+    }
   }
 
   .navigation__list {
