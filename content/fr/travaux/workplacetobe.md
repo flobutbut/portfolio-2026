@@ -1,8 +1,8 @@
 ---
-# Repris de docs/Portfolio/02b_Cas_02_WorkplaceToBe.md. Les « Visuel prévu » restent à fournir.
+# Repris de docs/Portfolio/02b_Cas_02_WorkplaceToBe.md. Les « Visuel prévu » n’apparaissent qu’en aperçu tant qu’ils ne sont pas fournis.
 numero: 2
 slug: workplacetobe
-statut: brouillon
+statut: publie
 titre: "Un produit, plusieurs surfaces"
 chapo: "WorkplaceToBe devait rester un seul produit tout en étant distribué sur plusieurs surfaces : web, mobile, Outlook, écrans de salle et étiquettes de bureau. J’ai mené sa refonte côté design en construisant un système commun, capable de décliner les mêmes usages selon chaque contexte."
 meta: "SharingCloud · Gestion des espaces de travail"
@@ -31,7 +31,7 @@ Le problème n’était donc pas seulement visuel : sans socle commun, chaque no
 
 J’ai proposé de commencer **par un design system partagé, avec le soutien des développeurs front-end**.
 
-![Visuel prévu](a-completer "socle partagé et bibliothèques propres à chaque surface")
+![Visuel prévu](a-venir "socle partagé et bibliothèques propres à chaque surface")
 
 ## Repartir des usages
 
@@ -50,7 +50,7 @@ Le modèle de données existait déjà côté back-end. Mon travail a consisté 
 
 Une réservation, un espace ou une présence devaient conserver le même sens, le même vocabulaire et les mêmes informations essentielles, quelle que soit la surface.
 
-![Visuel prévu](a-completer "les objets communs aux interfaces : réservation, espace et présence")
+![Visuel prévu](a-venir "les objets communs aux interfaces : réservation, espace et présence")
 
 ## Un usage, plusieurs contextes
 
@@ -86,7 +86,7 @@ Nous avons identifié les usages communs, puis retenu pour chaque surface ceux q
 
 Le nouvel accueil web réunissait les principaux usages autour de la journée du collaborateur : ses réservations, la présence de son équipe, les événements et les actualités du site.
 
-![Visuel prévu](a-completer "Écran d’accueil WorkplaceToBe, Mon agenda, 2023")
+![Visuel prévu](a-venir "Écran d’accueil WorkplaceToBe, Mon agenda, 2023")
 
 La refonte a établi un cadre commun pour faire évoluer les interfaces : des objets partagés, des usages identifiés et des règles de déclinaison. Ce cadre devait limiter les décisions reprises à chaque nouvelle surface. Le cas ne documente toutefois pas de mesure du temps de conception gagné ni d’évaluation comparative de l’expérience entre surfaces.
 

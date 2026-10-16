@@ -1,8 +1,8 @@
 ---
-# English translation by Claude of content/fr/travaux/workplacetobe.md. Planned visuals remain to be supplied.
+# English translation by Claude of content/fr/travaux/workplacetobe.md. Planned visuals only show in previews until supplied.
 numero: 2
 slug: workplacetobe
-statut: brouillon
+statut: publie
 titre: "One product, several surfaces"
 chapo: "WorkplaceToBe had to remain a single product while being delivered on several surfaces: web, mobile, Outlook, room displays and desk labels. I led its redesign on the design side by building a shared system, able to adapt the same uses to each context."
 meta: "SharingCloud · Workplace management"
@@ -31,7 +31,7 @@ So the problem was not only visual: without a shared foundation, every new featu
 
 I proposed starting **with a shared design system, with the support of the front-end developers**.
 
-![Planned visual](a-completer "shared foundation and surface-specific libraries")
+![Planned visual](a-venir "shared foundation and surface-specific libraries")
 
 ## Starting again from uses
 
@@ -50,7 +50,7 @@ The data model already existed on the back end. My work consisted in identifying
 
 A booking, a space or a presence had to keep the same meaning, the same vocabulary and the same essential information, whatever the surface.
 
-![Planned visual](a-completer "the objects shared across interfaces: booking, space and presence")
+![Planned visual](a-venir "the objects shared across interfaces: booking, space and presence")
 
 ## One use, several contexts
 
@@ -86,7 +86,7 @@ We identified the shared uses, then kept for each surface those relevant in its 
 
 The new web home brought the main uses together around the employee’s day: their bookings, their team’s presence, events and news from the site.
 
-![Planned visual](a-completer "WorkplaceToBe home screen, My schedule, 2023")
+![Planned visual](a-venir "WorkplaceToBe home screen, My schedule, 2023")
 
 The redesign established a shared framework for evolving the interfaces: shared objects, identified uses and adaptation rules. This framework was meant to limit the decisions revisited for each new surface. The case does not, however, document any measure of design time saved or any comparative evaluation of the experience across surfaces.
 

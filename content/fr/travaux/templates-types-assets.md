@@ -1,8 +1,8 @@
 ---
-# Repris de docs/Portfolio/02d_Cas_04_Templates_Qlik.md. Les « Visuel prévu » restent à fournir.
+# Repris de docs/Portfolio/02d_Cas_04_Templates_Qlik.md. Les « Visuel prévu » n’apparaissent qu’en aperçu tant qu’ils ne sont pas fournis.
 numero: 4
 slug: templates-types-assets
-statut: brouillon
+statut: publie
 nature: note
 titre: "Donner un rôle à chaque vue"
 chapo: "Chez Qlik, chaque type de ressource — jeu de données, produit de données ou projet de pipeline — avait sa propre vue d’ensemble, construite au fil des besoins. Je travaille à les faire reposer sur des modèles de page communs, en donnant à chaque vue un rôle précis."
@@ -37,7 +37,7 @@ Plutôt que de corriger chaque page, j’ai proposé de revoir l’architecture 
 
 Je propose d’inscrire cette règle dans le design system de l’expérience unifiée sous forme de modèles de page communs. Leur application doit tenir compte des informations nécessaires pour évaluer chaque type de ressource.
 
-![Figure prévue](a-completer "une vue d’ensemble existante, puis la structure proposée — identification, informations utiles à l’évaluation, actions et accès aux vues détaillées")
+![Figure prévue](a-venir "une vue d’ensemble existante, puis la structure proposée — identification, informations utiles à l’évaluation, actions et accès aux vues détaillées")
 
 ## Faire adopter une architecture
 

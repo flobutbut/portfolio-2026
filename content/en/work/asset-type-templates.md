@@ -1,8 +1,8 @@
 ---
-# English translation by Claude of content/fr/travaux/templates-types-assets.md. The planned figure remains to be supplied.
+# English translation by Claude of content/fr/travaux/templates-types-assets.md. The planned figure only shows in previews until supplied.
 numero: 4
 slug: asset-type-templates
-statut: brouillon
+statut: publie
 nature: note
 titre: "Giving each view a role"
 chapo: "At Qlik, each type of resource — dataset, data product or pipeline project — had its own overview, built as needs arose. I am working to base them on shared page templates, giving each view a precise role."
@@ -37,7 +37,7 @@ Rather than fixing each page, I proposed revisiting the architecture of resource
 
 I propose writing this rule into the design system of the unified experience as shared page templates. Applying them must take into account the information needed to evaluate each resource type.
 
-![Planned figure](a-completer "an existing overview, then the proposed structure — identification, information useful for evaluation, actions and access to detailed views")
+![Planned figure](a-venir "an existing overview, then the proposed structure — identification, information useful for evaluation, actions and access to detailed views")
 
 ## Getting an architecture adopted
 

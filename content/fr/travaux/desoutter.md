@@ -1,8 +1,8 @@
 ---
-# Repris de docs/Portfolio/02a_Cas_01_Desoutter.md. Les « Visuel prévu » restent à fournir.
+# Repris de docs/Portfolio/02a_Cas_01_Desoutter.md. Les « Visuel prévu » n’apparaissent qu’en aperçu tant qu’ils ne sont pas fournis.
 numero: 1
 slug: desoutter
-statut: brouillon
+statut: publie
 titre: "Une installation qu’on parcourt comme une arborescence"
 chapo: "Chez Desoutter, des contrôleurs pilotent des dizaines d’outils de vissage, chacun avec ses programmes. J’ai été recruté en freelance pour concevoir WebUI, une plateforme accessible depuis un navigateur, et créer son design system. Le cœur du travail : une navigation qui suit la structure de l’installation elle-même."
 meta: "Desoutter · Plateforme SaaS industrielle"
@@ -34,15 +34,15 @@ Réunir ces logiciels dans un seul produit, c’était faire cohabiter quatre m�
 
 J’ai choisi l’installation comme structure principale de navigation plutôt qu’une entrée par fonctions — configurer, analyser, diagnostiquer. L’arborescence reproduit les relations entre les équipements. On entre par les contrôleurs ; chaque contrôleur donne accès à ses outils de vissage ; chaque outil à ses programmes.
 
-![Visuel prévu](a-completer "l’arborescence de WebUI · quatre niveaux, une même page")
+![Visuel prévu](a-venir "l’arborescence de WebUI · quatre niveaux, une même page")
 
 À chaque niveau, la page a la même forme : un titre, les mêmes onglets (vue d’ensemble, réglages, historique) et un fil d’Ariane pour remonter. La répétition de ces repères vise à faciliter le passage d’un niveau à l’autre.
 
-![Visuel prévu](a-completer "Vue d’ensemble : tous les contrôleurs et leur état")
+![Visuel prévu](a-venir "Vue d’ensemble : tous les contrôleurs et leur état")
 
-![Visuel prévu](a-completer "Un contrôleur : ses outils en temps réel")
+![Visuel prévu](a-venir "Un contrôleur : ses outils en temps réel")
 
-![Visuel prévu](a-completer "Un outil : ses programmes de vissage, édités en panneau latéral")
+![Visuel prévu](a-venir "Un outil : ses programmes de vissage, édités en panneau latéral")
 
 L’état remonte dans l’arbre : un outil hors tolérance apparaît dans le compteur de son contrôleur, qui apparaît dans la vue d’ensemble. D’en haut, on voit où descendre.
 
@@ -61,13 +61,13 @@ Quatre profils métier ont été identifiés en ateliers avec les équipes Desou
 
 Le programme de vissage est le nœud où ces attentes se croisent. Deux des trois fiches persona faisaient apparaître un besoin de réglages avancés et de configuration guidée. J’ai conservé les deux modes d’édition : on trouve le programme, on le consulte, puis on choisit de l’éditer directement ou pas à pas. Le guidage offre une autre manière d’aborder la configuration, sans imposer ce parcours à tous.
 
-![Visuel prévu](a-completer "le programme de vissage · liste, consultation, deux modes d’édition")
+![Visuel prévu](a-venir "le programme de vissage · liste, consultation, deux modes d’édition")
 
 ## Plusieurs chemins, un même nœud
 
 L’arbre donne un contexte, mais il ne doit pas imposer de parcourir tous les niveaux pour atteindre un outil connu. Le diagnostic illustre cette articulation entre navigation et recherche. Il commence quand un opérateur bloqué appelle la maintenance, dont le technicien n’est pas forcément devant la ligne. Qu’il parte de la vue d’ensemble ou d’un outil recherché par son nom ou son numéro de série, il arrive à la même page outil, d’où part le chemin de vérification.
 
-![Visuel prévu](a-completer "Parcours de diagnostic : depuis WebUI, ou depuis l’outil avec une recherche")
+![Visuel prévu](a-venir "Parcours de diagnostic : depuis WebUI, ou depuis l’outil avec une recherche")
 
 ## Ce qui reste commun, ce qui change
 
@@ -78,7 +78,7 @@ Le design system, que j’ai créé pour WebUI, servait directement cette naviga
 
 Le gabarit regroupait un titre, des onglets et un fil d’Ariane ; les états permettaient de signaler un problème à plusieurs niveaux de l’installation. L’équipe pouvait réutiliser ces repères, puis concevoir le contenu et les actions propres à chaque page.
 
-![Visuel prévu](a-completer "Extrait du design system WebUI")
+![Visuel prévu](a-venir "Extrait du design system WebUI")
 
 ## Ce qui a été transmis à l’équipe
 

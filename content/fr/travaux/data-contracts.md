@@ -1,8 +1,8 @@
 ---
-# Repris de docs/Portfolio/02c_Cas_03_Data_contracts.md. Les « Visuel prévu » restent à fournir.
+# Repris de docs/Portfolio/02c_Cas_03_Data_contracts.md. Les « Visuel prévu » n’apparaissent qu’en aperçu tant qu’ils ne sont pas fournis.
 numero: 3
 slug: data-contracts
-statut: brouillon
+statut: publie
 titre: "Rendre explicites les engagements autour des données"
 chapo: "Chez Qlik, je conçois un outil de contrats de données pour expliciter les engagements entre les équipes qui produisent un jeu de données et celles qui l’utilisent. L’enjeu : relier ces engagements aux informations et aux mesures de qualité déjà présentes dans la plateforme. Ce travail est en cours."
 meta: "Qlik · Intégration de données"
@@ -45,7 +45,7 @@ Nous avons d’abord listé tout ce qu’un contrat peut garantir, puis donné d
 
 L’objectif est de partager le vocabulaire et les comportements récurrents, tout en conservant les différences entre types de garanties. Les écrans et les prototypes permettent ensuite d’éprouver ces règles.
 
-![Figure prévue](a-completer "le contrat relie les engagements envers les consommateurs aux informations et aux mesures du jeu de données")
+![Figure prévue](a-venir "le contrat relie les engagements envers les consommateurs aux informations et aux mesures du jeu de données")
 
 ## Le prototype comme outil de décision
 

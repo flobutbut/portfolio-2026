@@ -42,7 +42,8 @@ Même chose avec `content/_modeles/ecrit.md`, copié dans `content/fr/ecrits/` (
 | `:::lead` … `:::` | Paragraphe en grand (Lead/22). |
 | `:::question` … `:::` | Question finale, en bleu. |
 | `![Description](/images/cas/ecran.png "Légende")` | Image avec légende. Le texte alternatif est obligatoire. Placez l'image dans `public/images/…`. |
-| `![Description](a-completer "Légende")` | Emplacement gris en attendant l'image. |
+| `![Visuel prévu](a-venir "Légende")` | Emplacement gris en aperçu seulement ; omis sur le site publié, sans bloquer le build. |
+| `![Description](a-completer "Légende")` | Emplacement gris qui bloque le build de production tant que l'image manque. |
 | Bloc ` ```figure ` en YAML | Figure de modèle : `arborescence`, `strates` ou `parcours` (exemples dans le cas Desoutter et l'écrit 07). |
 
 Dans un écrit, le premier paragraphe s'affiche automatiquement en chapô.

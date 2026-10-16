@@ -8,7 +8,8 @@
  * - `> citation` → citation à filet bleu.
  * - `:::lead … :::` → paragraphe Lead/22 ; `:::question … :::` → question finale en bleu.
  * - ```figure (YAML) → figure de modèle (arborescence, strates, parcours).
- * - `![alt](/images/x.png "Légende")` → figure avec légende ; `![alt](a-completer "Légende")` → emplacement vide.
+ * - `![alt](/images/x.png "Légende")` → figure avec légende ; `![alt](a-completer "Légende")` → emplacement vide (bloque la production).
+ * - `![Visuel prévu](a-venir "Légende")` → emplacement en aperçu seulement ; omis en production, sans bloquer.
  * - Un paragraphe qui commence par « À compléter » s'affiche en gris.
  */
 import { existsSync } from 'node:fs';
@@ -26,6 +27,7 @@ import YAML from 'yaml';
 import type { Locale } from '../i18n/routes';
 import { echapper, renderFigure } from './figures';
 import { isTodo } from './todo';
+import { modeApercu } from './mode';
 import { typographieFr } from './typographie';
 
 interface Options {
@@ -107,7 +109,12 @@ function remarkStrates({ locale, mode, fichier }: Options) {
           const legende = titre ? `<figcaption class="md-legende text-caption">${echapper(titre)}</figcaption>` : '';
           const html = { type: 'html' as const, value: '' };
           enfants[index] = html;
-          if (img.url === 'a-completer') {
+          if (img.url === 'a-venir') {
+            // Visuel prévu : visible en aperçu, absent du site publié
+            html.value = modeApercu
+              ? `<figure class="md-figure"><div class="md-emplacement" role="img" aria-label="${echapper(alt)}"><span class="text-caption">${echapper(alt)}</span></div>${legende}</figure>`
+              : '';
+          } else if (img.url === 'a-completer') {
             html.value = `<figure class="md-figure"><div class="md-emplacement todo" role="img" aria-label="${echapper(alt)}"><span class="text-caption">${echapper(alt)}</span></div>${legende}</figure>`;
           } else {
             if (!alt) throw new Error(`${fichier} : l’image ${img.url} n’a pas de texte alternatif`);

@@ -1,8 +1,8 @@
 ---
-# English translation by Claude of content/fr/travaux/data-contracts.md. The planned figure remains to be supplied.
+# English translation by Claude of content/fr/travaux/data-contracts.md. The planned figure only shows in previews until supplied.
 numero: 3
 slug: data-contracts
-statut: brouillon
+statut: publie
 titre: "Making commitments around data explicit"
 chapo: "At Qlik, I am designing a data contract tool to make explicit the commitments between the teams that produce a dataset and those that use it. The challenge: linking these commitments to the information and quality measures already present in the platform. This work is in progress."
 meta: "Qlik · Data integration"
@@ -45,7 +45,7 @@ We first listed everything a contract can guarantee, then gave rules to each typ
 
 The goal is to share vocabulary and recurring behaviours, while keeping the differences between types of guarantees. Screens and prototypes then make it possible to test these rules.
 
-![Planned figure](a-completer "the contract links commitments to consumers with the dataset’s information and measures")
+![Planned figure](a-venir "the contract links commitments to consumers with the dataset’s information and measures")
 
 ## The prototype as a decision tool
 

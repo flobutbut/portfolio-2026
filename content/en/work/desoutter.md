@@ -1,8 +1,8 @@
 ---
-# English translation by Claude of content/fr/travaux/desoutter.md. Planned visuals remain to be supplied.
+# English translation by Claude of content/fr/travaux/desoutter.md. Planned visuals only show in previews until supplied.
 numero: 1
 slug: desoutter
-statut: brouillon
+statut: publie
 titre: "An installation you navigate like a tree"
 chapo: "At Desoutter, controllers drive dozens of tightening tools, each with its own programs. I was hired as a freelancer to design WebUI, a platform accessed from a web browser, and to create its design system. The heart of the work: a navigation that follows the structure of the installation itself."
 meta: "Desoutter · Industrial SaaS platform"
@@ -34,15 +34,15 @@ Bringing this software together into a single product meant having four professi
 
 I chose the installation as the main navigation structure rather than an entry by function — configure, analyse, diagnose. The tree mirrors the relations between pieces of equipment. You enter through the controllers; each controller gives access to its tightening tools; each tool to its programs.
 
-![Planned visual](a-completer "the WebUI tree · four levels, one page")
+![Planned visual](a-venir "the WebUI tree · four levels, one page")
 
 At every level, the page has the same shape: a title, the same tabs (overview, settings, history) and a breadcrumb to go back up. Repeating these landmarks is meant to make it easier to move from one level to the next.
 
-![Planned visual](a-completer "Overview: all the controllers and their state")
+![Planned visual](a-venir "Overview: all the controllers and their state")
 
-![Planned visual](a-completer "A controller: its tools in real time")
+![Planned visual](a-venir "A controller: its tools in real time")
 
-![Planned visual](a-completer "A tool: its tightening programs, edited in a side panel")
+![Planned visual](a-venir "A tool: its tightening programs, edited in a side panel")
 
 State rolls up the tree: a tool out of tolerance shows up in its controller’s counter, which shows up in the overview. From the top, you can see where to go down.
 
@@ -61,13 +61,13 @@ Four professional profiles were identified in workshops with the Desoutter teams
 
 The tightening program is the node where these expectations meet. Two of the three persona sheets showed a need for both advanced settings and guided configuration. I kept both editing modes: you find the program, view it, then choose to edit it directly or step by step. Guidance offers another way into configuration, without imposing that path on everyone.
 
-![Planned visual](a-completer "the tightening program · list, viewing, two editing modes")
+![Planned visual](a-venir "the tightening program · list, viewing, two editing modes")
 
 ## Several paths, one node
 
 The tree provides context, but it must not force you through every level to reach a known tool. Diagnosis illustrates this interplay between navigation and search. It starts when a blocked operator calls maintenance, whose technician is not necessarily at the line. Whether they start from the overview or from a tool searched by name or serial number, they reach the same tool page, where the verification path begins.
 
-![Planned visual](a-completer "Diagnosis journey: from WebUI, or from the tool with a search")
+![Planned visual](a-venir "Diagnosis journey: from WebUI, or from the tool with a search")
 
 ## What stays shared, what changes
 
@@ -78,7 +78,7 @@ The design system, which I created for WebUI, directly served this navigation. T
 
 The template brought together a title, tabs and a breadcrumb; the states made it possible to flag a problem at several levels of the installation. The team could reuse these landmarks, then design the content and actions specific to each page.
 
-![Planned visual](a-completer "Excerpt from the WebUI design system")
+![Planned visual](a-venir "Excerpt from the WebUI design system")
 
 ## What was handed over to the team
 
