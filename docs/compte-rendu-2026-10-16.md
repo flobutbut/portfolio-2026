@@ -45,8 +45,8 @@ Les étapes 4 à 7 ont été réalisées en autonomie, avec un commit par étape
    - Fig. 06, les trois strates, avec le design system mis en avant.
 
    À valider ou à remplacer.
-5. **Hero** : pour l'animation des trois strates, j'ai ajouté dans la colonne bleue la liste « surfaces / design system / modèle ». Elle n'est pas dans la maquette.
-6. **Piliers inactifs de la méthode** : au lieu d'un simple fondu, leurs textes passent en gris et leurs pratiques en Off. C'est demandé par l'AA, puisqu'une opacité de 35 % ne passe pas.
+5. ~~Hero : liste des strates ajoutée dans la colonne bleue~~ → retirée à la demande de Florian (16/10). L'animation « Hero, les trois strates » du brief n'a donc plus d'implémentation : à redéfinir.
+6. **Piliers inactifs de la méthode** : leurs textes passent en gris (AA). Les étiquettes de strate ne changent plus.
 7. **Figures de modèle des contenus** (arborescence, strates) : rendues en HTML sémantique plutôt qu'en SVG. Elles restent alimentées par des données et sont plus lisibles par les lecteurs d'écran, les agents et le responsive.
 8. **Notes des figures sur fond gris** : elles passent en `text/supporting` pour respecter l'AA. La maquette les met en `text/muted`, à 3,8:1.
 9. **Boutons du hero** : la maquette les met en UI/15 ; le composant Bouton est en Body/17. J'ai gardé le composant.

@@ -98,9 +98,11 @@ docs/                      Notes de décision et guides
 - Première visite : français si `navigator.language` commence par `fr`, anglais sinon ; le choix est mémorisé (`localStorage.langue`). Le sélecteur de langue écrase ce choix. Script en ligne dans `BaseLayout` ; jamais de redirection pour les robots ni sans équivalent.
 
 ### Animations
-- Méthode (desktop, avec JS, sans reduced-motion) : figure collée, pilier actif ; les autres passent en gris et leurs pratiques en Off (contraste AA conservé).
-- Hero : les trois strates se révèlent au défilement par `animation-timeline: scroll()` (CSS seul, repli : affichées).
+- Méthode (desktop, avec JS, sans reduced-motion) : figure collée, pilier actif ; les textes des autres passent en gris (contraste AA conservé).
 - Sections `[data-apparition]` : fondu unique à l'entrée dans l'écran.
+- Entrées de liste (`.entree`) : au survol ou au focus, fond gris léger qui balaie la ligne de gauche à droite.
+- **Les étiquettes de strate ne sont jamais animées** : elles ne sont pas interactives.
+- Ne rien ajouter qui ne soit pas dans la maquette sans le demander d'abord (ex. : pas de strates dans la colonne bleue du hero).
 
 ## Déploiement
 

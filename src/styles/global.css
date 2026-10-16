@@ -132,95 +132,33 @@ a {
 }
 
 /*
- * Entrées de liste (projets, écrits) : survol et focus clavier.
- * Le filet du bas se trace en bleu de gauche à droite, et les strates touchées
- * s'avancent l'une après l'autre : le survol montre où le cas agit dans le système.
+ * Entrées de liste (projets, écrits) : au survol et au focus clavier, un fond gris léger
+ * balaie la ligne de gauche à droite, comme l'aplat des boutons et de la navigation.
+ * Les étiquettes de strate restent immobiles : elles ne sont pas interactives.
  */
+.entree {
+  isolation: isolate;
+}
+
 .entree::before {
   content: '';
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 2px;
-  background: var(--color-background-brand);
+  z-index: -1;
+  inset: 0;
+  /* surface/inactive à moitié : plus léger que les étiquettes Off, qui restent lisibles */
+  background: color-mix(in srgb, var(--color-surface-inactive) 50%, transparent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--motion-duration-long) var(--motion-ease);
-}
-
-.entree .strate--on {
-  transition:
-    padding-left var(--motion-duration) var(--motion-ease),
-    color var(--motion-duration) var(--motion-ease);
-}
-
-.entree li:nth-child(2) .strate--on {
-  transition-delay: 60ms;
-}
-
-.entree li:nth-child(3) .strate--on {
-  transition-delay: 120ms;
 }
 
 .entree:focus-within::before {
   transform: scaleX(1);
 }
 
-.entree:focus-within .strate--on {
-  padding-left: 1rem;
-  color: var(--color-text-inverse);
-}
-
 @media (hover: hover) {
   .entree:hover::before {
     transform: scaleX(1);
-  }
-
-  .entree:hover .strate--on {
-    padding-left: 1rem;
-    color: var(--color-text-inverse);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .entree .strate--on {
-    transition-delay: 0ms !important;
-  }
-}
-
-/* Conteneur étroit des pages intérieures : contenu de 1 120 px */
-.container--etroit {
-  max-width: calc(70rem + 2 * var(--layout-gutter));
-}
-
-/* Libellé de section (Label/12, gris) */
-.libelle {
-  color: var(--color-text-muted);
-}
-
-/* En-tête des pages intérieures */
-.page-tete {
-  padding-top: 8.75rem;
-}
-
-@media (max-width: 39.99rem) {
-  .page-tete {
-    padding-top: 4rem;
-  }
-}
-
-/* Apparition des sections (scripts/apparition.ts) : masquage seulement si le script tourne */
-@media (prefers-reduced-motion: no-preference) {
-  .js [data-apparition] {
-    transition:
-      opacity var(--motion-duration-long) var(--motion-ease),
-      transform var(--motion-duration-long) var(--motion-ease);
-  }
-
-  .js [data-apparition]:not(.apparu) {
-    opacity: 0;
-    transform: translateY(1rem);
   }
 }
 
