@@ -9,8 +9,9 @@ Principe directeur : **retirer avant d'ajouter**. Pas de dépendance, de script 
 ```bash
 npm run dev       # serveur de développement, http://localhost:4321
 npm run dev:clean # idem après avoir vidé le cache de contenu (à faire après un changement de schéma)
-npm run build     # astro check (types) puis build statique dans dist/
-npm run preview   # sert dist/ localement
+npm run build         # production : types, puis build ; refuse tout « À compléter » publié
+npm run build:apercu  # aperçu : brouillons visibles, « À compléter » en gris
+npm run preview       # sert dist/ localement
 npm run check     # vérification des types seule
 ```
 
@@ -19,13 +20,25 @@ Node 22.22 ou plus.
 ## Structure
 
 ```
-content/<langue>/          Contenus éditoriaux (Markdown et YAML), un dossier par langue
-  interface.yaml           Textes d'interface (navigation, contact, 404)
+content/<langue>/          Contenus éditoriaux, un dossier par langue (guide : docs/ajouter-du-contenu.md)
+  interface.yaml           Textes d'interface (navigation, contact, gabarits, métadonnées)
+  accueil.yaml, parcours.yaml
+  travaux|work/*.md        Cas (frontmatter typé + corps Markdown)
+  ecrits|writing/*.md      Écrits
+content/_modeles/          Fichiers modèles à copier (hors collections)
 src/
   content.config.ts        Collections et schémas Zod : une erreur de saisie casse le build
   i18n/routes.ts           Table unique des adresses FR ↔ EN (navigation, hreflang, sitemap)
   i18n/ui.ts               getInterface(locale) : textes d'interface validés
+  lib/contenu.ts           Lecture, filtrage (statut), appariement FR/EN par numero, repli, validation de production
+  lib/markdown.ts          Rendu du corps : sections, ::decisions, :::lead, :::question, figures, images
+  lib/figures.ts           Figures de modèle en HTML (arborescence, strates, parcours)
+  lib/typographie.ts       Espaces insécables françaises
+  lib/mode.ts              Mode aperçu (dev, build:apercu, Vercel preview) ou production
   lib/todo.ts              Repérage des valeurs « À compléter »
+  lib/pages.ts, og.ts      Inventaire des pages, chemins des images Open Graph
+  scripts/                 Amélioration progressive : méthode collée, apparition des sections
+  pages/og/, sitemap.xml.ts, robots.txt.ts, llms.txt.ts, content.json.ts   Générés au build
   styles/tokens.css        Jetons (couleurs, échelle typographique fluide, mise en page)
   styles/global.css        Réinitialisation, classes de style de texte, utilitaires
   styles/fonts.css         @font-face des polices auto-hébergées
@@ -73,16 +86,27 @@ docs/                      Notes de décision et guides
 
 ### Contenu
 - **Ne jamais inventer de contenu.** Ce qui manque reste « À compléter : … ».
-- Les valeurs « À compléter » s'affichent en gris (`.todo`) en développement et doivent faire échouer le build de production (contrôle ajouté à l'étape 7).
+- Les valeurs « À compléter » s'affichent en gris (`.todo`) en aperçu et font échouer le build de production (`lib/contenu.ts`).
+- `statut: brouillon` : visible en aperçu seulement. Les renvois vers un contenu absent ou non publié sont masqués (avertissement au build).
+- Cas et écrits sont appariés entre langues par `numero` ; les renvois (`ecritsLies`, `casCites`, `casSuivant`, `reglesEcrit`) utilisent aussi les numéros.
 
 ### Accessibilité
 - WCAG 2.1 AA. Focus visible (`:focus-visible`, contour 2 px `currentColor`), lien d'évitement, un seul `h1` par page, titres hiérarchisés.
 - Liens actifs : `aria-current="page"` (page exacte) ou `"true"` (sous-page).
 
+### Bilingue (comportement)
+- Première visite : français si `navigator.language` commence par `fr`, anglais sinon ; le choix est mémorisé (`localStorage.langue`). Le sélecteur de langue écrase ce choix. Script en ligne dans `BaseLayout` ; jamais de redirection pour les robots ni sans équivalent.
+
+### Animations
+- Méthode (desktop, avec JS, sans reduced-motion) : figure collée, pilier actif ; les autres passent en gris et leurs pratiques en Off (contraste AA conservé).
+- Hero : les trois strates se révèlent au défilement par `animation-timeline: scroll()` (CSS seul, repli : affichées).
+- Sections `[data-apparition]` : fondu unique à l'entrée dans l'écran.
+
 ## Déploiement
 
-Vercel (`vercel.json` : adresses propres, sans barre finale). Nouveau projet, aucune modification de DNS : florianbutour.com basculera plus tard.
+Vercel (`vercel.json` : adresses propres, sans barre finale). Les déploiements de prévisualisation construisent en mode aperçu (`VERCEL_ENV=preview`) ; la production refuse les « À compléter ». Aucune modification de DNS : florianbutour.com basculera plus tard.
 
 ## Méthode de travail
 
-Étapes : 1. pile ✔ · 2. squelette, jetons, navigation, pied de page ✔ · 3. composants Figma ✔ · 4. gabarits et contenus de démonstration · 5. i18n (détection de langue, mémoire du choix) · 6. animations · 7. passe qualité. Pause et démonstration à la fin de chaque étape.
+Étapes : 1. pile ✔ · 2. squelette ✔ · 3. composants ✔ · 4. gabarits et contenus ✔ · 5. i18n ✔ · 6. animations ✔ · 7. qualité ✔ (axe sans violation, Lighthouse mobile 100 × 4).
+Vérifications : `npm run build:apercu`, axe-core (devDependency) dans le navigateur, Lighthouse sur `dist/` servi compressé.
