@@ -15,6 +15,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@vercel/analytics": "2.0.1",
     "astro": "7.4.0",
     "rehype-stringify": "10.0.1",
     "remark-directive": "4.0.0",
