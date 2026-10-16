@@ -32,7 +32,7 @@ const target = otherLocale(locale);
 
 <header class="navigation">
   <div class="navigation__inner container">
-    <a class="navigation__logo text-heading-24" href={path('accueil', locale)} aria-label={ui.navigation.accueil}>FB.</a>
+    <a class="navigation__logo text-heading-24" href={path('accueil', locale)}>FB.<span class="visually-hidden"> {ui.navigation.accueil}</span></a>
 
     <button class="navigation__burger" type="button" popovertarget="menu-principal" aria-label={ui.navigation.ouvrirMenu}>
       <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
@@ -78,10 +78,9 @@ const target = otherLocale(locale);
                   href={alternate}
                   hreflang={target}
                   lang={target}
-                  aria-label={ui.langue.libelle}
                   data-lang-switch={target}
                 >
-                  {ui.langue.code}
+                  {ui.langue.code}<span class="visually-hidden"> — {ui.langue.libelle}</span>
                 </a>
               </li>
             )

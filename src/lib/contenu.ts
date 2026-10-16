@@ -151,7 +151,7 @@ export function valider(): Promise<void> {
     }
     if (erreurs.length) {
       throw new Error(
-        `\n[contenu] Build de production refusé : ${erreurs.length} champ(s) « À compléter » dans des contenus publiés.\n  ` +
+        `\n[contenu] Build de production refusé : ${erreurs.length} champ(s) « À compléter » dans des contenus publiés ou des textes du site.\n  ` +
           erreurs.join('\n  ') +
           `\n\nComplétez ces champs, repassez le contenu en « statut: brouillon », ou construisez un aperçu avec « npm run build:apercu ».\n`,
       );

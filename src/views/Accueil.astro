@@ -220,6 +220,7 @@ const cv = ui.contact.cv.url;
   .bouton-todo {
     padding: 1rem 1.5rem;
     box-shadow: inset 0 0 0 2px var(--color-border-on-dark);
+    color: var(--color-text-on-dark-muted);
   }
 
   @media (max-width: 63.99rem) {
@@ -397,12 +398,22 @@ const cv = ui.contact.cv.url;
     flex-direction: column;
     justify-content: center;
     min-height: 70svh;
-    opacity: 0.35;
-    transition: opacity var(--motion-duration-long) var(--motion-ease);
   }
 
-  .methode--collee .methode__pilier[data-actif] {
-    opacity: 1;
+  /* Les piliers inactifs s'estompent en restant lisibles (AA) : textes en gris, pratiques en Off */
+  .methode--collee .methode__pilier :global(:is(h3, p, .strate)) {
+    transition:
+      color var(--motion-duration-long) var(--motion-ease),
+      background-color var(--motion-duration-long) var(--motion-ease);
+  }
+
+  .methode--collee .methode__pilier:not([data-actif]) :global(:is(h3, p)) {
+    color: var(--color-text-muted);
+  }
+
+  .methode--collee .methode__pilier:not([data-actif]) :global(.strate--on) {
+    background: var(--color-surface-inactive);
+    color: var(--color-text-supporting);
   }
 
   /* Hero : les trois strates se révèlent l'une après l'autre au défilement (CSS seul).

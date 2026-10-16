@@ -82,6 +82,11 @@
   color: var(--color-text-muted);
 }
 
+/* Emplacement d'image vide : contraste AA sur surface/placeholder */
+.prose .md-emplacement {
+  color: var(--color-text-secondary);
+}
+
 /* Figures */
 .md-figure {
   display: flex;
@@ -190,7 +195,8 @@
 }
 
 .fig-strates__note {
-  color: var(--color-text-muted);
+  /* text/supporting : contraste AA sur surface/inactive */
+  color: var(--color-text-supporting);
 }
 
 .fig-strates__strate--actif .fig-strates__note {
