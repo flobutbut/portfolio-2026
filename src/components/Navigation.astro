@@ -9,6 +9,7 @@
  */
 import { otherLocale, path, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
+import { contenusVisibles } from '../lib/contenu';
 
 interface Props {
   locale: Locale;
@@ -20,7 +21,12 @@ const { locale, alternate } = Astro.props;
 const ui = await getInterface(locale);
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 
-const sections = (['travaux', 'ecrits', 'parcours', 'contact'] as const).map((key) => {
+// Travaux et Écrits n'apparaissent qu'une fois un contenu publié
+const visibles = await contenusVisibles(locale);
+const cles = (['travaux', 'ecrits', 'parcours', 'contact'] as const).filter(
+  (cle) => (cle !== 'travaux' || visibles.cas) && (cle !== 'ecrits' || visibles.ecrits),
+);
+const sections = cles.map((key) => {
   const href = path(key, locale);
   const ariaCurrent: 'page' | 'true' | undefined =
     current === href ? 'page' : current.startsWith(`${href}/`) ? 'true' : undefined;

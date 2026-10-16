@@ -46,7 +46,7 @@ const cv = ui.contact.cv.url;
         <p>{a.hero.details}</p>
       </div>
       <div class="hero__actions">
-        <Bouton href="#travaux" data-court-circuit>{a.hero.voirTravaux}</Bouton>
+        {cas.length > 0 && <Bouton href="#travaux">{a.hero.voirTravaux}</Bouton>}
         {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{a.hero.cv}</span> : <Bouton apparence="contour" href={cv}>{a.hero.cv}</Bouton>}
       </div>
     </div>
@@ -71,25 +71,29 @@ const cv = ui.contact.cv.url;
     </ul>
   </section>
 
-  <!-- Travaux -->
-  <section id="travaux" class="container section" aria-labelledby="travaux-titre" data-apparition>
-    <EnTeteDeSection titre={a.travaux.titre} id="travaux-titre" />
-    <div>
-      {
-        cas.map((c) => (
-          <EntreeDeProjet
-            locale={locale}
-            lang={c.langue !== locale ? c.langue : undefined}
-            titre={c.data.entree?.titre ?? c.data.titre}
-            description={c.data.entree?.description ?? c.data.chapo}
-            meta={c.data.meta}
-            strates={c.data.strates}
-            href={c.href}
-          />
-        ))
-      }
-    </div>
-  </section>
+  <!-- Travaux (masqué tant qu'aucun cas n'est publié) -->
+  {
+    cas.length > 0 && (
+      <section id="travaux" class="container section" aria-labelledby="travaux-titre" data-apparition>
+        <EnTeteDeSection titre={a.travaux.titre} id="travaux-titre" />
+        <div>
+          {
+            cas.map((c) => (
+              <EntreeDeProjet
+                locale={locale}
+                lang={c.langue !== locale ? c.langue : undefined}
+                titre={c.data.entree?.titre ?? c.data.titre}
+                description={c.data.entree?.description ?? c.data.chapo}
+                meta={c.data.meta}
+                strates={c.data.strates}
+                href={c.href}
+              />
+            ))
+          }
+        </div>
+      </section>
+    )
+  }
 
   <!-- Position -->
   <section class="position" aria-labelledby="position-titre" data-apparition>
@@ -121,25 +125,29 @@ const cv = ui.contact.cv.url;
     </div>
   </section>
 
-  <!-- Écrits -->
-  <section class="container section" aria-labelledby="ecrits-titre" data-apparition>
-    <EnTeteDeSection titre={a.ecrits.titre} id="ecrits-titre" />
-    <div class="ecrits__liste">
-      {
-        ecrits.map((e) => (
-          <EntreeDEcrit
-            retrait={false}
-            locale={locale}
-            lang={e.langue !== locale ? e.langue : undefined}
-            titre={e.data.titre}
-            these={e.data.these}
-            strates={e.data.strates}
-            href={e.href}
-          />
-        ))
-      }
-    </div>
-  </section>
+  <!-- Écrits (masqués tant qu'aucun écrit n'est publié) -->
+  {
+    ecrits.length > 0 && (
+      <section class="container section" aria-labelledby="ecrits-titre" data-apparition>
+        <EnTeteDeSection titre={a.ecrits.titre} id="ecrits-titre" />
+        <div class="ecrits__liste">
+          {
+            ecrits.map((e) => (
+              <EntreeDEcrit
+                retrait={false}
+                locale={locale}
+                lang={e.langue !== locale ? e.langue : undefined}
+                titre={e.data.titre}
+                these={e.data.these}
+                strates={e.data.strates}
+                href={e.href}
+              />
+            ))
+          }
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <script>

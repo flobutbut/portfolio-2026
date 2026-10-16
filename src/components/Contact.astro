@@ -9,6 +9,7 @@ import type { Locale } from '../i18n/routes';
 import { path } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
 import { isTodo } from '../lib/todo';
+import { contenusVisibles } from '../lib/contenu';
 
 interface Props {
   locale: Locale;
@@ -18,10 +19,11 @@ interface Props {
 const { locale, avecEmail = true } = Astro.props;
 const { contact } = await getInterface(locale);
 
+const visibles = await contenusVisibles(locale);
 const liens = [
   { libelle: contact.linkedin.libelle, url: contact.linkedin.url, externe: true },
   { libelle: contact.cv.libelle, url: contact.cv.url, externe: false },
-  { libelle: contact.ecrits, url: path('ecrits', locale), externe: false },
+  ...(visibles.ecrits ? [{ libelle: contact.ecrits, url: path('ecrits', locale), externe: false }] : []),
 ];
 ---
 

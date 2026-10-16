@@ -17,7 +17,7 @@ const ui = await getInterface(locale);
 const cas = await lister('cas', locale);
 ---
 
-<BaseLayout title={ui.navigation.travaux} description={ui.metadonnees.travaux} locale={locale} alternate={path('travaux', otherLocale(locale))}>
+<BaseLayout title={ui.navigation.travaux} description={ui.metadonnees.travaux} locale={locale} noindex={cas.length === 0} alternate={path('travaux', otherLocale(locale))}>
   <div class="container container--etroit page-tete">
     <EnTeteDeSection titre={ui.navigation.travaux} niveau={1} espace="page" />
   </div>

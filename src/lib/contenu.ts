@@ -75,6 +75,14 @@ export async function lister<G extends Genre>(genre: G, locale: Locale): Promise
     });
 }
 
+/** Y a-t-il au moins un cas / un écrit visible ? Sinon, sections et liens correspondants sont masqués. */
+export async function contenusVisibles(locale: Locale) {
+  return {
+    cas: (await lister('cas', locale)).length > 0,
+    ecrits: (await lister('ecrits', locale)).length > 0,
+  };
+}
+
 export async function trouver<G extends Genre>(genre: G, locale: Locale, numero: number) {
   return (await lister(genre, locale)).find((e) => e.numero === numero);
 }

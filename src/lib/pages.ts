@@ -3,7 +3,7 @@
  * Alimente le sitemap, les images Open Graph, llms.txt et content.json.
  */
 import { path, routes, type Locale, type RouteKey } from '../i18n/routes';
-import { lister } from './contenu';
+import { contenusVisibles, lister } from './contenu';
 
 export interface PagePaire {
   fr: string;
@@ -11,7 +11,11 @@ export interface PagePaire {
 }
 
 export async function toutesLesPages(): Promise<PagePaire[]> {
-  const fixes = (Object.keys(routes) as RouteKey[]).map((k) => ({ fr: path(k, 'fr'), en: path(k, 'en') }));
+  const visibles = await contenusVisibles('fr');
+  const fixes = (Object.keys(routes) as RouteKey[])
+    // Listes vides : hors sitemap tant qu'aucun contenu n'est publié
+    .filter((k) => (k !== 'travaux' || visibles.cas) && (k !== 'ecrits' || visibles.ecrits))
+    .map((k) => ({ fr: path(k, 'fr'), en: path(k, 'en') }));
   const paires: PagePaire[] = [];
   for (const genre of ['cas', 'ecrits'] as const) {
     const fr = await lister(genre, 'fr');

@@ -7,7 +7,7 @@ import PlancheContact from '../components/PlancheContact.astro';
 import Strate from '../components/Strate.astro';
 import { otherLocale, path, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
-import { getParcours } from '../lib/contenu';
+import { contenusVisibles, getParcours } from '../lib/contenu';
 import { isTodo } from '../lib/todo';
 
 interface Props {
@@ -18,6 +18,7 @@ const { locale } = Astro.props;
 const ui = await getInterface(locale);
 const p = await getParcours(locale);
 const cv = ui.contact.cv.url;
+const visibles = await contenusVisibles(locale);
 const sep = locale === 'fr' ? ' : ' : ': ';
 ---
 
@@ -32,7 +33,7 @@ const sep = locale === 'fr' ? ' : ' : ': ';
       <div class="container container--etroit intro__inner">
         <p class="text-lead intro__texte">{p.introduction}</p>
         <div class="intro__actions">
-          <Bouton href={path('travaux', locale)}>{p.voirTravaux}</Bouton>
+          {visibles.cas && <Bouton href={path('travaux', locale)}>{p.voirTravaux}</Bouton>}
           {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{p.cv}</span> : <Bouton apparence="contour" href={cv}>{p.cv}</Bouton>}
         </div>
       </div>
