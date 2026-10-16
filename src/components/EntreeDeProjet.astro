@@ -21,19 +21,24 @@ interface Props {
   strates: Strates;
   href: string;
   /** Visuel optionnel ; sans `src`, un aplat réserve la place. */
-  visuel?: { src?: ImageMetadata; alt: string };
+  visuel?: { src?: ImageMetadata | string; alt: string };
   niveau?: 2 | 3;
+  /** Langue du contenu, si elle diffère de celle de la page */
+  lang?: string;
 }
 
-const { locale, titre, description, meta, strates, href, visuel, niveau = 3 } = Astro.props;
+const { locale, titre, description, meta, strates, href, visuel, niveau = 3, lang } = Astro.props;
 const Titre = `h${niveau}` as 'h2' | 'h3';
 ---
 
-<article class:list={['entree', 'entree-projet', { 'entree-projet--visuel': visuel }]}>
+<article class:list={['entree', 'entree-projet', { 'entree-projet--visuel': visuel }]} lang={lang}>
   {
     visuel && (
       <div class="entree-projet__visuel">
-        {visuel.src && <Image src={visuel.src} alt={visuel.alt} widths={[400, 800]} sizes="(min-width: 40rem) 400px, 100vw" />}
+        {typeof visuel.src === 'string' && <img src={visuel.src} alt={visuel.alt} loading="lazy" decoding="async" />}
+        {visuel.src && typeof visuel.src !== 'string' && (
+          <Image src={visuel.src} alt={visuel.alt} widths={[400, 800]} sizes="(min-width: 40rem) 400px, 100vw" />
+        )}
       </div>
     )
   }

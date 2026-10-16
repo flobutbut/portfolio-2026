@@ -1,0 +1,14 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Cas from '../../views/Cas.astro';
+import { lister } from '../../lib/contenu';
+
+export const getStaticPaths = (async () => {
+  const elements = await lister('cas', 'fr');
+  return elements.map((element) => ({ params: { slug: element.slug }, props: { element } }));
+}) satisfies GetStaticPaths;
+
+const { element } = Astro.props;
+---
+
+<Cas locale="fr" cas={element} />

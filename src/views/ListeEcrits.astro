@@ -1,0 +1,41 @@
+---
+/** Liste des écrits (Figma 9:1861) : entrées sans retrait, conteneur de 1 120 px. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnTeteDeSection from '../components/EnTeteDeSection.astro';
+import EntreeDEcrit from '../components/EntreeDEcrit.astro';
+import PlancheContact from '../components/PlancheContact.astro';
+import { otherLocale, path, type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+import { lister } from '../lib/contenu';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = await getInterface(locale);
+const ecrits = await lister('ecrits', locale);
+---
+
+<BaseLayout title={ui.navigation.ecrits} description={ui.metadonnees.ecrits} locale={locale} alternate={path('ecrits', otherLocale(locale))}>
+  <div class="container container--etroit page-tete">
+    <EnTeteDeSection titre={ui.navigation.ecrits} niveau={1} />
+  </div>
+  <div class="container container--etroit" data-apparition>
+    {
+      ecrits.map((e) => (
+        <EntreeDEcrit
+          locale={locale}
+          lang={e.langue !== locale ? e.langue : undefined}
+          niveau={2}
+          retrait={false}
+          titre={e.data.titre}
+          these={e.data.these}
+          strates={e.data.strates}
+          href={e.href}
+        />
+      ))
+    }
+  </div>
+  <PlancheContact locale={locale} libelle={false} />
+</BaseLayout>

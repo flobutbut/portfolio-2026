@@ -1,5 +1,6 @@
 @import './fonts.css';
 @import './tokens.css';
+@import './contenu.css';
 
 /* Réinitialisation minimale */
 *,
@@ -185,6 +186,41 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .entree .strate--on {
     transition-delay: 0ms !important;
+  }
+}
+
+/* Conteneur étroit des pages intérieures : contenu de 1 120 px */
+.container--etroit {
+  max-width: calc(70rem + 2 * var(--layout-gutter));
+}
+
+/* Libellé de section (Label/12, gris) */
+.libelle {
+  color: var(--color-text-muted);
+}
+
+/* En-tête des pages intérieures */
+.page-tete {
+  padding-top: 8.75rem;
+}
+
+@media (max-width: 39.99rem) {
+  .page-tete {
+    padding-top: 4rem;
+  }
+}
+
+/* Apparition des sections (scripts/apparition.ts) : masquage seulement si le script tourne */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-apparition] {
+    transition:
+      opacity var(--motion-duration-long) var(--motion-ease),
+      transform var(--motion-duration-long) var(--motion-ease);
+  }
+
+  .js [data-apparition]:not(.apparu) {
+    opacity: 0;
+    transform: translateY(1rem);
   }
 }
 

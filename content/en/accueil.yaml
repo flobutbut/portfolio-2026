@@ -1,0 +1,78 @@
+# Home page, English version (Figma node 1:14)
+
+titrePage: Florian Butour, Senior Product Designer
+description: I make complex technical systems legible, for the humans who run them and for the agents acting on their behalf.
+
+hero:
+  surtitre: Surfaces — Design system — Model
+  accroche: I make complex technical systems legible.
+  complement: For the humans who run them, and for the agents acting on their behalf.
+  nom: Florian Butour
+  fonction: Senior Product Designer.
+  details: 10+ years of experience · Nantes or fully remote.
+  voirTravaux: See the work ↓
+  cv: Résumé
+
+strates:
+  titre: Layers
+  introduction: "What interests me is what runs through them: the same object, held by the same rules, present on every surface for different uses by each user."
+  surfaces:
+    description: The places where people meet the product. I don’t design a screen, but the presence of the same object on each of them.
+    exemples: web · mobile · Outlook · CLI · API · agents
+  designSystem:
+    description: "The rules that translate the model into surfaces: what to use, and above all when. Written for teams, and for agents."
+    exemples: tokens · components · patterns · usage rules
+  modele:
+    description: "The product’s internal architecture: its objects, their relations and dependencies, their states, and who is allowed to act on what. What remains once the screens are removed."
+    exemples: objects · relations · dependencies · states · permissions
+
+travaux:
+  titre: Work
+  tous: All work →
+
+position:
+  libelle: Position
+  titre: A good system absorbs complexity instead of passing it on to the people it serves.
+  texte: When a machine acts on someone’s behalf, you have to decide what they agree to delegate, what they are asked to confirm, and how they take back control. That is where I come in.
+
+methode:
+  titre: Method
+  piliers:
+    - titre: Frame
+      description: I start from usage observed in the field, then set out with Product and Engineering the trade-offs that will fix the product’s rules.
+      pratiques:
+        - Interviews and field observation
+        - Usability testing
+        - Journey mapping
+        - Product trade-offs
+      figure:
+        type: parcours
+        legende: Fig. 04 · Frame
+        elements: [Interviews and field observation, Usability testing, Journey mapping, Product trade-offs]
+        actif: 3
+    - titre: Model
+      description: "I describe the product before drawing it: its objects, their relations, their states, and who can act on what."
+      pratiques:
+        - Object modelling (OOUX)
+        - Information architecture
+        - Versionable specifications
+      figure:
+        type: graphe
+        legende: Fig. 05 · Model
+        elements: [objects, relations, dependencies, states, permissions]
+        actif: 0
+    - titre: Systematise
+      description: I turn decisions into reusable rules, so that five teams don’t design five versions of the same concept.
+      pratiques:
+        - Design system and tokens
+        - Cross-product patterns
+        - Accessibility (WCAG, RGAA)
+      figure:
+        type: strates
+        legende: Fig. 06 · Systematise
+        elements: [surfaces, design system, model]
+        actif: 1
+
+ecrits:
+  titre: Writing
+  tous: All writing →

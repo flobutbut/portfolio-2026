@@ -1,0 +1,244 @@
+/*
+ * Corps éditorial (Markdown rendu) et figures de modèle.
+ * Colonne de lecture : 720 px ; les figures prennent toute la largeur (1 120 px).
+ */
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+}
+
+.prose > :where(p, ul, ol, h2, h3, blockquote) {
+  max-width: 45rem;
+}
+
+.prose p,
+.prose li {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-leading);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.25rem;
+}
+
+.prose a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.prose a:hover {
+  color: var(--color-background-brand);
+}
+
+.prose strong {
+  font-weight: 500;
+}
+
+/* Grand titre de section de cas */
+.prose .md-titre {
+  max-width: 56.25rem;
+}
+
+.prose .md-titre + p {
+  margin-top: 0.375rem;
+}
+
+/* Intertitre d'écrit */
+.prose .md-intertitre {
+  margin-top: 2.375rem;
+}
+
+.prose .md-lead {
+  font-size: var(--text-lead-size);
+  line-height: var(--text-lead-leading);
+}
+
+.prose .md-question {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--text-heading-24-size);
+  line-height: var(--text-heading-leading);
+  letter-spacing: var(--text-heading-tracking);
+  color: var(--color-background-brand);
+}
+
+.prose .md-citation {
+  padding: 0.5rem 0 0.5rem 1.75rem;
+  border-left: 6px solid var(--color-background-brand);
+}
+
+.prose .md-citation p {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--text-heading-24-size);
+  line-height: var(--text-heading-leading);
+  letter-spacing: var(--text-heading-tracking);
+}
+
+.prose .todo {
+  color: var(--color-text-muted);
+}
+
+/* Figures */
+.md-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  margin-block: 0.375rem;
+}
+
+.md-figure img {
+  width: 100%;
+  height: auto;
+}
+
+.md-legende {
+  color: var(--color-text-muted);
+}
+
+.md-emplacement {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2 / 1;
+  padding: 1.5rem;
+  background: var(--color-surface-placeholder);
+  color: var(--color-text-secondary);
+  font-style: normal;
+  text-align: center;
+}
+
+/* Fig. arborescence */
+.fig-arbo__niveaux {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border-ink);
+  border-left: 1px solid var(--color-border-ink);
+}
+
+.fig-arbo__niveau {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1.25rem;
+  border-right: 1px solid var(--color-border-ink);
+  border-bottom: 1px solid var(--color-border-ink);
+}
+
+.fig-arbo__rang {
+  color: var(--color-text-muted);
+  white-space: pre;
+}
+
+.fig-arbo__description {
+  color: var(--color-text-secondary);
+}
+
+.fig-arbo__bandeau {
+  padding: 1rem 1.25rem;
+  background: var(--color-background-brand);
+  color: var(--color-text-inverse);
+}
+
+/* Fig. strates */
+.fig-strates__liste {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 0 0;
+  list-style: none;
+}
+
+.fig-strates__strate,
+.fig-strates__base {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.fig-strates__strate {
+  background: var(--color-surface-inactive);
+}
+
+.fig-strates__strate--actif {
+  padding-block: 2rem;
+  background: var(--color-background-brand);
+  color: var(--color-text-inverse);
+}
+
+.fig-strates__nom {
+  flex: 0 0 var(--layout-strates-width);
+}
+
+.fig-strates__contenu,
+.fig-strates__base {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fig-strates__base {
+  align-items: flex-start;
+  margin-top: 0.25rem;
+  border: 1px dashed var(--color-border-default);
+}
+
+.fig-strates__note {
+  color: var(--color-text-muted);
+}
+
+.fig-strates__strate--actif .fig-strates__note {
+  color: var(--color-text-on-brand-secondary);
+}
+
+/* Fig. parcours */
+.fig-parcours__etapes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.fig-parcours__etape {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1.25rem;
+  background: var(--color-surface-inactive);
+}
+
+.fig-parcours__etape--actif {
+  background: var(--color-background-brand);
+  color: var(--color-text-inverse);
+}
+
+.fig-parcours__rang {
+  color: var(--color-text-supporting);
+}
+
+.fig-parcours__etape--actif .fig-parcours__rang {
+  color: var(--color-text-on-brand-secondary);
+}
+
+@media (max-width: 39.99rem) {
+  .fig-strates__strate {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .fig-strates__nom {
+    flex-basis: auto;
+  }
+
+  .md-emplacement {
+    aspect-ratio: 4 / 3;
+  }
+}

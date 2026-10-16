@@ -1,0 +1,78 @@
+# Page d'accueil, version française (Figma : « C · Accueil — Les strates », nœud 1:14)
+
+titrePage: Florian Butour, Senior Product Designer
+description: Je rends lisibles des systèmes techniques complexes, pour les humains qui les pilotent et pour les agents qui agissent en leur nom.
+
+hero:
+  surtitre: Surfaces — Design system — Modèle
+  accroche: Je rends lisibles des systèmes techniques complexes.
+  complement: Pour les humains qui les pilotent, et pour les agents qui agissent en leur nom.
+  nom: Florian Butour
+  fonction: Senior Product Designer.
+  details: Plus de 10 ans d’expérience · Nantes ou full remote.
+  voirTravaux: Voir les travaux ↓
+  cv: CV
+
+strates:
+  titre: Strates
+  introduction: "Ce qui m’intéresse, c’est ce qui les traverse : un même objet, tenu par les mêmes règles, présent sur chaque surface pour des usages différents pour chaque utilisateur."
+  surfaces:
+    description: Les endroits où l’on rencontre le produit. Je ne conçois pas un écran, mais la présence d’un même objet sur chacun d’eux.
+    exemples: web · mobile · Outlook · CLI · API · agents
+  designSystem:
+    description: "Les règles qui traduisent le modèle en surfaces : quoi utiliser, et surtout quand. Écrites pour les équipes, et pour les agents."
+    exemples: tokens · composants · patterns · règles d’usage
+  modele:
+    description: "L’architecture interne du produit : ses objets, leurs relations et leurs dépendances, leurs états, et qui a le droit d’agir sur quoi. Ce qui reste quand on retire les écrans."
+    exemples: objets · relations · dépendances · états · droits
+
+travaux:
+  titre: Travaux
+  tous: Tous les travaux →
+
+position:
+  libelle: Position
+  titre: Un bon système absorbe la complexité au lieu de la faire porter à ceux qu’il sert.
+  texte: Quand une machine agit au nom d’une personne, il faut décider ce qu’elle accepte de déléguer, ce qu’on lui fait confirmer, et comment elle reprend la main. C’est là que j’interviens.
+
+methode:
+  titre: Méthode
+  piliers:
+    - titre: Cadrer
+      description: Je pars des usages observés sur le terrain, puis je pose avec Product et Engineering les arbitrages qui fixeront les règles du produit.
+      pratiques:
+        - Entretiens et observation terrain
+        - Tests d’utilisabilité
+        - Cartographie des parcours
+        - Arbitrages produit
+      figure:
+        type: parcours
+        legende: Fig. 04 · Cadrer
+        elements: [Entretiens et observation terrain, Tests d’utilisabilité, Cartographie des parcours, Arbitrages produit]
+        actif: 3
+    - titre: Modéliser
+      description: "Je décris le produit avant de le dessiner : ses objets, leurs relations, leurs états, et qui peut agir sur quoi."
+      pratiques:
+        - Modélisation objet (OOUX)
+        - Architecture de l’information
+        - Spécifications versionnables
+      figure:
+        type: graphe
+        legende: Fig. 05 · Modéliser
+        elements: [objets, relations, dépendances, états, droits]
+        actif: 0
+    - titre: Systématiser
+      description: Je transforme les décisions en règles réutilisables, pour que cinq équipes ne conçoivent pas cinq versions du même concept.
+      pratiques:
+        - Design system et tokens
+        - Patterns transverses
+        - Accessibilité (WCAG, RGAA)
+      figure:
+        type: strates
+        legende: Fig. 06 · Systématiser
+        elements: [surfaces, design system, modèle]
+        actif: 1
+
+ecrits:
+  titre: Écrits
+  tous: Tous les écrits →

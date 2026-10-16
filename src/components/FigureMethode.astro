@@ -1,0 +1,149 @@
+---
+/**
+ * Figures de la méthode (Fig. 04, 05, 06), en SVG alimenté par content/<langue>/accueil.yaml.
+ * - parcours : étapes en escalier, la dernière mise en avant
+ * - graphe : un objet central relié à ses facettes
+ * - strates : bandes empilées, l'une mise en avant
+ * Le texte reste du texte (sélectionnable, lisible par un lecteur d'écran et par un agent).
+ */
+interface Props {
+  type: 'parcours' | 'graphe' | 'strates';
+  legende: string;
+  elements: string[];
+  actif?: number;
+  id: string;
+}
+
+const { type, legende, elements, actif, id } = Astro.props;
+const n = elements.length;
+
+const parcours = elements.map((texte, i) => ({ texte, x: 40 + i * 48, y: 56 + i * (488 / n), actif: i === actif }));
+
+const autour = elements.map((texte, i) => ({ texte, i })).filter(({ i }) => i !== (actif ?? 0));
+const centre = { texte: elements[actif ?? 0], x: 400, y: 300 };
+const satellites = autour.map(({ texte }, k) => {
+  const angle = ((-135 + (k * 360) / autour.length) * Math.PI) / 180;
+  return { texte, x: 400 + Math.cos(angle) * 270, y: 300 + Math.sin(angle) * 196 };
+});
+
+const hauteurBande = (600 - 96 - (n - 1) * 12) / n;
+const strates = elements.map((texte, i) => ({ texte, y: 48 + i * (hauteurBande + 12), actif: i === actif }));
+---
+
+<figure class="fig-methode">
+  <svg viewBox="0 0 800 600" role="img" aria-labelledby={`${id}-titre`} class="fig-methode__svg">
+    <title id={`${id}-titre`}>{legende} : {elements.join(', ')}</title>
+    {
+      type === 'parcours' &&
+        parcours.map((e, i) => (
+          <g class:list={['fig-methode__noeud', { 'fig-methode__noeud--actif': e.actif }]}>
+            {i < n - 1 && (
+              <path class="fig-methode__lien" d={`M${e.x + 28} ${e.y + 72} V${parcours[i + 1].y + 36} H${parcours[i + 1].x}`} />
+            )}
+            <rect x={e.x} y={e.y} width="560" height="72" />
+            <text x={e.x + 24} y={e.y + 42} class="fig-methode__rang">{String(i + 1).padStart(2, '0')}</text>
+            <text x={e.x + 72} y={e.y + 43}>{e.texte}</text>
+          </g>
+        ))
+    }
+    {
+      type === 'graphe' && (
+        <>
+          {satellites.map((s) => (
+            <line class="fig-methode__lien" x1={centre.x} y1={centre.y} x2={s.x} y2={s.y} />
+          ))}
+          {satellites.map((s) => (
+            <g class="fig-methode__noeud">
+              <rect x={s.x - 100} y={s.y - 32} width="200" height="64" />
+              <text x={s.x} y={s.y + 7} text-anchor="middle">{s.texte}</text>
+            </g>
+          ))}
+          <g class="fig-methode__noeud fig-methode__noeud--actif">
+            <rect x={centre.x - 120} y={centre.y - 42} width="240" height="84" />
+            <text x={centre.x} y={centre.y + 10} text-anchor="middle" class="fig-methode__grand">{centre.texte}</text>
+          </g>
+        </>
+      )
+    }
+    {
+      type === 'strates' &&
+        strates.map((s) => (
+          <g class:list={['fig-methode__bande', { 'fig-methode__bande--actif': s.actif }]}>
+            <rect x="40" y={s.y} width="720" height={hauteurBande} />
+            <text x="72" y={s.y + hauteurBande / 2 + 12} class="fig-methode__grand">{s.texte}</text>
+          </g>
+        ))
+    }
+  </svg>
+  <figcaption class="text-caption fig-methode__legende">{legende}</figcaption>
+</figure>
+
+<style>
+  .fig-methode {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .fig-methode__svg {
+    width: 100%;
+    height: auto;
+    background: var(--color-background-canvas);
+  }
+
+  .fig-methode__legende {
+    color: var(--color-text-muted);
+  }
+
+  .fig-methode text {
+    font-family: var(--font-body);
+    font-size: 20px;
+    fill: var(--color-text-primary);
+  }
+
+  .fig-methode .fig-methode__grand {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: -0.035em;
+  }
+
+  .fig-methode .fig-methode__rang {
+    font-size: 14px;
+    fill: var(--color-text-muted);
+  }
+
+  .fig-methode__noeud rect {
+    fill: var(--color-background-canvas);
+    stroke: var(--color-border-ink);
+    stroke-width: 2;
+  }
+
+  .fig-methode__noeud--actif rect {
+    fill: var(--color-background-brand);
+    stroke: var(--color-background-brand);
+  }
+
+  .fig-methode__noeud--actif text,
+  .fig-methode__bande--actif text {
+    fill: var(--color-text-inverse);
+  }
+
+  .fig-methode__noeud--actif .fig-methode__rang {
+    fill: var(--color-text-on-brand-secondary);
+  }
+
+  .fig-methode__lien {
+    fill: none;
+    stroke: var(--color-border-ink);
+    stroke-width: 2;
+  }
+
+  .fig-methode__bande rect {
+    fill: var(--color-surface-inactive);
+  }
+
+  .fig-methode__bande--actif rect {
+    fill: var(--color-background-brand);
+  }
+</style>

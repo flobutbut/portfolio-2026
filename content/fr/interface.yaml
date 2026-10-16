@@ -27,10 +27,51 @@ strates:
   touchee: touchée
   nonTouchee: non touchée
 
+# Gabarit de cas
+cas:
+  surtitre: Cas
+  role: Rôle
+  duree: Durée
+  equipe: Équipe
+  livrables: Livrables
+  trenteSecondes: En trente secondes
+  probleme: Le problème
+  decision: La décision
+  ceQuiReste: Ce qui reste
+  decisions: Décisions et arbitrages
+  plutotQue: Plutôt que
+  parceQue: Parce que
+  auPrixDe: Au prix de
+  regles: Ce que le système a retenu
+  regle: Règle
+  renvoiEcrit: Argumenté dans l’écrit
+  aLireAussi: À lire aussi
+  casSuivant: Cas suivant
+  tousLesTravaux: ← Tous les travaux
+
+# Gabarit d'écrit
+ecrit:
+  surtitre: Écrit
+  lecture: min de lecture
+  casCite: Cas cité
+  limites: Limites
+  ecritsLies: Écrits liés
+  tousLesEcrits: ← Tous les écrits
+
+# Planche « Ce que je cherche », avant le pied de page
+planche:
+  libelle: Ce que je cherche
+  titre:
+    - Un poste, un produit, une question ?
+    - Écrivez-moi.
+  texte:
+    - Je cherche un rôle de lead ou de staff sur un produit technique complexe (cloud, plateforme, data, outils pour développeurs), où le design participe aux décisions avant qu’elles soient prises.
+    - Nantes ou full remote depuis la France.
+
 contact:
   titre: Contact
   email: f.butour@gmail.com
-  copier: Copier l'adresse e-mail
+  copier: Copier l’adresse e-mail
   copie: Adresse copiée
   signature: Florian Butour — Senior Product Designer
   linkedin:
@@ -45,4 +86,10 @@ contact:
 pageIntrouvable:
   titre: Page introuvable
   texte: Cette adresse ne mène à aucune page.
-  retour: Retour à l'accueil
+  retour: Retour à l’accueil
+
+metadonnees:
+  site: Florian Butour
+  description: Florian Butour, Senior Product Designer. Je rends lisibles des systèmes techniques complexes, pour les humains qui les pilotent et pour les agents qui agissent en leur nom.
+  travaux: Cas d’étude de Florian Butour, Senior Product Designer.
+  ecrits: Écrits de Florian Butour sur la conception de systèmes, de modèles et de design systems.

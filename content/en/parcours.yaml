@@ -1,0 +1,73 @@
+# Background page, English version (Figma node 9:1964)
+
+titre: Background
+description: "Background of Florian Butour, Senior Product Designer: more than ten years of product design on highly complex B2B products."
+introduction: "More than ten years of product design on highly complex B2B products: data platforms, industrial tools, multi-product SaaS. I design the structure of the product, its roles, its objects and its rules, then the systems that keep it consistent as it grows."
+voirTravaux: See the work
+cv: Résumé
+
+experiences:
+  - periode: June 2025 – present
+    lieu: Nantes
+    organisation: Qlik
+    poste: Senior Product Designer, Data Integration
+    contexte: Enterprise data platform, convergence of the Talend and Qlik products.
+    realisations:
+      - titre: Data products
+        texte: business glossaries and data contracts, which make vocabulary, responsibilities and guarantees explicit between data producers and consumers; cost visibility (FinOps).
+      - titre: Design system
+        texte: templates for the unified experience across Talend and Qlik products.
+      - titre: AI and prototyping
+        texte: automating design work and building working prototypes with Claude and Figma Make.
+    etiquettes: [Governance, Data contracts, Design system]
+
+  - periode: Sept. 2022 – June 2025
+    lieu: Nantes
+    organisation: SharingCloud, acquired by Witco
+    poste: Principal Product Designer
+    contexte: "Smart office: space booking, presence management, sensors, digital signage."
+    realisations:
+      - titre: WorkplaceToBe
+        texte: redesign as a modular offer, with modules sold separately, aligned with sales and unified across web, mobile and Outlook.
+      - titre: Design system
+        texte: four levels (tokens, components, patterns, product libraries), documented and accessible.
+      - titre: Design lead
+        texte: mentoring a work-study designer; after the Witco acquisition, floor-plan background for seat selection.
+    etiquettes: [Modular offer, Multi-surface, Design system]
+
+  - periode: Jan. 2015 – Sept. 2022
+    lieu: Nantes
+    organisation: Freelance
+    poste: Product Designer
+    contexte: B2B products for software vendors, manufacturers and large accounts.
+    realisations:
+      - titre: Desoutter
+        texte: unifying business software into a SaaS platform, a profile-based architecture on a shared data foundation, a governed design system.
+      - titre: MAIF
+        texte: field research (call shadowing, call analysis) and decision-support tools for call-centre advisers.
+      - titre: JP Racing
+        texte: e-commerce and a 3D configurator with compatibility rules between components.
+    etiquettes: [Platform, Field research, Business rules]
+
+  - periode: Before 2015
+    organisation: Early experience
+    realisations:
+      - titre: Altran
+        texte: aeronautics.
+      - titre: Mechdyne
+        texte: virtual reality, for L’Oréal.
+      - titre: Schneider Electric DesignLab
+        texte: energy, as a work-study student.
+
+formation:
+  titre: Education, teaching and languages
+  lignes:
+    - periode: Education
+      titre: Master’s in Interaction Design
+      texte: École de Design Nantes Atlantique.
+    - periode: 2016 – 2022
+      titre: UX/UI and design system lecturer
+      texte: École de Design Nantes Atlantique and ECV Nantes.
+    - periode: Languages
+      titre: French and English
+      texte: Native French, professional English.

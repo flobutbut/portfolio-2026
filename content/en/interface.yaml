@@ -27,6 +27,47 @@ strates:
   touchee: involved
   nonTouchee: not involved
 
+# Case study template
+cas:
+  surtitre: Case
+  role: Role
+  duree: Duration
+  equipe: Team
+  livrables: Deliverables
+  trenteSecondes: In thirty seconds
+  probleme: The problem
+  decision: The decision
+  ceQuiReste: What remains
+  decisions: Decisions and trade-offs
+  plutotQue: Rather than
+  parceQue: Because
+  auPrixDe: At the cost of
+  regles: What the system retained
+  regle: Rule
+  renvoiEcrit: Argued in essay
+  aLireAussi: Further reading
+  casSuivant: Next case
+  tousLesTravaux: ← All work
+
+# Essay template
+ecrit:
+  surtitre: Essay
+  lecture: min read
+  casCite: Case cited
+  limites: Limits
+  ecritsLies: Related essays
+  tousLesEcrits: ← All essays
+
+# "What I'm looking for" block, before the footer
+planche:
+  libelle: What I’m looking for
+  titre:
+    - A role, a product, a question?
+    - Write to me.
+  texte:
+    - I’m looking for a lead or staff role on a complex technical product (cloud, platform, data, developer tools), where design takes part in decisions before they are made.
+    - Nantes, or fully remote from France.
+
 contact:
   titre: Contact
   email: f.butour@gmail.com
@@ -46,3 +87,9 @@ pageIntrouvable:
   titre: Page not found
   texte: This address does not lead to any page.
   retour: Back to home
+
+metadonnees:
+  site: Florian Butour
+  description: Florian Butour, Senior Product Designer. I make complex technical systems legible, for the humans who run them and for the agents acting on their behalf.
+  travaux: Case studies by Florian Butour, Senior Product Designer.
+  ecrits: Essays by Florian Butour on designing systems, models and design systems.

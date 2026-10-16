@@ -15,13 +15,17 @@ interface Props {
   strates: Strates;
   href: string;
   niveau?: 2 | 3;
+  /** Retrait de 304 px à gauche (accueil) ; sans retrait dans les listes et les écrits liés */
+  retrait?: boolean;
+  /** Langue du contenu, si elle diffère de celle de la page */
+  lang?: string;
 }
 
-const { locale, titre, these, strates, href, niveau = 3 } = Astro.props;
+const { locale, titre, these, strates, href, niveau = 3, retrait = true, lang } = Astro.props;
 const Titre = `h${niveau}` as 'h2' | 'h3';
 ---
 
-<article class="entree entree-ecrit">
+<article class:list={['entree', 'entree-ecrit', { 'entree-ecrit--sans-retrait': !retrait }]} lang={lang}>
   <div class="entree-ecrit__texte">
     <Titre class="text-heading-24">
       <a class="entree-ecrit__lien" href={href}>{titre}</a>
@@ -40,6 +44,10 @@ const Titre = `h${niveau}` as 'h2' | 'h3';
     padding-block: 2.75rem;
     padding-left: var(--layout-offset);
     border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .entree-ecrit--sans-retrait {
+    padding-left: 0;
   }
 
   .entree-ecrit__texte {

@@ -1,0 +1,456 @@
+---
+/**
+ * Page de cas (Figma 27:316, modèle Desoutter)
+ * En-tête et cartouche · En trente secondes · sections du corps · Décisions · Règles · suite.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PlancheContact from '../components/PlancheContact.astro';
+import StratesTouchees from '../components/StratesTouchees.astro';
+import { type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+import { resoudre, trouver, type Element } from '../lib/contenu';
+import { rendreCas } from '../lib/markdown';
+import { isTodo } from '../lib/todo';
+
+interface Props {
+  locale: Locale;
+  cas: Element<'cas'>;
+}
+
+const { locale, cas } = Astro.props;
+const ui = await getInterface(locale);
+const t = ui.cas;
+const d = cas.data;
+const corps = await rendreCas(cas.body, cas.langue, cas.fichier);
+
+const deux = (n: number) => String(n).padStart(2, '0');
+let rang = 1;
+const avant = corps.avant.map((s) => ({ ...s, rang: deux(++rang) }));
+const aDecisions = d.decisions.length > 0 || d.regles.length > 0;
+const rangDecisions = aDecisions ? deux(++rang) : '';
+const apres = corps.apres.map((s) => ({ ...s, rang: deux(++rang) }));
+
+const ecritsLies = await resoudre('ecrits', locale, d.ecritsLies);
+const ecritRegles = d.reglesEcrit ? (await resoudre('ecrits', locale, [d.reglesEcrit]))[0] : undefined;
+const suivant = d.casSuivant ? await trouver('cas', locale, d.casSuivant) : undefined;
+const cartouche = [
+  [t.role, d.cartouche.role],
+  [t.duree, d.cartouche.duree],
+  [t.equipe, d.cartouche.equipe],
+  [t.livrables, d.cartouche.livrables],
+] as const;
+const trente = [
+  [t.probleme, d.trenteSecondes.probleme],
+  [t.decision, d.trenteSecondes.decision],
+  [t.ceQuiReste, d.trenteSecondes.ceQuiReste],
+] as const;
+const lignesDecision = (dec: (typeof d.decisions)[number]) =>
+  [
+    [t.plutotQue, dec.plutotQue],
+    [t.parceQue, dec.parceQue],
+    [t.auPrixDe, dec.auPrixDe],
+  ] as const;
+---
+
+<BaseLayout title={d.titre} description={d.chapo} locale={locale} alternate={cas.alternate} type="article">
+  <article lang={cas.langue !== locale ? cas.langue : undefined}>
+    <header class="container container--etroit page-tete cas-tete">
+      <p class="text-label libelle">{t.surtitre} {deux(cas.numero)} · {d.meta}</p>
+      <h1 class="text-display cas-tete__titre">{d.titre}</h1>
+      <p class="text-lead cas-tete__chapo">{d.chapo}</p>
+      <dl class="cartouche">
+        {
+          cartouche.map(([libelle, valeur]) => (
+            <div class="cartouche__item">
+              <dt class="text-label libelle">{libelle}</dt>
+              <dd class:list={['text-body', { todo: isTodo(valeur) }]}>{valeur}</dd>
+            </div>
+          ))
+        }
+        <div class="cartouche__item cartouche__strates">
+          <dt class="text-label libelle">{ui.strates.libelle}</dt>
+          <dd><StratesTouchees locale={locale} strates={d.strates} /></dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class="trente" aria-labelledby="trente-titre">
+      <div class="container container--etroit trente__inner">
+        <h2 id="trente-titre" class="text-label trente__libelle">{t.trenteSecondes}</h2>
+        <div class="trente__colonnes">
+          {
+            trente.map(([libelle, texte]) => (
+              <div class="trente__colonne">
+                <h3 class="text-label trente__sous-libelle">{libelle}</h3>
+                <p class:list={['text-lead', { todo: isTodo(texte) }]}>{texte}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    {
+      avant.map((s) => (
+        <section class="cas-section" data-apparition>
+          <div class="container container--etroit cas-section__inner">
+            <h2 class="text-label libelle">{s.rang} · {s.libelle}</h2>
+            <div class="prose" set:html={s.html} />
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      aDecisions && d.decisions.length > 0 && (
+        <section class="cas-section" data-apparition>
+          <div class="container container--etroit cas-section__inner">
+            <h2 class="text-label libelle">{rangDecisions} · {t.decisions}</h2>
+            {d.titreDecisions && <p class="text-heading-40 cas-section__titre">{d.titreDecisions}</p>}
+            <ol class="decisions" role="list">
+              {d.decisions.map((dec, i) => (
+                <li class="decision">
+                  <span class="decision__numero text-heading-40" aria-hidden="true">{deux(i + 1)}</span>
+                  <div class="decision__contenu">
+                    <h3 class="text-heading-24">{dec.titre}</h3>
+                    {lignesDecision(dec).map(([libelle, valeur]) => (
+                      <p class:list={['text-body', 'decision__ligne', { todo: isTodo(valeur) }]}>
+                        <strong>{libelle}</strong>{locale === 'fr' ? ' : ' : ': '}{valeur}
+                      </p>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )
+    }
+
+    {
+      aDecisions && d.regles.length > 0 && (
+        <section class="cas-section" data-apparition>
+          <div class="container container--etroit cas-section__inner">
+            <h2 class="text-label libelle">
+              {rangDecisions} bis · {t.regles}
+            </h2>
+            {d.titreRegles && <p class="text-heading-40 cas-section__titre">{d.titreRegles}</p>}
+            <ol class="regles" role="list">
+              {d.regles.map((regle, i) => (
+                <li class="regle">
+                  <span class="text-label libelle">
+                    {t.regle} {deux(i + 1)}
+                  </span>
+                  <p class="text-lead">{regle}</p>
+                </li>
+              ))}
+            </ol>
+            {d.reglesCommentaire && (
+              <p class:list={['text-body', 'cas-section__colonne', { todo: isTodo(d.reglesCommentaire) }]}>{d.reglesCommentaire}</p>
+            )}
+            {ecritRegles && (
+              <a class="text-ui lien-fleche" href={ecritRegles.href}>
+                {t.renvoiEcrit} {deux(ecritRegles.numero)} · {ecritRegles.data.titre} →
+              </a>
+            )}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      apres.map((s) => (
+        <section class="cas-section" data-apparition>
+          <div class="container container--etroit cas-section__inner">
+            <h2 class="text-label libelle">{s.rang} · {s.libelle}</h2>
+            <div class="prose" set:html={s.html} />
+          </div>
+        </section>
+      ))
+    }
+
+    {
+      (ecritsLies.length > 0 || suivant) && (
+        <nav class="suite" aria-label={t.casSuivant}>
+          <div class="container container--etroit suite__inner">
+            <div class="suite__colonne">
+              {ecritsLies.length > 0 && (
+                <>
+                  <h2 class="text-label libelle">{t.aLireAussi}</h2>
+                  <ul class="suite__liens" role="list">
+                    {ecritsLies.map((e) => (
+                      <li>
+                        <a class="text-ui" href={e.href}>
+                          {ui.ecrit.surtitre} {deux(e.numero)} · {e.data.titre}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+            <div class="suite__colonne">
+              {suivant && (
+                <>
+                  <h2 class="text-label libelle">
+                    {t.casSuivant} · {deux(suivant.numero)}
+                  </h2>
+                  <a class="text-heading-24 suite__suivant" href={suivant.href}>
+                    {suivant.data.entree?.titre ?? suivant.data.titre} →
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+        </nav>
+      )
+    }
+  </article>
+  <PlancheContact locale={locale} />
+</BaseLayout>
+
+<style>
+  .cas-tete {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .cas-tete__titre {
+    padding-bottom: 1.25rem;
+  }
+
+  .cas-tete__chapo {
+    max-width: 47.5rem;
+  }
+
+  .cartouche {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) 12.5rem;
+    gap: 2rem;
+    padding: 1rem 0 3.5rem;
+  }
+
+  .cartouche__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .cartouche dd {
+    margin: 0;
+  }
+
+  .cartouche__strates :global(.strates-touchees--verticale) {
+    width: 100%;
+  }
+
+  @media (max-width: 63.99rem) {
+    .cartouche {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .cartouche__strates {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 39.99rem) {
+    .cartouche {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.25rem;
+      padding-bottom: 2.5rem;
+    }
+  }
+
+  /* En trente secondes */
+  .trente {
+    background: var(--color-background-brand);
+    color: var(--color-text-inverse);
+  }
+
+  .trente__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-block: 5.5rem;
+  }
+
+  .trente__libelle {
+    color: var(--color-text-on-brand-muted);
+  }
+
+  .trente__colonnes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  .trente__colonne {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .trente__sous-libelle {
+    color: var(--color-text-on-brand-secondary);
+  }
+
+  .trente .todo {
+    color: var(--color-text-on-brand-muted);
+  }
+
+  @media (max-width: 63.99rem) {
+    .trente__colonnes {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .trente__inner {
+      padding-block: 4rem;
+    }
+  }
+
+  /* Sections */
+  .cas-section {
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .cas-section__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-block: 5.5rem;
+  }
+
+  .cas-section__titre {
+    max-width: 56.25rem;
+  }
+
+  .cas-section__colonne {
+    max-width: 45rem;
+  }
+
+  .cas-section .todo {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 39.99rem) {
+    .cas-section__inner {
+      padding-block: 4rem;
+    }
+  }
+
+  /* Décisions */
+  .decisions {
+    padding: 0;
+    list-style: none;
+  }
+
+  .decision {
+    display: flex;
+    gap: 2.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--color-border-default);
+  }
+
+  .decision__numero {
+    flex: 0 0 7.5rem;
+  }
+
+  .decision__contenu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .decision__ligne {
+    color: var(--color-text-secondary);
+  }
+
+  .decision__ligne strong {
+    font-weight: 500;
+  }
+
+  @media (max-width: 39.99rem) {
+    .decision {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .decision__numero {
+      flex-basis: auto;
+    }
+  }
+
+  /* Règles */
+  .regles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .regle {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 3px solid var(--color-border-ink);
+  }
+
+  @media (max-width: 63.99rem) {
+    .regles {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .lien-fleche {
+    text-decoration: none;
+  }
+
+  .lien-fleche:hover {
+    text-decoration: underline;
+  }
+
+  /* Suite */
+  .suite {
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .suite__inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+    padding-block: 4rem;
+  }
+
+  .suite__colonne {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .suite__liens {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .suite a {
+    text-decoration: none;
+  }
+
+  .suite a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 39.99rem) {
+    .suite__inner {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

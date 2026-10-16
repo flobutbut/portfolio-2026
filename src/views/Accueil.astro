@@ -1,0 +1,429 @@
+---
+/**
+ * Accueil (Figma 1:14 « C · Accueil — Les strates »)
+ * Hero · Strates · Travaux · Position · Méthode · Écrits
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Bouton from '../components/Bouton.astro';
+import EnTeteDeSection from '../components/EnTeteDeSection.astro';
+import EntreeDeProjet from '../components/EntreeDeProjet.astro';
+import EntreeDEcrit from '../components/EntreeDEcrit.astro';
+import PilierDeMethode from '../components/PilierDeMethode.astro';
+import FigureMethode from '../components/FigureMethode.astro';
+import { otherLocale, path, type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+import { getAccueil, lister } from '../lib/contenu';
+import { STRATES } from '../lib/strates';
+import { isTodo } from '../lib/todo';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = await getInterface(locale);
+const a = await getAccueil(locale);
+const cas = await lister('cas', locale);
+const ecrits = await lister('ecrits', locale);
+const cv = ui.contact.cv.url;
+---
+
+<BaseLayout title={a.titrePage} description={a.description} locale={locale} alternate={path('accueil', otherLocale(locale))}>
+  <!-- Hero : trois strates -->
+  <section class="hero" aria-labelledby="hero-titre" data-hero>
+    <div class="hero__haut">
+      <div class="hero__surface">
+        <p class="text-label libelle">{a.hero.surtitre}</p>
+        <h1 id="hero-titre" class="text-display">{a.hero.accroche}</h1>
+      </div>
+      <div class="hero__marque">
+        <ol class="hero__strates" role="list" aria-label={ui.strates.libelle} data-hero-strates>
+          {STRATES.map((cle, i) => <li style={`--i: ${i}`} class="text-heading-24">{ui.strates[cle]}</li>)}
+        </ol>
+        <p class="text-lead">{a.hero.complement}</p>
+      </div>
+    </div>
+    <div class="hero__socle">
+      <div class="hero__identite text-lead">
+        <p><strong>{a.hero.nom}</strong>, {a.hero.fonction}</p>
+        <p>{a.hero.details}</p>
+      </div>
+      <div class="hero__actions">
+        <Bouton href="#travaux" data-court-circuit>{a.hero.voirTravaux}</Bouton>
+        {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{a.hero.cv}</span> : <Bouton apparence="contour" href={cv}>{a.hero.cv}</Bouton>}
+      </div>
+    </div>
+  </section>
+
+  <!-- Strates -->
+  <section class="container section" aria-labelledby="strates-titre" data-apparition>
+    <EnTeteDeSection titre={a.strates.titre} id="strates-titre" />
+    <p class="text-lead strates__intro">{a.strates.introduction}</p>
+    <ul class="strates__cartes" role="list">
+      {
+        STRATES.map((cle) => (
+          <li class="strates__carte">
+            <h3 class="strates__nom text-heading-24">{ui.strates[cle]}</h3>
+            <p class="text-body">{a.strates[cle].description}</p>
+            <p class="text-caption libelle">{a.strates[cle].exemples}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Travaux -->
+  <section id="travaux" class="container section" aria-labelledby="travaux-titre" data-apparition>
+    <EnTeteDeSection titre={a.travaux.titre} id="travaux-titre" />
+    <div>
+      {
+        cas.map((c) => (
+          <EntreeDeProjet
+            locale={locale}
+            lang={c.langue !== locale ? c.langue : undefined}
+            titre={c.data.entree?.titre ?? c.data.titre}
+            description={c.data.entree?.description ?? c.data.chapo}
+            meta={c.data.meta}
+            strates={c.data.strates}
+            href={c.href}
+          />
+        ))
+      }
+    </div>
+    <a class="section__tous text-ui" href={path('travaux', locale)}>{a.travaux.tous}</a>
+  </section>
+
+  <!-- Position -->
+  <section class="position" aria-labelledby="position-titre" data-apparition>
+    <div class="container position__inner">
+      <p class="text-label position__libelle">{a.position.libelle}</p>
+      <div class="position__texte">
+        <h2 id="position-titre" class="text-display">{a.position.titre}</h2>
+        <p class="text-body">{a.position.texte}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Méthode -->
+  <section class="container section methode" aria-labelledby="methode-titre" data-methode>
+    <EnTeteDeSection titre={a.methode.titre} id="methode-titre" />
+    <div class="methode__grille">
+      {
+        a.methode.piliers.map((p, i) => (
+          <>
+            <div class="methode__pilier" style={`--rang: ${i + 1}`} data-pilier={i}>
+              <PilierDeMethode titre={p.titre} description={p.description} pratiques={p.pratiques} />
+            </div>
+            <div class="methode__figure" style={`--rang: ${i + 1}`} data-figure={i}>
+              <FigureMethode {...p.figure} id={`fig-methode-${i}`} />
+            </div>
+          </>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Écrits -->
+  <section class="container section" aria-labelledby="ecrits-titre" data-apparition>
+    <EnTeteDeSection titre={a.ecrits.titre} id="ecrits-titre" />
+    <div class="ecrits__liste">
+      {
+        ecrits.map((e) => (
+          <EntreeDEcrit
+            locale={locale}
+            lang={e.langue !== locale ? e.langue : undefined}
+            titre={e.data.titre}
+            these={e.data.these}
+            strates={e.data.strates}
+            href={e.href}
+          />
+        ))
+      }
+    </div>
+    <a class="section__tous text-ui" href={path('ecrits', locale)}>{a.ecrits.tous}</a>
+  </section>
+  <div class="espace" aria-hidden="true"></div>
+</BaseLayout>
+
+<script>
+  import { initMethode } from '../scripts/methode';
+  initMethode();
+</script>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    --bord: max(var(--layout-gutter), calc((100% - var(--layout-max)) / 2 + var(--layout-gutter)));
+  }
+
+  .hero__haut {
+    display: grid;
+    grid-template-columns: minmax(0, 996fr) minmax(0, 444fr);
+    min-height: clamp(30rem, calc(100svh - var(--layout-nav-height) - 7.75rem), 42.25rem);
+  }
+
+  .hero__surface {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 8.5rem var(--layout-gutter) 3rem var(--bord);
+  }
+
+  .hero__surface h1 {
+    max-width: 55.25rem;
+  }
+
+  .hero__marque {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem var(--bord) 2rem var(--layout-gutter);
+    background: var(--color-background-brand);
+    color: var(--color-text-inverse);
+  }
+
+  .hero__strates {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero__strates li {
+    padding: 0.375rem 0.5rem;
+    border-left: 2px solid var(--color-border-white);
+    color: var(--color-text-on-brand-secondary);
+  }
+
+  .hero__socle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem var(--bord);
+    background: var(--color-background-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  .hero__identite strong {
+    font-weight: 500;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .bouton-todo {
+    padding: 1rem 1.5rem;
+    box-shadow: inset 0 0 0 2px var(--color-border-on-dark);
+  }
+
+  @media (max-width: 63.99rem) {
+    .hero__haut {
+      grid-template-columns: minmax(0, 1fr);
+      min-height: 0;
+    }
+
+    .hero__surface {
+      padding-top: 5rem;
+    }
+
+    .hero__marque {
+      padding-left: var(--bord);
+    }
+
+    .hero__socle {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  /* ---------- Sections ---------- */
+  .section {
+    padding-top: 8.75rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .section__tous {
+    display: inline-block;
+    margin-top: 2rem;
+    text-decoration: none;
+  }
+
+  .section__tous:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 39.99rem) {
+    .section {
+      padding-top: 5rem;
+    }
+  }
+
+  /* ---------- Strates ---------- */
+  .strates__intro {
+    max-width: 52.5rem;
+    padding-block: 2rem;
+  }
+
+  .strates__cartes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0 0 2rem;
+    list-style: none;
+  }
+
+  .strates__carte {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    border: 1px solid var(--color-border-default);
+  }
+
+  .strates__carte + .strates__carte {
+    border-left: 0;
+  }
+
+  .strates__nom {
+    padding: 0.375rem 0.5rem;
+    background: var(--color-background-brand);
+    color: var(--color-text-inverse);
+  }
+
+  @media (max-width: 63.99rem) {
+    .strates__cartes {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .strates__carte + .strates__carte {
+      border-left: 1px solid var(--color-border-default);
+      border-top: 0;
+    }
+  }
+
+  /* ---------- Position ---------- */
+  .position {
+    margin-top: 6.25rem;
+    background: var(--color-background-brand);
+    color: var(--color-text-inverse);
+  }
+
+  .position__inner {
+    display: grid;
+    grid-template-columns: 18.75rem minmax(0, 1fr);
+    gap: 2.5rem;
+    padding-top: 7.5rem;
+    padding-bottom: 7rem;
+  }
+
+  .position__texte {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  .position__texte p {
+    max-width: 38.75rem;
+    color: var(--color-text-on-brand-secondary);
+  }
+
+  @media (max-width: 63.99rem) {
+    .position__inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.5rem;
+      padding-block: 5rem;
+    }
+  }
+
+  /* ---------- Méthode ---------- */
+  .methode__grille {
+    display: grid;
+    grid-template-columns: minmax(0, 488fr) minmax(0, 800fr);
+    column-gap: 2.5rem;
+    padding-block: 2.75rem;
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .methode__pilier {
+    grid-column: 1;
+    grid-row: var(--rang);
+  }
+
+  /* Sans JavaScript : chaque figure en face de son pilier */
+  .methode__figure {
+    grid-column: 2;
+    grid-row: var(--rang);
+    padding-block: 1.5rem;
+  }
+
+  @media (max-width: 63.99rem) {
+    .methode__grille {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .methode__pilier,
+    .methode__figure {
+      grid-column: 1;
+      grid-row: auto;
+    }
+  }
+
+  /* Avec JavaScript, desktop, sans prefers-reduced-motion : figure collée (voir scripts/methode.ts) */
+  .methode--collee .methode__figure {
+    grid-row: 1 / span 3;
+    position: sticky;
+    top: max(1.5rem, calc(50svh - 20rem));
+    align-self: start;
+    opacity: 0;
+    transform: translateY(0.75rem);
+    transition:
+      opacity var(--motion-duration-long) var(--motion-ease),
+      transform var(--motion-duration-long) var(--motion-ease);
+  }
+
+  .methode--collee .methode__figure[data-actif] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .methode--collee .methode__pilier {
+    opacity: 0.35;
+    transition: opacity var(--motion-duration-long) var(--motion-ease);
+  }
+
+  .methode--collee .methode__pilier[data-actif] {
+    opacity: 1;
+  }
+
+  /* Hero : les trois strates se révèlent l'une après l'autre au défilement (CSS seul).
+     Sans prise en charge ou avec prefers-reduced-motion : affichées d'emblée. */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero__strates li {
+        animation: strate-apparait linear both;
+        animation-timeline: scroll(root);
+        animation-range: calc(var(--i) * 14svh - 14svh) calc(var(--i) * 14svh);
+      }
+    }
+  }
+
+  @keyframes strate-apparait {
+    from {
+      opacity: 0;
+      transform: translateX(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .espace {
+    height: 7.5rem;
+  }
+</style>

@@ -1,9 +1,7 @@
-import { getEntry } from 'astro:content';
 import type { Locale } from './routes';
+import { getTextesInterface } from '../lib/contenu';
 
-/** Textes d'interface validés de la langue demandée. */
-export async function getInterface(locale: Locale) {
-  const entry = await getEntry('interfaceTextes', `${locale}/interface`);
-  if (!entry) throw new Error(`Textes d'interface introuvables : content/${locale}/interface.yaml`);
-  return entry.data;
+/** Textes d'interface validés de la langue demandée, typographie française appliquée. */
+export function getInterface(locale: Locale) {
+  return getTextesInterface(locale);
 }

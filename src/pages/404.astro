@@ -8,7 +8,7 @@ const fr = (await getInterface('fr')).pageIntrouvable;
 const en = (await getInterface('en')).pageIntrouvable;
 ---
 
-<BaseLayout title={`${fr.titre} · ${en.titre}`} locale="fr">
+<BaseLayout title={`${fr.titre} · ${en.titre}`} locale="fr" noindex>
   <div class="container introuvable">
     <p class="text-label introuvable__code">404</p>
     <h1 class="text-display">{fr.titre}</h1>

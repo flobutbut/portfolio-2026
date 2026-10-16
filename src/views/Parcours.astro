@@ -1,0 +1,223 @@
+---
+/** Parcours (Figma 9:1964) : expériences, formation, planche contact. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Bouton from '../components/Bouton.astro';
+import EnTeteDeSection from '../components/EnTeteDeSection.astro';
+import PlancheContact from '../components/PlancheContact.astro';
+import Strate from '../components/Strate.astro';
+import { otherLocale, path, type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+import { getParcours } from '../lib/contenu';
+import { isTodo } from '../lib/todo';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = await getInterface(locale);
+const p = await getParcours(locale);
+const cv = ui.contact.cv.url;
+const sep = locale === 'fr' ? ' : ' : ': ';
+---
+
+<BaseLayout title={p.titre} description={p.description} locale={locale} alternate={path('parcours', otherLocale(locale))}>
+  <div class="container container--etroit page-tete parcours-tete">
+    <EnTeteDeSection titre={p.titre} niveau={1} />
+  </div>
+
+  <section class="intro" aria-label={p.titre}>
+    <div class="container container--etroit intro__inner">
+      <p class="text-lead intro__texte">{p.introduction}</p>
+      <div class="intro__actions">
+        <Bouton href={path('travaux', locale)}>{p.voirTravaux}</Bouton>
+        {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{p.cv}</span> : <Bouton apparence="contour" href={cv}>{p.cv}</Bouton>}
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc" data-apparition>
+    <ol class="container container--etroit lignes" role="list">
+      {
+        p.experiences.map((x) => (
+          <li class="ligne">
+            <div class="ligne__periode">
+              <p class="text-ui">{x.periode}</p>
+              {x.lieu && <p class="text-caption libelle">{x.lieu}</p>}
+            </div>
+            <div class="ligne__contenu">
+              <h2 class="text-heading-24">{x.organisation}</h2>
+              {x.poste && <p class="text-body">{x.poste}</p>}
+              {x.contexte && <p class="text-body libelle">{x.contexte}</p>}
+              {x.realisations.length > 0 && (
+                <ul class="ligne__realisations" role="list">
+                  {x.realisations.map((r) => (
+                    <li class="text-body">
+                      <strong>{r.titre}</strong>{sep}{r.texte}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <ul class="ligne__etiquettes" role="list">
+              {x.etiquettes.map((e) => (
+                <li>
+                  <Strate>{e}</Strate>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="bloc" aria-labelledby="formation" data-apparition>
+    <div class="container container--etroit">
+      <h2 id="formation" class="text-label libelle formation__libelle">{p.formation.titre}</h2>
+      <ol class="lignes lignes--serrees" role="list">
+        {
+          p.formation.lignes.map((l) => (
+            <li class="ligne">
+              <div class="ligne__periode">
+                <p class="text-ui">{l.periode}</p>
+              </div>
+              <div class="ligne__contenu">
+                <h3 class="text-heading-24">{l.titre}</h3>
+                <p class="text-body libelle">{l.texte}</p>
+              </div>
+              <span class="ligne__etiquettes" aria-hidden="true"></span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <PlancheContact locale={locale} />
+</BaseLayout>
+
+<style>
+  .parcours-tete {
+    padding-bottom: 3.5rem;
+  }
+
+  .intro {
+    background: var(--color-background-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  .intro__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding-block: 3.5rem;
+  }
+
+  .intro__texte {
+    max-width: 50rem;
+  }
+
+  .intro__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .bouton-todo {
+    padding: 1rem 1.5rem;
+    box-shadow: inset 0 0 0 2px var(--color-border-on-dark);
+  }
+
+  .bloc {
+    padding-block: 4.5rem;
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .lignes {
+    padding-top: 0;
+    padding-bottom: 0;
+    list-style: none;
+  }
+
+  .ligne {
+    display: grid;
+    grid-template-columns: 12.5rem minmax(0, 40rem) 12.5rem;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding-block: 2.5rem;
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .ligne:last-child {
+    border-bottom: 0;
+  }
+
+  .lignes--serrees .ligne {
+    padding-block: 1.5rem;
+  }
+
+  .formation__libelle {
+    padding-bottom: 0.5rem;
+  }
+
+  .ligne__periode {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .ligne__contenu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .ligne__realisations {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 0.5rem 0 0;
+    list-style: none;
+    color: var(--color-text-secondary);
+  }
+
+  .ligne__realisations strong {
+    font-weight: 500;
+  }
+
+  .ligne__etiquettes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 63.99rem) {
+    .ligne {
+      grid-template-columns: 10rem minmax(0, 1fr);
+    }
+
+    .ligne__etiquettes {
+      grid-column: 2;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 39.99rem) {
+    .ligne {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .ligne__etiquettes {
+      grid-column: 1;
+    }
+
+    .bloc {
+      padding-block: 2.5rem;
+    }
+  }
+</style>

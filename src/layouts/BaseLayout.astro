@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation.astro';
 import Contact from '../components/Contact.astro';
 import { otherLocale, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
+import { ogPath } from '../lib/og';
 
 interface Props {
   title: string;
@@ -11,10 +12,16 @@ interface Props {
   locale: Locale;
   /** Adresse de la page équivalente dans l'autre langue. */
   alternate?: string;
+  /** Type Open Graph */
+  type?: 'website' | 'article';
+  /** Les pages hors index (banc d'essai, 404) */
+  noindex?: boolean;
 }
 
-const { title, description, locale, alternate } = Astro.props;
+const { title, description, locale, alternate, type = 'website', noindex = false } = Astro.props;
 const ui = await getInterface(locale);
+const desc = description ?? ui.metadonnees.description;
+const titre = title.includes(ui.metadonnees.site) ? title : `${title} · ${ui.metadonnees.site}`;
 
 const site = Astro.site ?? new URL('https://florianbutour.com');
 const canonical = new URL(Astro.url.pathname, site).href;
@@ -22,6 +29,7 @@ const alternateUrl = alternate ? new URL(alternate, site).href : undefined;
 const urls = { [locale]: canonical, ...(alternateUrl && { [otherLocale(locale)]: alternateUrl }) } as Partial<
   Record<Locale, string>
 >;
+const image = new URL(ogPath(Astro.url.pathname), site).href;
 ---
 
 <!doctype html>
@@ -29,8 +37,9 @@ const urls = { [locale]: canonical, ...(alternateUrl && { [otherLocale(locale)]:
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <title>{titre}</title>
+    <meta name="description" content={desc} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     {urls.fr && <link rel="alternate" hreflang="fr" href={urls.fr} />}
     {urls.en && <link rel="alternate" hreflang="en" href={urls.en} />}
@@ -39,6 +48,40 @@ const urls = { [locale]: canonical, ...(alternateUrl && { [otherLocale(locale)]:
     <link rel="preload" href="/fonts/archivo-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={ui.metadonnees.site} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : 'en_GB'} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
+    <!--
+      Langue : à la première visite, la langue du navigateur choisit la version (français si
+      navigator.language commence par « fr », anglais sinon). Le choix fait dans la navigation est
+      mémorisé et prime. Pas de redirection pour les robots, ni sans page équivalente.
+    -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        try {
+          var ici = d.lang;
+          var lien = document.querySelector('link[rel="alternate"][hreflang="' + (ici === 'fr' ? 'en' : 'fr') + '"]');
+          if (!lien || /bot|crawl|spider|slurp|lighthouse|headless|preview/i.test(navigator.userAgent)) return;
+          var choix = localStorage.getItem('langue');
+          if (!choix) {
+            var nav = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+            choix = nav.indexOf('fr') === 0 ? 'fr' : 'en';
+            localStorage.setItem('langue', choix);
+          }
+          if (choix !== ici) location.replace(new URL(lien.href).pathname + location.search + location.hash);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <a class="lien-evitement text-ui" href="#contenu">{ui.lienEvitement}</a>
@@ -49,6 +92,20 @@ const urls = { [locale]: canonical, ...(alternateUrl && { [otherLocale(locale)]:
     <Contact locale={locale} />
   </body>
 </html>
+
+<script>
+  import { initApparition } from '../scripts/apparition';
+  initApparition();
+
+  // Le choix de langue fait dans la navigation est mémorisé
+  document.addEventListener('click', (event) => {
+    const lien = (event.target as Element).closest<HTMLElement>('[data-lang-switch]');
+    if (!lien) return;
+    try {
+      localStorage.setItem('langue', lien.dataset.langSwitch ?? '');
+    } catch {}
+  });
+</script>
 
 <style>
   .lien-evitement {

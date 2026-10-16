@@ -1,0 +1,152 @@
+---
+/**
+ * Page d'écrit (Figma 28:342, modèle Écrit 07)
+ * En-tête · corps · cas cités · limites · écrits liés.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EntreeDeProjet from '../components/EntreeDeProjet.astro';
+import EntreeDEcrit from '../components/EntreeDEcrit.astro';
+import PlancheContact from '../components/PlancheContact.astro';
+import { path, type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+import { resoudre, type Element } from '../lib/contenu';
+import { rendreEcrit, rendreTexte } from '../lib/markdown';
+
+interface Props {
+  locale: Locale;
+  ecrit: Element<'ecrits'>;
+}
+
+const { locale, ecrit } = Astro.props;
+const ui = await getInterface(locale);
+const t = ui.ecrit;
+const d = ecrit.data;
+const corps = await rendreEcrit(ecrit.body, ecrit.langue, ecrit.fichier);
+const limites = d.limites ? await rendreTexte(d.limites, ecrit.langue, ecrit.fichier) : '';
+const casCites = await resoudre('cas', locale, d.casCites);
+const ecritsLies = await resoudre('ecrits', locale, d.ecritsLies);
+const surtitre = [`${t.surtitre} ${String(ecrit.numero).padStart(2, '0')}`, d.genre, `${d.tempsLecture} ${t.lecture}`]
+  .filter(Boolean)
+  .join(' · ');
+---
+
+<BaseLayout title={d.titre} description={d.these} locale={locale} alternate={ecrit.alternate} type="article">
+  <article lang={ecrit.langue !== locale ? ecrit.langue : undefined}>
+    <header class="container container--etroit page-tete ecrit-tete">
+      <p class="text-label libelle">{surtitre}</p>
+      <h1 class="text-display ecrit-tete__titre">{d.titre}</h1>
+      <p class="text-lead ecrit-tete__these">{d.these}</p>
+      {
+        d.date && (
+          <p class="text-caption libelle">
+            <time datetime={d.date.toISOString().slice(0, 10)}>
+              {d.date.toLocaleDateString(locale === 'fr' ? 'fr-FR' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </time>
+          </p>
+        )
+      }
+    </header>
+
+    <div class="container container--etroit ecrit-corps">
+      <div class="prose" set:html={corps} />
+
+      {
+        casCites.length > 0 && (
+          <section class="ecrit-bloc" aria-labelledby="cas-cites">
+            <h2 id="cas-cites" class="text-label libelle">{t.casCite}</h2>
+            {casCites.map((c) => (
+              <EntreeDeProjet
+                locale={locale}
+                lang={c.langue !== locale ? c.langue : undefined}
+                titre={c.data.entree?.titre ?? c.data.titre}
+                description={c.data.entree?.description ?? c.data.chapo}
+                meta={c.data.meta}
+                strates={c.data.strates}
+                href={c.href}
+                visuel={c.data.visuel ?? { alt: '' }}
+              />
+            ))}
+          </section>
+        )
+      }
+
+      {
+        limites && (
+          <section class="ecrit-bloc prose" aria-labelledby="limites">
+            <h2 id="limites" class="text-heading-24">{t.limites}</h2>
+            <Fragment set:html={limites} />
+          </section>
+        )
+      }
+
+      <nav class="ecrit-bloc ecrits-lies" aria-labelledby="ecrits-lies">
+        {
+          ecritsLies.length > 0 && (
+            <>
+              <h2 id="ecrits-lies" class="text-label libelle">{t.ecritsLies}</h2>
+              <div>
+                {ecritsLies.map((e) => (
+                  <EntreeDEcrit
+                    locale={locale}
+                    lang={e.langue !== locale ? e.langue : undefined}
+                    retrait={false}
+                    titre={e.data.titre}
+                    these={e.data.these}
+                    strates={e.data.strates}
+                    href={e.href}
+                  />
+                ))}
+              </div>
+            </>
+          )
+        }
+        <a class="text-ui ecrits-lies__retour" href={path('ecrits', locale)}>{t.tousLesEcrits}</a>
+      </nav>
+    </div>
+  </article>
+  <PlancheContact locale={locale} />
+</BaseLayout>
+
+<style>
+  .ecrit-tete {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .ecrit-tete__titre {
+    padding-bottom: 1.25rem;
+  }
+
+  .ecrit-tete__these {
+    max-width: 47.5rem;
+  }
+
+  .ecrit-corps {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    padding-top: 3.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .ecrit-bloc {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+  }
+
+  .ecrits-lies {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border-ink);
+  }
+
+  .ecrits-lies__retour {
+    text-decoration: none;
+  }
+
+  .ecrits-lies__retour:hover {
+    text-decoration: underline;
+  }
+</style>

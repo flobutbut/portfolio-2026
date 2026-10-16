@@ -1,0 +1,73 @@
+# Page Parcours, version française (Figma nœud 9:1964)
+
+titre: Parcours
+description: "Parcours de Florian Butour, Senior Product Designer : plus de dix ans de product design sur des produits B2B à forte complexité."
+introduction: "Plus de dix ans de product design sur des produits B2B à forte complexité : plateformes data, outils industriels, SaaS multi-produits. Je conçois la structure du produit, ses rôles, ses objets et ses règles, puis les systèmes qui la gardent cohérente quand il grandit."
+voirTravaux: Voir les travaux
+cv: CV
+
+experiences:
+  - periode: Juin 2025 – aujourd’hui
+    lieu: Nantes
+    organisation: Qlik
+    poste: Senior Product Designer, Data Integration
+    contexte: Plateforme data d’entreprise, convergence des produits Talend et Qlik.
+    realisations:
+      - titre: Data products
+        texte: glossaires métier et data contracts, qui explicitent vocabulaire, responsabilités et garanties entre producteurs et consommateurs de données ; visibilité des coûts (FinOps).
+      - titre: Design system
+        texte: templates de l’expérience unifiée entre les produits Talend et Qlik.
+      - titre: IA et prototypage
+        texte: automatisation du travail de design et prototypes fonctionnels avec Claude et Figma Make.
+    etiquettes: [Gouvernance, Data contracts, Design system]
+
+  - periode: Sept. 2022 – juin 2025
+    lieu: Nantes
+    organisation: SharingCloud, racheté par Witco
+    poste: Principal Product Designer
+    contexte: "Smart office : réservation d’espaces, gestion de présence, capteurs, affichage dynamique."
+    realisations:
+      - titre: WorkplaceToBe
+        texte: refonte en offre modulaire, des modules vendables séparément, alignés avec le commercial et unifiés entre web, mobile et Outlook.
+      - titre: Design system
+        texte: quatre niveaux (tokens, composants, patterns, librairies produit), documenté et accessible.
+      - titre: Référent design
+        texte: encadrement d’un designer en alternance ; après le rachat par Witco, fond de plan d’étage pour la sélection de siège.
+    etiquettes: [Offre modulaire, Multi-surfaces, Design system]
+
+  - periode: Janv. 2015 – sept. 2022
+    lieu: Nantes
+    organisation: Indépendant
+    poste: Product Designer
+    contexte: Produits B2B pour éditeurs, industriels et grands comptes.
+    realisations:
+      - titre: Desoutter
+        texte: unification de logiciels métiers en une plateforme SaaS, architecture par profils sur un socle de données commun, design system gouverné.
+      - titre: MAIF
+        texte: recherche terrain (double écoute, analyse d’appels) et outils d’aide à la décision pour les téléconseillers.
+      - titre: JP Racing
+        texte: e-commerce et configurateur 3D avec règles de compatibilité entre composants.
+    etiquettes: [Plateforme, Recherche terrain, Règles métier]
+
+  - periode: Avant 2015
+    organisation: Premières expériences
+    realisations:
+      - titre: Altran
+        texte: aéronautique.
+      - titre: Mechdyne
+        texte: réalité virtuelle, pour L’Oréal.
+      - titre: Schneider Electric DesignLab
+        texte: énergie, en alternance.
+
+formation:
+  titre: Formation, transmission et langues
+  lignes:
+    - periode: Formation
+      titre: Master Interaction Design
+      texte: École de Design Nantes Atlantique.
+    - periode: 2016 – 2022
+      titre: Intervenant UX/UI et design system
+      texte: École de Design Nantes Atlantique et ECV Nantes.
+    - periode: Langues
+      titre: Français et anglais
+      texte: Français natif, anglais professionnel.
