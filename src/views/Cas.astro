@@ -29,6 +29,9 @@ const avant = corps.avant.map((s) => ({ ...s, rang: deux(++rang) }));
 const aDecisions = d.decisions.length > 0 || d.regles.length > 0;
 const rangDecisions = aDecisions ? deux(++rang) : '';
 const apres = corps.apres.map((s) => ({ ...s, rang: deux(++rang) }));
+// Seule la dernière section garde un filet : il sépare l'article de ce qui suit (Figma 27:563)
+const derniere =
+  apres.length > 0 ? `apres-${apres.length - 1}` : d.regles.length > 0 ? 'regles' : d.decisions.length > 0 ? 'decisions' : `avant-${avant.length - 1}`;
 
 const ecritsLies = await resoudre('ecrits', locale, d.ecritsLies);
 const ecritRegles = d.reglesEcrit ? (await resoudre('ecrits', locale, [d.reglesEcrit]))[0] : undefined;
@@ -61,8 +64,12 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
   <article lang={cas.langue !== locale ? cas.langue : undefined}>
     <header class="container container--etroit page-tete cas-tete">
       <p class="text-label libelle">{surtitre} {deux(cas.numero)} · {d.meta}</p>
-      <h1 class="text-display cas-tete__titre">{d.titre}</h1>
-      <p class="text-lead cas-tete__chapo">{d.chapo}</p>
+      <div class="cas-tete__titre-bloc">
+        <h1 class="text-display cas-tete__titre">{d.titre}</h1>
+        <div class="cas-tete__accroche">
+          <p class="text-lead">{d.chapo}</p>
+        </div>
+      </div>
       <dl class="cartouche">
         {
           cartouche.map(([libelle, valeur]) => (
@@ -106,8 +113,8 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
     )}
 
     {
-      avant.map((s) => (
-        <section class="cas-section" data-apparition>
+      avant.map((s, i) => (
+        <section class:list={['cas-section', { 'cas-section--derniere': derniere === `avant-${i}` }]} data-apparition>
           <div class="container container--etroit cas-section__inner">
             {s.avecTitre ? (
               <h2 class="text-label libelle">
@@ -129,7 +136,7 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
 
     {
       aDecisions && d.decisions.length > 0 && (
-        <section class="cas-section" data-apparition>
+        <section class:list={['cas-section', { 'cas-section--derniere': derniere === 'decisions' }]} data-apparition>
           <div class="container container--etroit cas-section__inner">
             <h2 class="text-label libelle">{rangDecisions} · {t.decisions}</h2>
             {d.titreDecisions && <p class="text-heading-40 cas-section__titre">{d.titreDecisions}</p>}
@@ -155,7 +162,7 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
 
     {
       aDecisions && d.regles.length > 0 && (
-        <section class="cas-section" data-apparition>
+        <section class:list={['cas-section', { 'cas-section--derniere': derniere === 'regles' }]} data-apparition>
           <div class="container container--etroit cas-section__inner">
             <h2 class="text-label libelle">
               {rangDecisions} bis · {t.regles}
@@ -185,8 +192,8 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
     }
 
     {
-      apres.map((s) => (
-        <section class="cas-section" data-apparition>
+      apres.map((s, i) => (
+        <section class:list={['cas-section', { 'cas-section--derniere': derniere === `apres-${i}` }]} data-apparition>
           <div class="container container--etroit cas-section__inner">
             {s.avecTitre ? (
               <h2 class="text-label libelle">
@@ -261,8 +268,20 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
     border-bottom: 3px solid var(--color-border-ink);
   }
 
-  .cas-tete__chapo {
+  /* Accroche dans un encart background/subtle, collé sous le filet du titre (Figma 84:952) */
+  .cas-tete__accroche {
+    padding: 1.5rem 2rem;
+    background: var(--color-background-subtle);
+  }
+
+  .cas-tete__accroche p {
     max-width: 47.5rem;
+  }
+
+  @media (max-width: 39.99rem) {
+    .cas-tete__accroche {
+      padding: 1.25rem;
+    }
   }
 
   .cas-intro {
@@ -357,7 +376,7 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
   }
 
   /* Sections */
-  .cas-section {
+  .cas-section--derniere {
     border-bottom: 1px solid var(--color-border-default);
   }
 
