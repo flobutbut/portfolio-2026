@@ -35,8 +35,12 @@ const surtitre = [`${t.surtitre} ${String(ecrit.numero).padStart(2, '0')}`, d.ge
   <article lang={ecrit.langue !== locale ? ecrit.langue : undefined}>
     <header class="container container--etroit page-tete ecrit-tete">
       <p class="text-label libelle">{surtitre}</p>
-      <h1 class="text-display ecrit-tete__titre">{d.titre}</h1>
-      <p class="text-lead ecrit-tete__these">{d.these}</p>
+      <div>
+        <h1 class="text-display ecrit-tete__titre">{d.titre}</h1>
+        <div class="ecrit-tete__these">
+          <p class="text-lead">{d.these}</p>
+        </div>
+      </div>
       {
         d.date && (
           <p class="text-caption libelle">
@@ -109,21 +113,33 @@ const surtitre = [`${t.surtitre} ${String(ecrit.numero).padStart(2, '0')}`, d.ge
 </BaseLayout>
 
 <style>
-  /* En-tête d'écrit centré dans un bloc de 720 px (Figma 28:344) : ≈ 264 px au-dessus, 144 px dessous */
+  /* En-tête d'écrit : ≈ 264 px au-dessus (Figma 28:344) ; l'encart de la thèse ferme l'en-tête */
   .ecrit-tete {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     padding-top: min(var(--layout-page-tete), 16.5rem);
-    padding-bottom: clamp(1.5rem, 9vw, 9rem);
   }
 
+  /* Même en-tête que les cas : titre sur un filet encre, thèse dans un encart background/subtle */
   .ecrit-tete__titre {
-    padding-bottom: 1.25rem;
+    padding-bottom: 4.5rem;
+    border-bottom: 3px solid var(--color-border-ink);
   }
 
   .ecrit-tete__these {
+    padding: 1.5rem 2rem;
+    background: var(--color-background-subtle);
+  }
+
+  .ecrit-tete__these p {
     max-width: 47.5rem;
+  }
+
+  @media (max-width: 39.99rem) {
+    .ecrit-tete__these {
+      padding: 1.25rem;
+    }
   }
 
   .ecrit-corps {
