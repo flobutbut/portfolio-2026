@@ -23,7 +23,7 @@
       ]
     },
     {
-      "source": "/agent.md",
+      "source": "/agent.(md|txt)",
       "headers": [
         {
           "key": "Content-Type",
