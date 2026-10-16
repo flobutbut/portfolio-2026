@@ -86,7 +86,7 @@ Niveau : évaluation de Florian (forte, en développement, exploratoire). « Où
 | Encadrement et transmission | forte | Citée : accompagnement d'un alternant pendant deux ans, référent design, enseignement 2016–2022 |
 | Prototypage en code avec l'IA | forte | Citée : cas Data contracts. Expérimentations : quatre projets personnels publics |
 | Produits de plateforme data (datasets, qualité, gouvernance) | en développement | Pratique actuelle chez Qlik depuis juin 2025. Décrite : cas Data contracts, Templates. Citée : glossaire métier, visibilité des coûts |
-| Mesure de l'usage | en développement | Citée : mesures PostHog sur WorkplaceToBe (temps, étapes, abandon, exploration) |
+| Définir ce qu'on mesure dans un parcours, et comment | forte | Citée : mesures PostHog sur WorkplaceToBe (temps, étapes, abandon, exploration) |
 | Concevoir des produits lisibles par des agents IA | exploratoire | Écrits 04 et 05 ; ce fichier lui-même |
 
 ## Pratiques et outils
