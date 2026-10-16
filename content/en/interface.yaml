@@ -84,7 +84,22 @@ contact:
     libelle: Résumé (PDF)
     url: /cv/florian-butour-cv-en.pdf
   ecrits: Writing
+  versionAgent: Agent version
   localisation: Nantes · fully remote
+
+# Markdown versions of case studies and writing (/en/work/<slug>.md…), for agents
+agents:
+  typeCas: Case study
+  typeNote: Design note
+  entreprise: Company
+  periode: Period
+  date: Date
+  lecture: Length
+  statut: Status
+  publie: published
+  brouillon: draft
+  contenusLies: Related content
+  pageWeb: Web page
 
 pageIntrouvable:
   titre: Page not found

@@ -139,7 +139,13 @@ const accueil = defineCollection({
       modele: z.object({ description: z.string(), exemples: z.string() }),
     }),
     travaux: z.object({ titre: z.string() }),
-    position: z.object({ libelle: z.string(), titre: z.string(), texte: z.string() }),
+    position: z.object({
+      libelle: z.string(),
+      titre: z.string(),
+      texte: z.string(),
+      /** Bloc « Pour les agents » (Figma 94:685) : renvoie vers /agent.md */
+      agents: z.object({ libelle: z.string(), texte: z.string(), copier: z.string(), copie: z.string(), lire: z.string() }),
+    }),
     methode: z.object({
       titre: z.string(),
       piliers: z
@@ -256,7 +262,21 @@ const interfaceTextes = defineCollection({
       linkedin: z.object({ libelle: z.string(), url: z.string() }),
       cv: z.object({ libelle: z.string(), url: z.string() }),
       ecrits: z.string(),
+      versionAgent: z.string(),
       localisation: z.string(),
+    }),
+    agents: z.object({
+      typeCas: z.string(),
+      typeNote: z.string(),
+      entreprise: z.string(),
+      periode: z.string(),
+      date: z.string(),
+      lecture: z.string(),
+      statut: z.string(),
+      publie: z.string(),
+      brouillon: z.string(),
+      contenusLies: z.string(),
+      pageWeb: z.string(),
     }),
     pageIntrouvable: z.object({
       titre: z.string(),

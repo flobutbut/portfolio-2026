@@ -10,7 +10,7 @@ import EntreeDeProjet from '../components/EntreeDeProjet.astro';
 import EntreeDEcrit from '../components/EntreeDEcrit.astro';
 import PilierDeMethode from '../components/PilierDeMethode.astro';
 import FigureMethode from '../components/FigureMethode.astro';
-import { otherLocale, path, type Locale } from '../i18n/routes';
+import { fichiersAgents, otherLocale, path, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
 import { getAccueil, lister } from '../lib/contenu';
 import { STRATES } from '../lib/strates';
@@ -26,6 +26,8 @@ const a = await getAccueil(locale);
 const cas = await lister('cas', locale);
 const ecrits = await lister('ecrits', locale);
 const cv = ui.contact.cv.url;
+// Bloc « Pour les agents » : l'adresse affichée sans protocole, copiée en entier
+const agent = new URL(fichiersAgents.agent, Astro.site ?? 'https://florianbutour.com');
 ---
 
 <BaseLayout title={a.titrePage} description={a.description} locale={locale} alternate={path('accueil', otherLocale(locale))}>
@@ -102,6 +104,19 @@ const cv = ui.contact.cv.url;
       <div class="position__texte">
         <h2 id="position-titre" class="text-display">{a.position.titre}</h2>
         <p class="text-body">{a.position.texte}</p>
+        <!-- Pour les agents (Figma 94:685) -->
+        <div class="agents">
+          <h3 class="text-label">{a.position.agents.libelle}</h3>
+          <p class="text-body">{a.position.agents.texte}</p>
+          <div class="agents__actions">
+            <p class="agents__adresse text-heading-24">{agent.host}{agent.pathname}</p>
+            <span class="agents__copier" data-copie={agent.href} data-copie-ok={a.position.agents.copie}>
+              <Bouton>{a.position.agents.copier}</Bouton>
+            </span>
+            <Bouton apparence="contour" href={fichiersAgents.agent} hreflang="fr">{a.position.agents.lire}</Bouton>
+            <p class="agents__statut text-caption" role="status" aria-live="polite"></p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -152,6 +167,22 @@ const cv = ui.contact.cv.url;
 <script>
   import { initMethode } from '../scripts/methode';
   initMethode();
+
+  // Pour les agents : copie l'adresse de /agent.md ; sans presse-papiers, le bouton disparaît
+  document.querySelectorAll<HTMLElement>('[data-copie]').forEach((copier) => {
+    const bouton = copier.querySelector('button');
+    const statut = copier.closest('.agents')?.querySelector<HTMLElement>('.agents__statut');
+    if (!bouton || !statut || !navigator.clipboard) return copier.remove();
+    let minuterie: number | undefined;
+    bouton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(copier.dataset.copie ?? '');
+        statut.textContent = copier.dataset.copieOk ?? '';
+        window.clearTimeout(minuterie);
+        minuterie = window.setTimeout(() => (statut.textContent = ''), 2400);
+      } catch {}
+    });
+  });
 </script>
 
 <style>
@@ -325,6 +356,53 @@ const cv = ui.contact.cv.url;
   .position__texte p {
     max-width: 38.75rem;
     color: var(--color-text-on-brand-secondary);
+  }
+
+  .agents {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border-white);
+  }
+
+  .agents h3 {
+    font-weight: 400;
+  }
+
+  .agents__actions {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+  }
+
+  .position__texte .agents__adresse {
+    color: var(--color-text-inverse);
+    overflow-wrap: anywhere;
+  }
+
+  /* Sans JavaScript, rien à copier : l'adresse reste lisible et le fichier accessible */
+  :global(html:not(.js)) .agents__copier {
+    display: none;
+  }
+
+  .position__texte .agents__statut {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+  }
+
+  @media (max-width: 39.99rem) {
+    .agents__actions {
+      gap: 1rem;
+    }
+
+    .agents__adresse {
+      flex-basis: 100%;
+    }
   }
 
   @media (max-width: 63.99rem) {

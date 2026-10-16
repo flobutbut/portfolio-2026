@@ -6,6 +6,8 @@
  *   sans mention (l'élément porte alors `langue` ≠ langue de la page, pour l'attribut lang).
  * - En production, seuls les contenus `publie` sont retenus, et tout « À compléter » fait échouer le build.
  */
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import { otherLocale, path, type Locale } from '../i18n/routes';
 import { modeApercu } from './mode';
@@ -104,6 +106,10 @@ export const getAccueil = (locale: Locale) => donnees('accueil', locale);
 export const getParcours = (locale: Locale) => donnees('parcours', locale);
 export const getTextesInterface = (locale: Locale) => donnees('interfaceTextes', locale);
 
+/** Version pour les agents, rédigée à la main (docs/agent.md) et publiée telle quelle à /agent.md. */
+export const FICHIER_AGENT = 'docs/agent.md';
+export const lireAgent = () => readFile(join(process.cwd(), FICHIER_AGENT), 'utf8');
+
 /* ---------- Validation de production ---------- */
 
 let validation: Promise<void> | undefined;
@@ -132,6 +138,9 @@ export function valider(): Promise<void> {
           for (const champ of cheminsTodo(entry?.data)) erreurs.push(`content/${locale}/${nom}.yaml → ${champ}`);
         }
       }
+      (await lireAgent()).split('\n').forEach((ligne, i) => {
+        if (contientTodo(ligne)) erreurs.push(`${FICHIER_AGENT} → ligne ${i + 1}`);
+      });
     }
 
     // Références entre contenus

@@ -33,6 +33,12 @@ position:
   libelle: Position
   titre: Un bon système absorbe la complexité au lieu de la faire porter à ceux qu’il sert.
   texte: Quand une machine agit au nom d’une personne, il faut décider ce qu’elle accepte de déléguer, ce qu’on lui fait confirmer, et comment elle reprend la main. C’est là que j’interviens.
+  agents:
+    libelle: Pour les agents
+    texte: "Ce site applique ce principe à lui-même : un seul contenu, une version pour les humains, une pour les agents. Si vous confiez sa lecture à un assistant IA, donnez-lui cette adresse. Elle dit ce que chaque cas prouve et ce qui revient à l’équipe ; rien n’y est caché."
+    copier: Copier l’adresse
+    copie: Adresse copiée
+    lire: Lire le fichier →
 
 methode:
   titre: Méthode

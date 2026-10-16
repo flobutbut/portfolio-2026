@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Navigation from '../components/Navigation.astro';
 import Contact from '../components/Contact.astro';
-import { otherLocale, type Locale } from '../i18n/routes';
+import { fichiersAgents, otherLocale, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
 import { ogPath } from '../lib/og';
 import Analytics from '@vercel/analytics/astro';
@@ -13,6 +13,8 @@ interface Props {
   locale: Locale;
   /** Adresse de la page équivalente dans l'autre langue. */
   alternate?: string;
+  /** Adresse de la version Markdown de la page, quand elle existe (cas et écrits). */
+  markdown?: string;
   /** Type Open Graph */
   type?: 'website' | 'article';
   /** Les pages hors index (banc d'essai, 404) */
@@ -21,7 +23,7 @@ interface Props {
   piedAvecEmail?: boolean;
 }
 
-const { title, description, locale, alternate, type = 'website', noindex = false, piedAvecEmail = true } = Astro.props;
+const { title, description, locale, alternate, markdown, type = 'website', noindex = false, piedAvecEmail = true } = Astro.props;
 const ui = await getInterface(locale);
 const desc = description ?? ui.metadonnees.description;
 const titre = title.includes(ui.metadonnees.site) ? title : `${title} · ${ui.metadonnees.site}`;
@@ -61,7 +63,8 @@ const image = new URL(ogPath(Astro.url.pathname), site).href;
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
+    {markdown && <link rel="alternate" type="text/markdown" href={markdown} />}
+    <link rel="describedby" href={fichiersAgents.llms} />
     <!--
       Langue : à la première visite, la langue du navigateur choisit la version (français si
       navigator.language commence par « fr », anglais sinon). Le choix fait dans la navigation est

@@ -33,6 +33,12 @@ position:
   libelle: Position
   titre: A good system absorbs complexity instead of passing it on to the people it serves.
   texte: When a machine acts on someone’s behalf, you have to decide what they agree to delegate, what they are asked to confirm, and how they take back control. That is where I come in.
+  agents:
+    libelle: For agents
+    texte: "This site applies that principle to itself: one body of content, one version for humans, one for agents. If you hand its reading to an AI assistant, give it this address. It states what each case proves and what belongs to the team; nothing is hidden there."
+    copier: Copy the address
+    copie: Address copied
+    lire: Read the file →
 
 methode:
   titre: Method
