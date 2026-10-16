@@ -43,7 +43,7 @@ const target = otherLocale(locale);
     <nav class="navigation__nav" aria-label={ui.navigation.libelle}>
       <div id="menu-principal" class="navigation__menu" popover>
         <div class="navigation__menu-tete container">
-          <span class="navigation__logo text-heading-24" aria-hidden="true">FB.</span>
+          <a class="navigation__logo text-heading-24" href={path('accueil', locale)}>FB.<span class="visually-hidden"> {ui.navigation.accueil}</span></a>
           <button
             class="navigation__burger"
             type="button"
