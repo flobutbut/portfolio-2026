@@ -26,8 +26,9 @@ const a = await getAccueil(locale);
 const cas = await lister('cas', locale);
 const ecrits = await lister('ecrits', locale);
 const cv = ui.contact.cv.url;
-// Bloc « Pour les agents » : l'adresse affichée sans protocole, copiée en entier
-const agent = new URL(fichiersAgents.agent, Astro.site ?? 'https://florianbutour.com');
+// Bloc « Pour les agents » : l'adresse affichée sans protocole ; le script copie l'adresse complète.
+// Version .txt : certains outils web d'assistants refusent un fichier .md.
+const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianbutour.com');
 ---
 
 <BaseLayout title={a.titrePage} description={a.description} locale={locale} alternate={path('accueil', otherLocale(locale))}>
@@ -110,10 +111,10 @@ const agent = new URL(fichiersAgents.agent, Astro.site ?? 'https://florianbutour
           <p class="text-body">{a.position.agents.texte}</p>
           <div class="agents__actions">
             <p class="agents__adresse text-heading-24">{agent.host}{agent.pathname}</p>
-            <span class="agents__copier" data-copie={agent.href} data-copie-ok={a.position.agents.copie}>
+            <span class="agents__copier" data-copie={agent.pathname} data-copie-ok={a.position.agents.copie}>
               <Bouton>{a.position.agents.copier}</Bouton>
             </span>
-            <Bouton apparence="contour" href={fichiersAgents.agent} hreflang="fr">{a.position.agents.lire}</Bouton>
+            <Bouton apparence="contour" href={fichiersAgents.agentTexte} hreflang="fr">{a.position.agents.lire}</Bouton>
             <p class="agents__statut text-caption" role="status" aria-live="polite"></p>
           </div>
         </div>
@@ -176,7 +177,8 @@ const agent = new URL(fichiersAgents.agent, Astro.site ?? 'https://florianbutour
     let minuterie: number | undefined;
     bouton.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(copier.dataset.copie ?? '');
+        // Adresse complète sur le domaine consulté (le domaine définitif n'est pas encore basculé)
+        await navigator.clipboard.writeText(new URL(copier.dataset.copie ?? '', location.origin).href);
         statut.textContent = copier.dataset.copieOk ?? '';
         window.clearTimeout(minuterie);
         minuterie = window.setTimeout(() => (statut.textContent = ''), 2400);

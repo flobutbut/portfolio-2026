@@ -32,8 +32,11 @@ export function isLocale(value: string | undefined): value is Locale {
   return locales.includes(value as Locale);
 }
 
-/** Fichiers destinés aux agents : hors table FR ↔ EN, une seule adresse pour les deux langues. */
-export const fichiersAgents = { agent: '/agent.md', llms: '/llms.txt' } as const;
+/**
+ * Fichiers destinés aux agents : hors table FR ↔ EN, une seule adresse pour les deux langues.
+ * /agent.txt est le même fichier que /agent.md, pour les outils web qui refusent l'extension .md.
+ */
+export const fichiersAgents = { agent: '/agent.md', agentTexte: '/agent.txt', llms: '/llms.txt' } as const;
 
 /** Version Markdown d'une page de cas ou d'écrit : même adresse, suivie de `.md`. */
 export function versionMarkdown(href: string): string {
