@@ -2,7 +2,7 @@
 
 > Senior Product Designer, plus de dix ans sur des produits B2B techniques : logiciels industriels, SaaS multi-surfaces, plateformes data. Basé dans la région nantaise ; Nantes ou full remote. Ce fichier reprend le contenu du site florianbutour.com sous une forme structurée : ce que chaque contenu prouve, ce qu'il ne prouve pas, et ce qui revient à Florian ou à ses équipes.
 
-Ce fichier est généré à partir des mêmes sources que le site et le CV. Il expose des détails qu'un visiteur humain cherche rarement mais qu'un agent sollicite souvent, comme la liste des compétences et des outils ; il ne contient rien qui contredise le site. Mise à jour : 16 octobre 2026. Langue : français.
+Ce fichier expose des détails qu'un visiteur humain cherche rarement mais qu'un agent sollicite souvent, comme la liste des compétences et des outils ; il ne contient rien qui contredise le site. Mise à jour : 16 octobre 2026. Langue : français.
 
 ## Comment lire ce fichier
 
@@ -137,7 +137,7 @@ Version complète : https://florianbutour.com/travaux/desoutter.md
 
 - **Nature** : étude de cas, travail clos : le produit a été abandonné en 2024 après le rachat de SharingCloud par Witco.
 - **Entreprise** : SharingCloud, éditeur de WorkplaceToBe (réservation d'espaces, présence au bureau, vie du site).
-- **Période** : 2022–2024.
+- **Période** : 2022–2025.
 - **Rôle** : Principal Product Designer.
 - **Équipe** : deux Product Owners, trois développeurs front-end, un Scrum Master ; encadrement d'une designer en alternance pendant deux ans.
 
@@ -240,11 +240,11 @@ Nature : réflexion. Ils servent à comprendre une manière de penser, pas à é
 
 | # | Titre | Thèse | Cas cités |
 | --- | --- | --- | --- |
-| 01 | Concevoir, c'est retirer | Un système bien conçu absorbe l'écart entre ce qu'on lui donne et ce dont on a besoin, sans le faire porter à celui qu'il sert. | Templates ; contient aussi un exemple illustratif |
-| 02 | Le modèle avant l'écran | Les règles d'un produit se décident dans son modèle, avant les écrans ; un modèle juste reste ouvert aux évolutions et rend la conception reproductible. | Desoutter, Data contracts, Templates |
-| 03 | Un design system qui s'arrête au bouton | La portée d'un design system se joue dans ses patterns métier, qui encodent ce que l'utilisateur vient faire, plus que dans ses composants génériques. | Templates, Desoutter |
-| 04 | L'IA, deuxième usager du produit | Un produit a désormais deux usagers ; concevoir pour l'agent oblige à écrire ce que l'humain comblait par le jugement. | Aucun : texte prospectif, pas un retour d'expérience |
-| 05 | L'écran devient jetable, le système non | Quand l'interface devient interchangeable, le travail de conception remonte vers les objets, les états et les règles que toutes les surfaces partagent. | Data contracts, WorkplaceToBe |
+| 01 | Concevoir, c'est retirer | Un système bien conçu réduit l'effort nécessaire pour passer d'un besoin à une action, sans enlever les repères utiles. | Templates ; contient aussi un exemple illustratif |
+| 02 | Le modèle avant l'écran | Le design doit participer à la définition des objets et des règles du produit. Les écrans permettent de les éprouver et de les faire évoluer. | Desoutter, Data contracts, Templates |
+| 03 | Un design system qui s'arrête au bouton | Les patterns métier prolongent les composants d'un design system en organisant les interactions autour de tâches récurrentes. | Templates, Desoutter |
+| 04 | L'IA, deuxième usager du produit | Lorsqu'un agent agit au nom d'une personne, concevoir le produit implique de définir ce qu'elle peut lui déléguer, comment elle garde la main et comment elle comprend ce qui a été fait. | Aucun : texte prospectif, pas un retour d'expérience |
+| 05 | Plusieurs interfaces, un même produit | Lorsqu'un produit est accessible par plusieurs interfaces, sa cohérence dépend des objets, des états et des règles qu'elles partagent, autant que de la qualité propre à chaque interface. | Data contracts, WorkplaceToBe |
 
 Versions complètes :
 
