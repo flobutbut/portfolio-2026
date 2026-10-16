@@ -39,6 +39,7 @@ position:
     copier: Copy the address
     copie: Address copied
     lire: Read the file →
+    nouvelOnglet: "(opens in a new tab)"
 
 methode:
   titre: Method

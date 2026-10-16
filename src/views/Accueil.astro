@@ -114,7 +114,9 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
             <span class="agents__copier" data-copie={agent.pathname} data-copie-ok={a.position.agents.copie}>
               <Bouton>{a.position.agents.copier}</Bouton>
             </span>
-            <Bouton apparence="contour" href={fichiersAgents.agentTexte} hreflang="fr">{a.position.agents.lire}</Bouton>
+            <Bouton apparence="contour" href={fichiersAgents.agentTexte} hreflang="fr" target="_blank" rel="noopener">
+              {a.position.agents.lire}<span class="visually-hidden"> {a.position.agents.nouvelOnglet}</span>
+            </Bouton>
             <p class="agents__statut text-caption" role="status" aria-live="polite"></p>
           </div>
         </div>

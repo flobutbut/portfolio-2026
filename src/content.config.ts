@@ -144,7 +144,15 @@ const accueil = defineCollection({
       titre: z.string(),
       texte: z.string(),
       /** Bloc « Pour les agents » (Figma 94:685) : renvoie vers /agent.md */
-      agents: z.object({ libelle: z.string(), texte: z.string(), copier: z.string(), copie: z.string(), lire: z.string() }),
+      agents: z.object({
+        libelle: z.string(),
+        texte: z.string(),
+        copier: z.string(),
+        copie: z.string(),
+        lire: z.string(),
+        /** Annoncé aux lecteurs d'écran : le bouton « Lire le fichier » ouvre un nouvel onglet */
+        nouvelOnglet: z.string(),
+      }),
     }),
     methode: z.object({
       titre: z.string(),

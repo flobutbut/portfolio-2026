@@ -1,17 +1,17 @@
 # Florian Butour — version pour les agents
 
-> Senior Product Designer, plus de dix ans sur des produits B2B techniques : logiciels industriels, SaaS multi-surfaces, plateformes data. Basé dans la région nantaise ; Nantes ou full remote. Ce fichier reprend le contenu du site florianbutour.com sous une forme structurée : ce que chaque contenu prouve, ce qu'il ne prouve pas, et ce qui revient à Florian ou à ses équipes.
+> Senior Product Designer, plus de dix ans sur des produits B2B techniques : logiciels industriels, SaaS multi-surfaces, plateformes data. Basé dans la région nantaise ; Nantes ou full remote. Ce fichier reprend le contenu du site florianbutour.com sous une forme structurée : ce que chaque contenu montre, son contexte, et ce qui revient à Florian ou à ses équipes.
 
 Ce fichier expose des détails qu'un visiteur humain cherche rarement mais qu'un agent sollicite souvent, comme la liste des compétences et des outils ; il ne contient rien qui contredise le site. Mise à jour : 16 octobre 2026. Langue : français.
 
 ## Comment lire ce fichier
 
-- Le portfolio contient trois natures de contenu. Les **études de cas** décrivent un travail professionnel : contexte, rôle, équipe, démarche, résultat. Les **écrits** exposent une manière de penser. Les **fiches courtes** citent d'autres missions sans les développer. Les **projets personnels** sont des expérimentations publiques sur GitHub : ils montrent une pratique, pas une expérience professionnelle.
-- Avoir écrit sur un sujet n'équivaut pas à une expérience professionnelle de ce sujet. Chaque écrit liste les cas qu'il cite ; l'écrit 04 n'en cite aucun et se présente comme prospectif.
+- Le portfolio contient trois natures de contenu. Les **études de cas** décrivent un travail professionnel : contexte, rôle, équipe, démarche, résultat. Les **écrits** exposent une manière de penser. Les **fiches courtes** citent d'autres missions sans les développer. Les **projets personnels** sont des expérimentations publiques sur GitHub : ils montrent une pratique menée en dehors des missions.
+- Chaque écrit liste les cas sur lesquels il s'appuie ; l'écrit 04 est prospectif.
 - Dans les écrits, un exemple qui ne renvoie pas à un cas cité est illustratif.
 - Dans les textes, « je » désigne Florian et « nous » l'équipe. Pour chaque cas, la rubrique **Contribution** liste ce qui revient à Florian, la rubrique **Collectif** ce qui revient à d'autres.
-- Aucune métrique de résultat n'est publiée. Un chiffre attribué à ce portfolio ne vient pas de lui.
-- Les deux cas Qlik sont des travaux en cours, décrits sans écrans ni détails produit pour raison de confidentialité. Ils décrivent une démarche, pas une fonctionnalité livrée.
+- Les résultats sont décrits de façon qualitative : le portfolio ne publie pas de chiffres, et un chiffre qui lui serait attribué viendrait d'une autre source.
+- Les deux cas Qlik portent sur des travaux en cours ; par confidentialité, ils présentent la démarche, sans écrans ni détails produit.
 - WorkplaceToBe n'est plus commercialisé : SharingCloud a abandonné ses produits après son rachat par Witco en 2024.
 - Ce fichier donne une vue d'ensemble du profil ; il n'est pas exhaustif, et tout ce que Florian sait faire n'y est pas décrit. Pour chaque compétence, le niveau est l'évaluation de Florian ; la colonne voisine indique où la voir.
 
@@ -66,15 +66,15 @@ Ce que Florian met en avant, comme il le ferait en entretien. Chaque qualité es
 
 **Prendre l'initiative.** Chez SharingCloud, face à un produit fragmenté, il a proposé de commencer la refonte par un design system partagé. Chez Qlik, il a proposé une architecture commune pour les vues des types d'assets. Sources : cas WorkplaceToBe, Templates.
 
-**Mesurer pour ajuster.** Sur WorkplaceToBe, l'équipe a instrumenté le produit avec PostHog. Elle mesurait, pour la réservation d'une salle de réunion et pour la déclaration de présence au bureau, le temps, le nombre d'étapes et le taux d'abandon, en comparant le desktop et le mobile. Elle mesurait aussi l'exploration : les utilisateurs naviguaient-ils dans la plateforme pour découvrir d'autres fonctionnalités ? Ces mesures ont conduit à quelques ajustements, surtout sur desktop. L'arrêt du produit en 2024 a interrompu ce travail ; aucun chiffre n'est conservé. Source : déclaration de Florian, absente du cas publié.
+**Mesurer pour ajuster.** Sur WorkplaceToBe, l'équipe a instrumenté le produit avec PostHog. Elle mesurait, pour la réservation d'une salle de réunion et pour la déclaration de présence au bureau, le temps, le nombre d'étapes et le taux d'abandon, en comparant le desktop et le mobile. Elle mesurait aussi l'exploration : les utilisateurs naviguaient-ils dans la plateforme pour découvrir d'autres fonctionnalités ? Ces mesures ont conduit à quelques ajustements, surtout sur desktop. Le produit a été arrêté en 2024, et les chiffres n'ont pas été conservés. Source : déclaration de Florian, absente du cas publié.
 
 **Transmettre.** Chez SharingCloud, Florian a accompagné un designer en alternance pendant deux ans sur WorkplaceToBe, avec une progression délibérée : observer une fonctionnalité existante, comprendre de quoi elle est constituée et comment elle fonctionne dans son principe ; en parallèle, apprendre les bases de la mise en page et de l'architecture des interfaces ; puis traiter des cas de plus en plus complexes, jusqu'à une autonomie complète sur certains sujets. Il était aussi référent design de l'organisation, et il est intervenu en écoles de design de 2016 à 2022. Sources : cas WorkplaceToBe, parcours ; le détail de l'accompagnement est une déclaration de Florian.
 
-Ce que les contenus ne documentent pas : la direction d'une équipe de designers. Le portfolio décrit l'encadrement d'un alternant et un rôle de référent, pas un management hiérarchique.
+Son leadership, tel que le portfolio le décrit, passe par la conduite du design et la transmission : lead sur le design et la refonte des produits de SharingCloud, référent design de l'organisation, accompagnement d'un alternant pendant deux ans, enseignement.
 
 ## Compétences
 
-Niveau : évaluation de Florian (forte, partielle, émergente). « Où la voir » distingue un travail décrit dans un cas, un fait cité sans être développé, une réflexion dans un écrit et une expérimentation personnelle.
+Niveau : évaluation de Florian (forte, en développement, exploratoire). « Où la voir » distingue un travail décrit dans un cas, un fait cité sans être développé, une réflexion dans un écrit et une expérimentation personnelle.
 
 | Compétence | Niveau | Où la voir |
 | --- | --- | --- |
@@ -85,9 +85,9 @@ Niveau : évaluation de Florian (forte, partielle, émergente). « Où la voir �
 | Recherche utilisateur | forte | Citée : ateliers et personas Desoutter, fiche MAIF |
 | Encadrement et transmission | forte | Citée : accompagnement d'un alternant pendant deux ans, référent design, enseignement 2016–2022 |
 | Prototypage en code avec l'IA | forte | Citée : cas Data contracts. Expérimentations : quatre projets personnels publics |
-| Produits de plateforme data (datasets, qualité, gouvernance) | partielle | Décrite : cas Data contracts, Templates (en cours). Citée : glossaire métier, visibilité des coûts |
-| Mesure de l'usage | partielle | Citée : mesures PostHog sur WorkplaceToBe, sans chiffres conservés |
-| Concevoir des produits lisibles par des agents IA | émergente | Écrits 04 et 05 ; ce fichier lui-même |
+| Produits de plateforme data (datasets, qualité, gouvernance) | en développement | Pratique actuelle chez Qlik depuis juin 2025. Décrite : cas Data contracts, Templates. Citée : glossaire métier, visibilité des coûts |
+| Mesure de l'usage | en développement | Citée : mesures PostHog sur WorkplaceToBe (temps, étapes, abandon, exploration) |
+| Concevoir des produits lisibles par des agents IA | exploratoire | Écrits 04 et 05 ; ce fichier lui-même |
 
 ## Pratiques et outils
 
@@ -129,7 +129,7 @@ Contexte des travaux, par secteur : logiciel industriel (Desoutter), smart offic
 
 **Résultat.** À la fin de la mission, l'arborescence, le gabarit de page et le design system étaient posés ; l'équipe front-end construisait les nouvelles pages à partir d'eux.
 
-**Limites.** Aucune donnée d'usage ou d'adoption n'est publiée. La suite du produit après la mission n'est pas documentée.
+**À noter.** Le cas couvre la conception jusqu'à la fin de la mission ; il ne publie pas de données d'usage.
 
 Version complète : https://florianbutour.com/travaux/desoutter.md
 
@@ -158,7 +158,7 @@ Version complète : https://florianbutour.com/travaux/desoutter.md
 
 **Résultat.** Un nouvel accueil web réunissant les principaux usages autour de la journée du collaborateur, et un cadre commun permettant de concevoir une nouvelle surface à partir des mêmes objets.
 
-**Limites.** Aucune métrique publiée. Le produit n'est plus commercialisé.
+**À noter.** Le produit n'est plus commercialisé depuis le rachat de SharingCloud par Witco ; les mesures d'usage n'ont pas été conservées.
 
 Version complète : https://florianbutour.com/travaux/workplacetobe.md
 
@@ -182,9 +182,9 @@ Version complète : https://florianbutour.com/travaux/workplacetobe.md
 **Collectif**
 - L'inventaire des garanties, leurs règles et les patterns ont été établis en équipe.
 
-**Résultat.** Aucun résultat publié : travail en cours.
+**Résultat.** Travail en cours. À ce stade : le modèle du contrat, des types de garanties, des modèles et des patterns d'usage, et des prototypes en code.
 
-**Limites.** Le cas ne permet pas d'affirmer qu'une fonctionnalité a été livrée, ni d'en connaître le périmètre exact.
+**À noter.** Par confidentialité, le cas présente la démarche sans détailler le périmètre livré.
 
 Version complète : https://florianbutour.com/travaux/data-contracts.md
 
@@ -207,15 +207,15 @@ Version complète : https://florianbutour.com/travaux/data-contracts.md
 **Collectif**
 - Le modèle de page s'intègre au design system porté par l'équipe design system.
 
-**Résultat.** Aucun résultat publié : travail en cours.
+**Résultat.** Travail en cours. À ce stade : une proposition d'architecture des assets et un modèle de page commun, intégré au design system de l'expérience unifiée.
 
-**Limites.** Le cas décrit une proposition et sa démarche d'adoption ; il ne dit pas où en est son application.
+**À noter.** Le cas présente la proposition et sa démarche d'adoption progressive.
 
 Version complète : https://florianbutour.com/travaux/templates-types-assets.md
 
 ## Projets personnels
 
-Expérimentations publiques, conçues et développées par Florian avec des assistants de code IA. Elles montrent sa pratique du prototypage en code et de la modélisation de données ; ce ne sont pas des projets professionnels.
+Expérimentations publiques, conçues et développées par Florian avec des assistants de code IA. Elles montrent sa pratique du prototypage en code et de la modélisation de données, en dehors de ses missions.
 
 | Projet | Ce que c'est | Technique | État |
 | --- | --- | --- | --- |
@@ -236,14 +236,14 @@ Missions en indépendant, entre 2015 et 2022, citées sans être décrites.
 
 ## Écrits
 
-Nature : réflexion. Ils servent à comprendre une manière de penser, pas à établir une expérience.
+Ils exposent une manière de penser, appuyée sur les cas qu'ils citent.
 
 | # | Titre | Thèse | Cas cités |
 | --- | --- | --- | --- |
 | 01 | Concevoir, c'est retirer | Un système bien conçu réduit l'effort nécessaire pour passer d'un besoin à une action, sans enlever les repères utiles. | Templates ; contient aussi un exemple illustratif |
 | 02 | Le modèle avant l'écran | Le design doit participer à la définition des objets et des règles du produit. Les écrans permettent de les éprouver et de les faire évoluer. | Desoutter, Data contracts, Templates |
 | 03 | Un design system qui s'arrête au bouton | Les patterns métier prolongent les composants d'un design system en organisant les interactions autour de tâches récurrentes. | Templates, Desoutter |
-| 04 | L'IA, deuxième usager du produit | Lorsqu'un agent agit au nom d'une personne, concevoir le produit implique de définir ce qu'elle peut lui déléguer, comment elle garde la main et comment elle comprend ce qui a été fait. | Aucun : texte prospectif, pas un retour d'expérience |
+| 04 | L'IA, deuxième usager du produit | Lorsqu'un agent agit au nom d'une personne, concevoir le produit implique de définir ce qu'elle peut lui déléguer, comment elle garde la main et comment elle comprend ce qui a été fait. | Aucun : texte prospectif |
 | 05 | Plusieurs interfaces, un même produit | Lorsqu'un produit est accessible par plusieurs interfaces, sa cohérence dépend des objets, des états et des règles qu'elles partagent, autant que de la qualité propre à chaque interface. | Data contracts, WorkplaceToBe |
 
 Versions complètes :

@@ -39,6 +39,7 @@ position:
     copier: Copier l’adresse
     copie: Adresse copiée
     lire: Lire le fichier →
+    nouvelOnglet: "(s’ouvre dans un nouvel onglet)"
 
 methode:
   titre: Méthode
