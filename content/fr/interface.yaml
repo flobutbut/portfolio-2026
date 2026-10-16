@@ -78,10 +78,10 @@ contact:
   signature: Florian Butour — Senior Product Designer
   linkedin:
     libelle: LinkedIn
-    url: "À compléter : adresse du profil LinkedIn"
+    url: https://www.linkedin.com/in/florianbutour/
   cv:
     libelle: CV (PDF)
-    url: "À compléter : fichier du CV français"
+    url: /cv/florian-butour-cv-fr.pdf
   ecrits: Écrits
   localisation: Nantes · full remote
 
