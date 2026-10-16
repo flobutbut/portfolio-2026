@@ -1,7 +1,7 @@
 ---
 /**
  * Strates/Navigation (Figma 2:487)
- * Logo, liens de section, ancre vers le contact et lien vers l'autre langue.
+ * Logo, liens de section (dont la page Contact) et lien vers l'autre langue.
  * États d'un lien (Figma 7:373, 8:443, 7:406) : repos, survol (aplat bleu), actif (barre de 8 px).
  *
  * Mobile : menu burger construit sur l'API Popover native.
@@ -20,7 +20,7 @@ const { locale, alternate } = Astro.props;
 const ui = await getInterface(locale);
 const current = Astro.url.pathname.replace(/\/$/, '') || '/';
 
-const sections = (['travaux', 'ecrits', 'parcours'] as const).map((key) => {
+const sections = (['travaux', 'ecrits', 'parcours', 'contact'] as const).map((key) => {
   const href = path(key, locale);
   const ariaCurrent: 'page' | 'true' | undefined =
     current === href ? 'page' : current.startsWith(`${href}/`) ? 'true' : undefined;
@@ -67,9 +67,6 @@ const target = otherLocale(locale);
               </li>
             ))
           }
-          <li>
-            <a class="navigation__link" href="#contact">{ui.navigation.contact}</a>
-          </li>
           {
             alternate && (
               <li class="navigation__langue">
@@ -92,7 +89,7 @@ const target = otherLocale(locale);
 </header>
 
 <script>
-  // Referme le menu mobile quand on suit un lien (notamment l'ancre #contact).
+  // Referme le menu mobile quand on suit un lien.
   const menu = document.getElementById('menu-principal');
   menu?.addEventListener('click', (event) => {
     const link = (event.target as Element).closest('a');

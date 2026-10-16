@@ -145,8 +145,7 @@ a {
   position: absolute;
   z-index: -1;
   inset: 0;
-  /* surface/inactive à moitié : plus léger que les étiquettes Off, qui restent lisibles */
-  background: color-mix(in srgb, var(--color-surface-inactive) 50%, transparent);
+  background: var(--color-background-subtle);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--motion-duration-long) var(--motion-ease);
@@ -159,6 +158,35 @@ a {
 @media (hover: hover) {
   .entree:hover::before {
     transform: scaleX(1);
+  }
+}
+
+/* Conteneur étroit des pages intérieures : contenu de 1 120 px */
+.container--etroit {
+  max-width: calc(70rem + 2 * var(--layout-gutter));
+}
+
+/* Libellé de section (Label/12, gris) */
+.libelle {
+  color: var(--color-text-muted);
+}
+
+/* Haut des pages intérieures : 280 px sur desktop (Figma 9:1779), 80 px sur mobile */
+.page-tete {
+  padding-top: var(--layout-page-tete);
+}
+
+/* Apparition des sections (scripts/apparition.ts) : masquage seulement si le script tourne */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-apparition] {
+    transition:
+      opacity var(--motion-duration-long) var(--motion-ease),
+      transform var(--motion-duration-long) var(--motion-ease);
+  }
+
+  .js [data-apparition]:not(.apparu) {
+    opacity: 0;
+    transform: translateY(1rem);
   }
 }
 

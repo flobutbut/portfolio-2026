@@ -1,9 +1,10 @@
 ---
 /**
- * Strates/Contact (Figma 2:492)
- * Adresse en grand, copiable en un clic ; signature, liens et localisation.
- * Sans JavaScript, l'adresse reste un lien mailto.
+ * Strates/Contact (Figma 2:492), pied de page
+ * Adresse en grand dans la colonne de 1 120 px, filet, puis signature, liens et localisation
+ * sur toute la largeur. Sur la page Contact, l'adresse est déjà dans la page : `avecEmail={false}`.
  */
+import EmailCopiable from './EmailCopiable.astro';
 import type { Locale } from '../i18n/routes';
 import { path } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
@@ -11,9 +12,10 @@ import { isTodo } from '../lib/todo';
 
 interface Props {
   locale: Locale;
+  avecEmail?: boolean;
 }
 
-const { locale } = Astro.props;
+const { locale, avecEmail = true } = Astro.props;
 const { contact } = await getInterface(locale);
 
 const liens = [
@@ -24,75 +26,39 @@ const liens = [
 ---
 
 <footer id="contact" class="contact" aria-labelledby="contact-titre">
-  <div class="contact__inner container">
-    <h2 id="contact-titre" class="visually-hidden">{contact.titre}</h2>
-
-    <div class="contact__email-bloc">
-      <a
-        class="contact__email text-display"
-        href={`mailto:${contact.email}`}
-        data-copy={contact.email}
-        data-copy-label={contact.copier}
-        data-copied={contact.copie}>{contact.email}</a
-      >
-      <p class="contact__status text-caption" role="status" aria-live="polite"></p>
-    </div>
-
-    <div class="contact__meta text-caption">
-      <p class="contact__col">{contact.signature}</p>
-      <p class="contact__col contact__col--centre">
-        {
-          liens.map((lien, i) => (
-            <>
-              {i > 0 && <span aria-hidden="true"> · </span>}
-              {isTodo(lien.url) ? (
-                <span class="todo" title={lien.url}>
-                  {lien.libelle}
-                </span>
-              ) : (
-                <a href={lien.url} rel={lien.externe ? 'me noopener' : undefined}>
-                  {lien.libelle}
-                </a>
-              )}
-            </>
-          ))
-        }
-      </p>
-      <p class="contact__col contact__col--fin">{contact.localisation}</p>
-    </div>
+  <h2 id="contact-titre" class="visually-hidden">{contact.titre}</h2>
+  {
+    avecEmail && (
+      <div class="contact__email">
+        <div class="container container--etroit">
+          <EmailCopiable locale={locale} />
+        </div>
+      </div>
+    )
+  }
+  <div class="contact__meta text-caption">
+    <p class="contact__col">{contact.signature}</p>
+    <p class="contact__col contact__col--centre">
+      {
+        liens.map((lien, i) => (
+          <>
+            {i > 0 && <span aria-hidden="true"> · </span>}
+            {isTodo(lien.url) ? (
+              <span class="todo" title={lien.url}>
+                {lien.libelle}
+              </span>
+            ) : (
+              <a href={lien.url} rel={lien.externe ? 'me noopener' : undefined}>
+                {lien.libelle}
+              </a>
+            )}
+          </>
+        ))
+      }
+    </p>
+    <p class="contact__col contact__col--fin">{contact.localisation}</p>
   </div>
 </footer>
-
-<script>
-  // Remplace le lien mailto par un bouton qui copie l'adresse, si le presse-papiers est disponible.
-  const link = document.querySelector<HTMLAnchorElement>('.contact__email[data-copy]');
-  const status = document.querySelector<HTMLElement>('.contact__status');
-
-  if (link && status && navigator.clipboard) {
-    const { copy = '', copyLabel = '', copied = '' } = link.dataset;
-    const button = document.createElement('button');
-    // Reprend la classe et l'attribut de portée CSS d'Astro, sans le href.
-    for (const { name, value } of link.attributes) {
-      if (name !== 'href') button.setAttribute(name, value);
-    }
-    button.type = 'button';
-    button.textContent = link.textContent;
-    button.setAttribute('aria-label', `${copy}, ${copyLabel}`);
-    link.replaceWith(button);
-
-    let timer: number | undefined;
-    button.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(copy);
-        status.textContent = copied;
-        window.clearTimeout(timer);
-        timer = window.setTimeout(() => (status.textContent = ''), 2400);
-      } catch {
-        window.location.href = `mailto:${copy}`;
-      }
-    });
-  }
-</script>
 
 <style>
   .contact {
@@ -100,72 +66,17 @@ const liens = [
     color: var(--color-text-inverse);
   }
 
-  .contact__inner {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-    padding-top: 6rem;
-    padding-bottom: 2.5rem;
-  }
-
-  .contact__email-bloc {
-    position: relative;
-  }
-
-  /* Survol : le texte passe en bleu de gauche à droite (dégradé à arrêt net découpé par le texte) */
   .contact__email {
-    display: inline-block;
-    padding: 0;
-    border: 0;
-    background: linear-gradient(
-        to right,
-        var(--color-background-brand) 50%,
-        var(--color-text-inverse) 50%
-      )
-      100% 0 / 200% 100% no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-align: left;
-    text-decoration: none;
-    cursor: pointer;
-    overflow-wrap: anywhere;
-    transition: background-position var(--motion-duration-long) var(--motion-ease);
-    /* L'adresse doit tenir sur une ligne jusqu'à 320 px de large */
-    font-size: clamp(1.75rem, 8.5vw, var(--text-display-size));
-  }
-
-  .contact__email:focus-visible {
-    background-position: 0 0;
-  }
-
-  @media (hover: hover) {
-    .contact__email:hover {
-      background-position: 0 0;
-    }
-  }
-
-  /* Mode contraste forcé : le texte découpé disparaîtrait, on revient à une couleur pleine */
-  @media (forced-colors: active) {
-    .contact__email {
-      background: none;
-      color: LinkText;
-    }
-  }
-
-  .contact__status {
-    position: absolute;
-    top: calc(100% + 0.75rem);
-    left: 0;
-    color: var(--color-text-on-dark-muted);
+    padding-top: 4.5rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--color-border-on-dark);
   }
 
   .contact__meta {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--color-border-on-dark);
+    padding: 1.5rem 2rem;
     color: var(--color-text-on-dark-muted);
   }
 
@@ -195,14 +106,15 @@ const liens = [
   }
 
   @media (max-width: 39.99rem) {
-    .contact__inner {
-      gap: 3rem;
-      padding-top: 4rem;
+    .contact__email {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
     }
 
     .contact__meta {
       flex-direction: column;
       gap: 0.75rem;
+      padding-inline: var(--layout-gutter);
     }
 
     .contact__col--centre,

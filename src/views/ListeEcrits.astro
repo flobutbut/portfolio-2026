@@ -19,7 +19,7 @@ const ecrits = await lister('ecrits', locale);
 
 <BaseLayout title={ui.navigation.ecrits} description={ui.metadonnees.ecrits} locale={locale} alternate={path('ecrits', otherLocale(locale))}>
   <div class="container container--etroit page-tete">
-    <EnTeteDeSection titre={ui.navigation.ecrits} niveau={1} />
+    <EnTeteDeSection titre={ui.navigation.ecrits} niveau={1} espace="page" />
   </div>
   <div class="container container--etroit" data-apparition>
     {

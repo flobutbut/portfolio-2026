@@ -16,9 +16,11 @@ interface Props {
   type?: 'website' | 'article';
   /** Les pages hors index (banc d'essai, 404) */
   noindex?: boolean;
+  /** Le pied de page affiche l'adresse en grand, sauf sur la page Contact qui la porte déjà */
+  piedAvecEmail?: boolean;
 }
 
-const { title, description, locale, alternate, type = 'website', noindex = false } = Astro.props;
+const { title, description, locale, alternate, type = 'website', noindex = false, piedAvecEmail = true } = Astro.props;
 const ui = await getInterface(locale);
 const desc = description ?? ui.metadonnees.description;
 const titre = title.includes(ui.metadonnees.site) ? title : `${title} · ${ui.metadonnees.site}`;
@@ -89,7 +91,7 @@ const image = new URL(ogPath(Astro.url.pathname), site).href;
     <main id="contenu" tabindex="-1">
       <slot />
     </main>
-    <Contact locale={locale} />
+    <Contact locale={locale} avecEmail={piedAvecEmail} />
   </body>
 </html>
 

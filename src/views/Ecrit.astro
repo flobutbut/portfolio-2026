@@ -108,11 +108,13 @@ const surtitre = [`${t.surtitre} ${String(ecrit.numero).padStart(2, '0')}`, d.ge
 </BaseLayout>
 
 <style>
+  /* En-tête d'écrit centré dans un bloc de 720 px (Figma 28:344) : ≈ 264 px au-dessus, 144 px dessous */
   .ecrit-tete {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: min(var(--layout-page-tete), 16.5rem);
+    padding-bottom: clamp(1.5rem, 9vw, 9rem);
   }
 
   .ecrit-tete__titre {

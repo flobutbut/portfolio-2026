@@ -23,7 +23,7 @@ const sep = locale === 'fr' ? ' : ' : ': ';
 
 <BaseLayout title={p.titre} description={p.description} locale={locale} alternate={path('parcours', otherLocale(locale))}>
   <div class="container container--etroit page-tete parcours-tete">
-    <EnTeteDeSection titre={p.titre} niveau={1} />
+    <EnTeteDeSection titre={p.titre} niveau={1} espace="page" filet={false} />
   </div>
 
   <section class="intro" aria-label={p.titre}>
@@ -98,10 +98,6 @@ const sep = locale === 'fr' ? ' : ' : ': ';
 </BaseLayout>
 
 <style>
-  .parcours-tete {
-    padding-bottom: 3.5rem;
-  }
-
   .intro {
     background: var(--color-background-inverse);
     color: var(--color-text-inverse);

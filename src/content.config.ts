@@ -130,7 +130,7 @@ const accueil = defineCollection({
       designSystem: z.object({ description: z.string(), exemples: z.string() }),
       modele: z.object({ description: z.string(), exemples: z.string() }),
     }),
-    travaux: z.object({ titre: z.string(), tous: z.string() }),
+    travaux: z.object({ titre: z.string() }),
     position: z.object({ libelle: z.string(), titre: z.string(), texte: z.string() }),
     methode: z.object({
       titre: z.string(),
@@ -145,7 +145,7 @@ const accueil = defineCollection({
         )
         .length(3),
     }),
-    ecrits: z.object({ titre: z.string(), tous: z.string() }),
+    ecrits: z.object({ titre: z.string() }),
   }),
 });
 
@@ -258,6 +258,7 @@ const interfaceTextes = defineCollection({
       description: z.string(),
       travaux: z.string(),
       ecrits: z.string(),
+      contact: z.string(),
     }),
   }),
 });

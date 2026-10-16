@@ -33,13 +33,14 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '## Pages',
     `- [Parcours](${url(path('parcours', 'fr'))})`,
-    `- Contact : ${ui.contact.email}`,
+    `- [Contact](${url(path('contact', 'fr'))}) : ${ui.contact.email}`,
     '',
     '## English',
     `- [Home](${url(path('accueil', 'en'))})`,
     ...casEn.map((c) => `- [${c.data.titre}](${url(c.href)})`),
     ...ecritsEn.map((e) => `- [${e.data.titre}](${url(e.href)})`),
     `- [Background](${url(path('parcours', 'en'))})`,
+    `- [Contact](${url(path('contact', 'en'))})`,
     '',
   ];
   return new Response(lignes.join('\n'), { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });

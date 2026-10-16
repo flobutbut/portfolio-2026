@@ -2,25 +2,43 @@
 /**
  * Strates/En-tête de section (Figma 2:488)
  * Titre Display/64 posé sur un filet encre de 3 px. Utilisé pour Travaux, Méthode, Écrits…
+ * En tête de page intérieure (Figma 9:1779, 9:1967, 54:673) : 72 px sous le titre ;
+ * le filet est présent sur les listes, absent sur Parcours et Contact.
  */
 interface Props {
   titre: string;
   /** Niveau du titre : h1 en tête de page, h2 dans une section. */
   niveau?: 1 | 2;
   id?: string;
+  /** Espace sous le titre : 20 px dans les sections, 72 px en tête de page */
+  espace?: 'section' | 'page';
+  filet?: boolean;
 }
 
-const { titre, niveau = 2, id } = Astro.props;
+const { titre, niveau = 2, id, espace = 'section', filet = true } = Astro.props;
 const Titre = `h${niveau}` as 'h1' | 'h2';
 ---
 
-<div class="en-tete-de-section">
+<div class:list={['en-tete-de-section', `en-tete-de-section--${espace}`, { 'en-tete-de-section--filet': filet }]}>
   <Titre class="text-display" id={id}>{titre}</Titre>
 </div>
 
 <style>
-  .en-tete-de-section {
+  .en-tete-de-section--section {
     padding-bottom: 1.25rem;
+  }
+
+  .en-tete-de-section--page {
+    padding-bottom: 4.5rem;
+  }
+
+  .en-tete-de-section--filet {
     border-bottom: 3px solid var(--color-border-ink);
+  }
+
+  @media (max-width: 39.99rem) {
+    .en-tete-de-section--page {
+      padding-bottom: 2.5rem;
+    }
   }
 </style>

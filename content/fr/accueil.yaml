@@ -15,7 +15,7 @@ hero:
 
 strates:
   titre: Strates
-  introduction: "Ce qui m’intéresse, c’est ce qui les traverse : un même objet, tenu par les mêmes règles, présent sur chaque surface pour des usages différents pour chaque utilisateur."
+  introduction: Chaque surface montre le même objet, tenu par les règles du design system, défini une seule fois dans le modèle. Seul l’usage change, selon qui le manipule, humain ou agent.
   surfaces:
     description: Les endroits où l’on rencontre le produit. Je ne conçois pas un écran, mais la présence d’un même objet sur chacun d’eux.
     exemples: web · mobile · Outlook · CLI · API · agents
@@ -28,7 +28,6 @@ strates:
 
 travaux:
   titre: Travaux
-  tous: Tous les travaux →
 
 position:
   libelle: Position
@@ -75,4 +74,3 @@ methode:
 
 ecrits:
   titre: Écrits
-  tous: Tous les écrits →

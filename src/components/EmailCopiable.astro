@@ -1,0 +1,106 @@
+---
+/**
+ * Adresse e-mail en grand (Display/64), copiable en un clic.
+ * Sans JavaScript ou sans presse-papiers, elle reste un lien mailto.
+ * Survol et focus : le texte passe en bleu de gauche à droite.
+ * Utilisée dans le pied de page (Strates/Contact) et sur la page Contact.
+ */
+import type { Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { contact } = await getInterface(locale);
+---
+
+<div class="email">
+  <a
+    class="email__adresse text-display"
+    href={`mailto:${contact.email}`}
+    data-copy={contact.email}
+    data-copy-label={contact.copier}
+    data-copied={contact.copie}>{contact.email}</a
+  >
+  <p class="email__statut text-caption" role="status" aria-live="polite"></p>
+</div>
+
+<script>
+  // Remplace chaque lien mailto par un bouton qui copie l'adresse, si le presse-papiers est disponible.
+  document.querySelectorAll<HTMLAnchorElement>('.email__adresse[data-copy]').forEach((lien) => {
+    const statut = lien.parentElement?.querySelector<HTMLElement>('.email__statut');
+    if (!statut || !navigator.clipboard) return;
+    const { copy = '', copyLabel = '', copied = '' } = lien.dataset;
+    const bouton = document.createElement('button');
+    // Reprend la classe et l'attribut de portée CSS d'Astro, sans le href
+    for (const { name, value } of lien.attributes) if (name !== 'href') bouton.setAttribute(name, value);
+    bouton.type = 'button';
+    bouton.textContent = lien.textContent;
+    bouton.setAttribute('aria-label', `${copy}, ${copyLabel}`);
+    lien.replaceWith(bouton);
+
+    let minuterie: number | undefined;
+    bouton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(copy);
+        statut.textContent = copied;
+        window.clearTimeout(minuterie);
+        minuterie = window.setTimeout(() => (statut.textContent = ''), 2400);
+      } catch {
+        window.location.href = `mailto:${copy}`;
+      }
+    });
+  });
+</script>
+
+<style>
+  .email {
+    position: relative;
+  }
+
+  /* Dégradé à arrêt net, découpé par le texte : blanc au repos, bleu au survol */
+  .email__adresse {
+    display: inline-block;
+    padding: 0;
+    border: 0;
+    background: linear-gradient(to right, var(--color-background-brand) 50%, var(--color-text-inverse) 50%) 100% 0 / 200%
+      100% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    transition: background-position var(--motion-duration-long) var(--motion-ease);
+    /* L'adresse doit tenir sur une ligne jusqu'à 320 px de large */
+    font-size: clamp(1.75rem, 8.5vw, var(--text-display-size));
+  }
+
+  .email__adresse:focus-visible {
+    background-position: 0 0;
+  }
+
+  @media (hover: hover) {
+    .email__adresse:hover {
+      background-position: 0 0;
+    }
+  }
+
+  /* Mode contraste forcé : le texte découpé disparaîtrait, on revient à une couleur pleine */
+  @media (forced-colors: active) {
+    .email__adresse {
+      background: none;
+      color: LinkText;
+    }
+  }
+
+  .email__statut {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 0;
+    color: var(--color-text-on-dark-muted);
+  }
+</style>

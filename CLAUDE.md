@@ -52,7 +52,7 @@ docs/                      Notes de décision et guides
 
 ## Sources de vérité
 
-- **Figma** `AqUur6HhWyKnXAJwEwx1Ol` (MCP Figma officiel disponible) : accueil `1:14`, travaux `9:1314`, écrits `9:1861`, parcours `9:1964`, cas `27:316`, écrit `28:342`, page « Composants » `9:773`.
+- **Figma** `AqUur6HhWyKnXAJwEwx1Ol` (MCP Figma officiel disponible) : accueil `1:14`, travaux `9:1314`, écrits `9:1861`, parcours `9:1964`, contact `54:671`, cas `27:316`, écrit `28:342`, page « Composants » `9:773`.
 - Quand une maquette contredit le brief ou une règle ci-dessous : **signaler, ne pas trancher seul**.
 - Arbitrages déjà rendus : intitulé « Senior Product Designer » ; `text/muted` = #737373 (et non #8A8A8A) ; Caption en 13 px ; marge unique de 56 px ; sélecteur de langue « EN / FR » après Contact ; favicon « FB. » sur carré bleu ; strates du brief (surfaces, design system, modèle) partout ; strate Off en `text/supporting` #5C5C59 ; bandeaux de strate de 28 px ; interligne UI 20 px.
 
@@ -70,7 +70,7 @@ docs/                      Notes de décision et guides
 - `prefers-reduced-motion` : `--motion-duration` passe à 0 ; tout s'affiche dans son état final.
 
 ### Composants
-- Catalogue (noms Figma de la page « Composants ») : `Bouton` (plein, contour), `Strate` (On/Off), `StratesTouchees` (les trois strates, verticale ou horizontale), `Navigation`, `EnTeteDeSection`, `EntreeDeProjet` (avec ou sans visuel), `PilierDeMethode`, `EntreeDEcrit`, `Contact`.
+- Catalogue (noms Figma de la page « Composants ») : `Bouton` (plein, contour), `Strate` (On/Off), `StratesTouchees` (les trois strates, verticale ou horizontale), `Navigation`, `EnTeteDeSection` (section ou tête de page, avec ou sans filet), `EntreeDeProjet` (avec ou sans visuel), `PilierDeMethode`, `EntreeDEcrit`, `Contact` (pied de page, `avecEmail`), `EmailCopiable`, `PlancheContact`.
 - Banc d'essai en développement : http://localhost:4321/systeme/composants (aucune page générée en production).
 - Styles limités au composant (`<style>` Astro) ; classes en BEM léger (`bloc__element--variante`).
 - Scripts : `<script>` natifs dans le composant, en amélioration progressive. La page doit fonctionner sans JavaScript.

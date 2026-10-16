@@ -15,7 +15,7 @@ hero:
 
 strates:
   titre: Layers
-  introduction: "What interests me is what runs through them: the same object, held by the same rules, present on every surface for different uses by each user."
+  introduction: Every surface shows the same object, held by the design system’s rules, defined once in the model. Only the use changes, depending on who handles it, human or agent.
   surfaces:
     description: The places where people meet the product. I don’t design a screen, but the presence of the same object on each of them.
     exemples: web · mobile · Outlook · CLI · API · agents
@@ -28,7 +28,6 @@ strates:
 
 travaux:
   titre: Work
-  tous: All work →
 
 position:
   libelle: Position
@@ -75,4 +74,3 @@ methode:
 
 ecrits:
   titre: Writing
-  tous: All writing →

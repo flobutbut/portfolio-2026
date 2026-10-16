@@ -210,14 +210,18 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
 </BaseLayout>
 
 <style>
+  /* En-tête de cas : 140 px en haut (Figma 27:318), moins que les autres pages */
   .cas-tete {
+    padding-top: min(var(--layout-page-tete), 8.75rem);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
   }
 
+  /* Titre posé sur un filet encre de 3 px, 72 px plus bas (Figma 27:319) */
   .cas-tete__titre {
-    padding-bottom: 1.25rem;
+    padding-bottom: 4.5rem;
+    border-bottom: 3px solid var(--color-border-ink);
   }
 
   .cas-tete__chapo {
@@ -228,7 +232,7 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr)) 12.5rem;
     gap: 2rem;
-    padding: 1rem 0 3.5rem;
+    padding: 3rem 0 3.5rem;
   }
 
   .cartouche__item {

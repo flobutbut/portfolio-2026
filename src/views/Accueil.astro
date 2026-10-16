@@ -55,7 +55,9 @@ const cv = ui.contact.cv.url;
   <!-- Strates -->
   <section class="container section" aria-labelledby="strates-titre" data-apparition>
     <EnTeteDeSection titre={a.strates.titre} id="strates-titre" />
-    <p class="text-lead strates__intro">{a.strates.introduction}</p>
+    <div class="strates__intro">
+      <p class="text-lead">{a.strates.introduction}</p>
+    </div>
     <ul class="strates__cartes" role="list">
       {
         STRATES.map((cle) => (
@@ -87,7 +89,6 @@ const cv = ui.contact.cv.url;
         ))
       }
     </div>
-    <a class="section__tous text-ui" href={path('travaux', locale)}>{a.travaux.tous}</a>
   </section>
 
   <!-- Position -->
@@ -127,6 +128,7 @@ const cv = ui.contact.cv.url;
       {
         ecrits.map((e) => (
           <EntreeDEcrit
+            retrait={false}
             locale={locale}
             lang={e.langue !== locale ? e.langue : undefined}
             titre={e.data.titre}
@@ -137,9 +139,7 @@ const cv = ui.contact.cv.url;
         ))
       }
     </div>
-    <a class="section__tous text-ui" href={path('ecrits', locale)}>{a.ecrits.tous}</a>
   </section>
-  <div class="espace" aria-hidden="true"></div>
 </BaseLayout>
 
 <script>
@@ -232,15 +232,6 @@ const cv = ui.contact.cv.url;
     padding-bottom: 2.5rem;
   }
 
-  .section__tous {
-    display: inline-block;
-    margin-top: 2rem;
-    text-decoration: none;
-  }
-
-  .section__tous:hover {
-    text-decoration: underline;
-  }
 
   @media (max-width: 39.99rem) {
     .section {
@@ -249,9 +240,15 @@ const cv = ui.contact.cv.url;
   }
 
   /* ---------- Strates ---------- */
+  /* Introduction sur fond background/subtle, alignée sur le texte des cartes */
   .strates__intro {
+    margin-bottom: 2rem;
+    padding: 1.5rem 2rem;
+    background: var(--color-background-subtle);
+  }
+
+  .strates__intro p {
     max-width: 52.5rem;
-    padding-block: 2rem;
   }
 
   .strates__cartes {
@@ -300,7 +297,7 @@ const cv = ui.contact.cv.url;
   .position__inner {
     display: grid;
     grid-template-columns: 18.75rem minmax(0, 1fr);
-    gap: 2.5rem;
+    gap: 0.5rem;
     padding-top: 7.5rem;
     padding-bottom: 7rem;
   }
@@ -393,7 +390,10 @@ const cv = ui.contact.cv.url;
     color: var(--color-text-muted);
   }
 
-  .espace {
-    height: 7.5rem;
+  /* Écrits : colonne centrée de 848 px, sans retrait */
+  .ecrits__liste {
+    max-width: 53rem;
+    margin-inline: auto;
+    padding-top: 3rem;
   }
 </style>
