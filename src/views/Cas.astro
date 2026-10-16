@@ -33,17 +33,22 @@ const apres = corps.apres.map((s) => ({ ...s, rang: deux(++rang) }));
 const ecritsLies = await resoudre('ecrits', locale, d.ecritsLies);
 const ecritRegles = d.reglesEcrit ? (await resoudre('ecrits', locale, [d.reglesEcrit]))[0] : undefined;
 const suivant = d.casSuivant ? await trouver('cas', locale, d.casSuivant) : undefined;
-const cartouche = [
-  [t.role, d.cartouche.role],
-  [t.duree, d.cartouche.duree],
-  [t.equipe, d.cartouche.equipe],
-  [t.livrables, d.cartouche.livrables],
-] as const;
-const trente = [
-  [t.probleme, d.trenteSecondes.probleme],
-  [t.decision, d.trenteSecondes.decision],
-  [t.ceQuiReste, d.trenteSecondes.ceQuiReste],
-] as const;
+const cartouche = (
+  [
+    [t.role, d.cartouche.role],
+    [t.duree, d.cartouche.duree],
+    [t.equipe, d.cartouche.equipe],
+    [t.livrables, d.cartouche.livrables],
+  ] as const
+).filter((ligne): ligne is readonly [string, string] => Boolean(ligne[1]));
+const trente = d.trenteSecondes
+  ? ([
+      [t.probleme, d.trenteSecondes.probleme],
+      [t.decision, d.trenteSecondes.decision],
+      [t.ceQuiReste, d.trenteSecondes.ceQuiReste],
+    ] as const)
+  : [];
+const surtitre = d.nature === 'note' ? t.note : t.surtitre;
 const lignesDecision = (dec: (typeof d.decisions)[number]) =>
   [
     [t.plutotQue, dec.plutotQue],
@@ -55,7 +60,7 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
 <BaseLayout title={d.titre} description={d.chapo} locale={locale} alternate={cas.alternate} type="article">
   <article lang={cas.langue !== locale ? cas.langue : undefined}>
     <header class="container container--etroit page-tete cas-tete">
-      <p class="text-label libelle">{t.surtitre} {deux(cas.numero)} · {d.meta}</p>
+      <p class="text-label libelle">{surtitre} {deux(cas.numero)} · {d.meta}</p>
       <h1 class="text-display cas-tete__titre">{d.titre}</h1>
       <p class="text-lead cas-tete__chapo">{d.chapo}</p>
       <dl class="cartouche">
@@ -74,6 +79,15 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
       </dl>
     </header>
 
+    {
+      corps.intro && (
+        <div class="container container--etroit cas-intro">
+          <div class="prose" set:html={corps.intro} />
+        </div>
+      )
+    }
+
+    {trente.length > 0 && (
     <section class="trente" aria-labelledby="trente-titre">
       <div class="container container--etroit trente__inner">
         <h2 id="trente-titre" class="text-label trente__libelle">{t.trenteSecondes}</h2>
@@ -89,12 +103,24 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
         </div>
       </div>
     </section>
+    )}
 
     {
       avant.map((s) => (
         <section class="cas-section" data-apparition>
           <div class="container container--etroit cas-section__inner">
-            <h2 class="text-label libelle">{s.rang} · {s.libelle}</h2>
+            {s.avecTitre ? (
+              <h2 class="text-label libelle">
+                {s.rang} · {s.libelle}
+              </h2>
+            ) : (
+              <>
+                <p class="text-label libelle" aria-hidden="true">
+                  {s.rang}
+                </p>
+                <h2 class="text-heading-40 cas-section__titre">{s.libelle}</h2>
+              </>
+            )}
             <div class="prose" set:html={s.html} />
           </div>
         </section>
@@ -162,7 +188,18 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
       apres.map((s) => (
         <section class="cas-section" data-apparition>
           <div class="container container--etroit cas-section__inner">
-            <h2 class="text-label libelle">{s.rang} · {s.libelle}</h2>
+            {s.avecTitre ? (
+              <h2 class="text-label libelle">
+                {s.rang} · {s.libelle}
+              </h2>
+            ) : (
+              <>
+                <p class="text-label libelle" aria-hidden="true">
+                  {s.rang}
+                </p>
+                <h2 class="text-heading-40 cas-section__titre">{s.libelle}</h2>
+              </>
+            )}
             <div class="prose" set:html={s.html} />
           </div>
         </section>
@@ -226,6 +263,10 @@ const lignesDecision = (dec: (typeof d.decisions)[number]) =>
 
   .cas-tete__chapo {
     max-width: 47.5rem;
+  }
+
+  .cas-intro {
+    padding-bottom: 5.5rem;
   }
 
   .cartouche {

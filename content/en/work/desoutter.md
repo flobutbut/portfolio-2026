@@ -1,104 +1,89 @@
 ---
-# Demo case study, taken from the Figma mockup (node 27:316). English translation by Claude.
-# "À compléter" placeholders remain to be supplied: they fail the production build.
+# English translation by Claude of content/fr/travaux/desoutter.md. Planned visuals remain to be supplied.
 numero: 1
 slug: desoutter
 statut: brouillon
-titre: An installation you navigate like a tree
-chapo: "At Desoutter, Multi controllers drive dozens of tightening tools, each with its own programs. I designed the SaaS version of their software, WebUI, and created its design system. The heart of the work: a navigation that follows the structure of the installation itself."
-meta: Desoutter · Industrial SaaS platform
+titre: "An installation you navigate like a tree"
+chapo: "At Desoutter, controllers drive dozens of tightening tools, each with its own programs. I was hired as a freelancer to design WebUI, a platform accessed from a web browser, and to create its design system. The heart of the work: a navigation that follows the structure of the installation itself."
+meta: "Desoutter · Industrial SaaS platform"
 strates:
   surfaces: false
   designSystem: true
   modele: true
 entree:
-  titre: Unifying business software into one platform
-  description: A profile-based architecture on a shared data foundation, held together by a governed design system.
+  titre: "Unifying business software into one platform"
+  description: "A profile-based architecture on a shared data foundation, held together by a governed design system."
 cartouche:
-  role: Product designer, freelance
-  duree: One year, in sprints
-  equipe: Two Product Owners, three front-end developers
-  livrables: WebUI (SaaS), design system
-trenteSecondes:
-  probleme: "One piece of software per task: the same tool, the same tightening program existed in several applications, with different screens and vocabulary."
-  decision: "Organise the whole product like the installation itself: Multi, tightening units, programs, with the same page at every level."
-  ceQuiReste: Four professions navigating the same tree, and states that roll up from one level to the next.
-titreDecisions: Three choices, and what they cost
-decisions:
-  - titre: Organise the product like the installation
-    plutotQue: a navigation by function (configure, analyse, diagnose).
-    parceQue: the four professions navigate the same tree and look for different things in it.
-    auPrixDe: à compléter.
-  - titre: A pset explored in stages
-    plutotQue: choosing between an advanced mode and a step-by-step setup.
-    parceQue: two personas out of three asked for both.
-    auPrixDe: à compléter.
-  - titre: Several paths, one node
-    plutotQue: à compléter.
-    parceQue: the maintenance technician is not necessarily at the line when the operator calls.
-    auPrixDe: à compléter.
-titreRegles: Three design system rules
-regles:
-  - Every level of the tree follows the same template.
-  - States are the same everywhere and roll up from one level to the next.
-  - Available actions depend on the profile and permissions.
-reglesCommentaire: "À compléter : un composant concret dont les actions changeaient selon le profil, et ce qui changeait entre desktop et tablette d’atelier."
-reglesEcrit: 4
-ecritsLies: [3, 4]
+  role: "Product designer, freelance"
+  duree: "One year, in sprints"
+  equipe: "Two Product Owners, three front-end developers"
+  livrables: "WebUI (SaaS), design system"
+ecritsLies: [2, 3]
 casSuivant: 2
 ---
 
-## The system before
+WebUI is a central platform, accessed from a web browser: it brings together all the controllers of an installation and the tools they drive, where each former piece of software covered a single task. I worked on it for a year, in sprints, with two Product Owners and three front-end developers, whom I supported through implementation.
 
-### One piece of software per task
+## Before: one piece of software per task
 
 Each task had its own software: configuring a controller, analysing tightening curves, collecting results, managing access rights. The same tool or the same tightening program existed in several applications, with different screens and sometimes different vocabulary.
 
 Bringing this software together into a single product meant having four professions coexist, each looking for something different: the operator, maintenance, the process engineer and the quality engineer.
 
-![À compléter : schéma des logiciels avant WebUI](a-completer "Fig. 01 · Software before WebUI, one task each")
+## Going down into the installation
 
-## The model
+I chose the installation as the main navigation structure rather than an entry by function — configure, analyse, diagnose. The tree mirrors the relations between pieces of equipment. You enter through the controllers; each controller gives access to its tightening tools; each tool to its programs.
 
-### Going down into the installation
+![Planned visual](a-completer "the WebUI tree · four levels, one page")
 
-Rather than organising WebUI by function, I designed the whole experience as a tree that mirrors the physical installation. You enter through the Multi; each Multi gives access to its tightening units; each tightening unit to its tightening programs and its other properties.
+At every level, the page has the same shape: a title, the same tabs (overview, settings, history) and a breadcrumb to go back up. Repeating these landmarks is meant to make it easier to move from one level to the next.
 
-```figure
-type: arborescence
-legende: "Fig. 02 · The WebUI tree: four levels, one page"
-niveaux:
-  - nom: System
-    description: All the Multi and their state
-  - nom: Multi
-    description: Its tightening units in real time
-  - nom: Tightening unit
-    description: Its programs and properties
-  - nom: Program (pset)
-    description: Viewed, then edited
-bandeau: "Same page at every level: title, Overview · Settings · History tabs, breadcrumb to go back up"
-```
+![Planned visual](a-completer "Overview: all the controllers and their state")
 
-State rolls up the tree: a tightening unit out of tolerance shows up in its Multi’s counter, which shows up in the system view. From the top, you can see where to go down.
+![Planned visual](a-completer "A controller: its tools in real time")
 
-::decisions
+![Planned visual](a-completer "A tool: its tightening programs, edited in a side panel")
 
-## Materialisation
+State rolls up the tree: a tool out of tolerance shows up in its controller’s counter, which shows up in the overview. From the top, you can see where to go down.
 
-### The model on screen
+Before drawing a page, I would specify its goal, navigation, statuses, actions and content.
 
-![À compléter : capture de la vue système](a-completer "System view: all the Multi and their state")
+## The same tree for four professions
 
-![À compléter : capture d’un Multi](a-completer "A Multi: its tightening units in real time")
+Four professional profiles were identified in workshops with the Desoutter teams; three were formalised as persona sheets, the operator having no dedicated sheet. This work made it possible to state the needs and risks specific to each profile in order to design their journeys within the same installation:
 
-![À compléter : capture d’une tightening unit](a-completer "A tightening unit: its tightening programs, edited in a side panel")
+- **Process engineer**: configure and monitor the system, apply a new configuration or roll back to the previous one. Fears a process being modified twice and production stopping.
+- **Maintenance**: diagnose, restore a configuration, manage the fleet, recalibrate. Fears not knowing who changed what.
+- **Quality engineer**: check the machines, analyse defects, calibrate. Fears “an OK that isn’t OK” and loss of traceability.
+- **Operator**: configure and check the tools, monitor in real time, validate sequences.
 
-## Results and limits
+## One program, several levels of engagement
 
-### What changed
+The tightening program is the node where these expectations meet. Two of the three persona sheets showed a need for both advanced settings and guided configuration. I kept both editing modes: you find the program, view it, then choose to edit it directly or step by step. Guidance offers another way into configuration, without imposing that path on everyone.
 
-À compléter : résultat observé (logiciels remplacés, adoption, délai de livraison), et ce que la confidentialité permet de montrer des écrans.
+![Planned visual](a-completer "the tightening program · list, viewing, two editing modes")
 
-:::lead
-What remains of this project: a navigation modelled on the structure of what you operate, the same page at every level, and professions that share the same tree.
-:::
+## Several paths, one node
+
+The tree provides context, but it must not force you through every level to reach a known tool. Diagnosis illustrates this interplay between navigation and search. It starts when a blocked operator calls maintenance, whose technician is not necessarily at the line. Whether they start from the overview or from a tool searched by name or serial number, they reach the same tool page, where the verification path begins.
+
+![Planned visual](a-completer "Diagnosis journey: from WebUI, or from the tool with a search")
+
+## What stays shared, what changes
+
+The design system, which I created for WebUI, directly served this navigation. Two rules guided its variations:
+
+1. **Every level of the tree follows the same template.**
+2. **States are the same everywhere and roll up from one level to the next.**
+
+The template brought together a title, tabs and a breadcrumb; the states made it possible to flag a problem at several levels of the installation. The team could reuse these landmarks, then design the content and actions specific to each page.
+
+![Planned visual](a-completer "Excerpt from the WebUI design system")
+
+## What was handed over to the team
+
+WebUI aimed to bring together configuration, curve analysis, result collection and rights management. By the end of my assignment, the tree, the page template and the design system were in place, and the front-end team was building new pages from them, without going back through screen-by-screen design.
+
+This result concerns the structure of the product and its reuse by the team. It is not enough to establish time saved in diagnosis or a reduced learning curve, which are not documented here.
+
+The structuring choice remains **a navigation based on the installation, complemented by search to reach a piece of equipment directly**.

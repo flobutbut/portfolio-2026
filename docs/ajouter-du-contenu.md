@@ -23,6 +23,8 @@ content/
 6. Pour la version anglaise : même fichier dans `content/en/work/`, même `numero`. Le `slug` peut être traduit. Si la traduction manque, la version française est servie à l'adresse anglaise, sans mention.
 7. Quand c'est prêt : `statut: publie`.
 
+Dans le frontmatter d'un cas, `cartouche` (rôle, durée, équipe, livrables), `trenteSecondes`, `decisions` et `regles` sont facultatifs : seuls les blocs renseignés s'affichent. `nature: note` présente le contenu comme une « Note » (note de conception en cours) au lieu d'un « Cas ».
+
 ## Ajouter un écrit
 
 Même chose avec `content/_modeles/ecrit.md`, copié dans `content/fr/ecrits/` (et `content/en/writing/`).
@@ -31,8 +33,10 @@ Même chose avec `content/_modeles/ecrit.md`, copié dans `content/fr/ecrits/` (
 
 | Vous écrivez | Vous obtenez |
 | --- | --- |
-| `## Le modèle` | Cas : une nouvelle section, numérotée automatiquement (« 03 · Le modèle »). Écrit : un intertitre. |
-| `### Descendre dans l'installation` | Cas : le grand titre de la section. |
+| Texte avant le premier `##` | Cas : introduction, affichée sous le cartouche. |
+| `## Le modèle` | Cas : une nouvelle section, numérotée automatiquement. Sans `###` dessous, ce titre devient le grand titre de la section ; avec un `###`, il sert de libellé (« 03 · Le modèle »). Écrit : un intertitre. |
+| `### Descendre dans l'installation` | Cas : le grand titre de la section (facultatif). |
+| Tableau Markdown (`\| a \| b \|`) | Tableau, défilant horizontalement sur mobile. |
 | `::decisions` (seul sur sa ligne) | Cas : place les blocs « Décisions » et « Règles » du frontmatter. |
 | `> Une phrase` | Citation à filet bleu. |
 | `:::lead` … `:::` | Paragraphe en grand (Lead/22). |

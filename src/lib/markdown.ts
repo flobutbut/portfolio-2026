@@ -16,6 +16,7 @@ import { join } from 'node:path';
 import type { Root, Paragraph, PhrasingContent, RootContent } from 'mdast';
 import rehypeStringify from 'rehype-stringify';
 import remarkDirective from 'remark-directive';
+import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import sharp from 'sharp';
@@ -130,6 +131,7 @@ function remarkStrates({ locale, mode, fichier }: Options) {
 async function rendre(md: string, options: Options): Promise<string> {
   const fichier = await unified()
     .use(remarkParse)
+    .use(remarkGfm)
     .use(remarkDirective)
     .use(remarkStrates, options)
     .use(remarkRehype, { allowDangerousHtml: true })
@@ -141,6 +143,8 @@ async function rendre(md: string, options: Options): Promise<string> {
 export interface Section {
   libelle: string;
   html: string;
+  /** La section a son propre grand titre (### …) ; sinon le libellé sert de grand titre */
+  avecTitre: boolean;
 }
 
 function decouper(md: string): { intro: string; sections: { libelle: string; md: string }[] } {
@@ -151,7 +155,7 @@ function decouper(md: string): { intro: string; sections: { libelle: string; md:
   return { intro, sections };
 }
 
-/** Corps d'un cas : sections avant et après la ligne `::decisions`. */
+/** Corps d'un cas : texte d'introduction, puis sections avant et après la ligne `::decisions`. */
 export async function rendreCas(body: string, locale: Locale, fichier: string) {
   const [avant, apres = ''] = body.split(/^::decisions\s*$/m);
   const options: Options = { locale, mode: 'cas', fichier };
@@ -161,9 +165,12 @@ export async function rendreCas(body: string, locale: Locale, fichier: string) {
       decouper(md).sections.map(async (s) => ({
         libelle: fr ? typographieFr(s.libelle) : s.libelle,
         html: await rendre(s.md, options),
+        avecTitre: /^\s*###\s/.test(s.md),
       })),
     );
+  const intro = decouper(avant).intro.trim();
   return {
+    intro: intro ? await rendre(intro, options) : '',
     avant: await rendreSections(avant),
     apres: await rendreSections(apres),
     aDecisions: /^::decisions\s*$/m.test(body),

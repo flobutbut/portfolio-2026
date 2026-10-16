@@ -248,3 +248,31 @@
     aspect-ratio: 4 / 3;
   }
 }
+
+/* Tableaux (syntaxe Markdown GFM) : défilement horizontal sur petit écran */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: var(--text-ui-size);
+  line-height: var(--text-ui-leading);
+}
+
+.prose th,
+.prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border-default);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  font-weight: 500;
+  border-bottom-color: var(--color-border-ink);
+  white-space: nowrap;
+}
+
+.prose td:first-child {
+  font-weight: 500;
+}

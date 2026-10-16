@@ -32,6 +32,8 @@ const cas = defineCollection({
     numero,
     slug,
     statut,
+    /** « cas » (étude de cas) ou « note » (note de conception en cours) */
+    nature: z.enum(['cas', 'note']).default('cas'),
     titre: z.string(),
     chapo: z.string(),
     /** Entreprise · domaine */
@@ -40,17 +42,23 @@ const cas = defineCollection({
     /** Titre et description de la ligne dans les listes (à défaut : titre et chapô) */
     entree: z.object({ titre: z.string(), description: z.string() }).optional(),
     visuel: image.optional(),
-    cartouche: z.object({
-      role: z.string(),
-      duree: z.string(),
-      equipe: z.string(),
-      livrables: z.string(),
-    }),
-    trenteSecondes: z.object({
-      probleme: z.string(),
-      decision: z.string(),
-      ceQuiReste: z.string(),
-    }),
+    /** Chaque ligne est facultative : seules les lignes renseignées s'affichent */
+    cartouche: z
+      .object({
+        role: z.string().optional(),
+        duree: z.string().optional(),
+        equipe: z.string().optional(),
+        livrables: z.string().optional(),
+      })
+      .default({}),
+    /** Encadré bleu facultatif */
+    trenteSecondes: z
+      .object({
+        probleme: z.string(),
+        decision: z.string(),
+        ceQuiReste: z.string(),
+      })
+      .optional(),
     titreDecisions: z.string().optional(),
     decisions: z
       .array(
@@ -223,6 +231,7 @@ const interfaceTextes = defineCollection({
       renvoiEcrit: z.string(),
       aLireAussi: z.string(),
       casSuivant: z.string(),
+      note: z.string(),
       tousLesTravaux: z.string(),
     }),
     ecrit: z.object({

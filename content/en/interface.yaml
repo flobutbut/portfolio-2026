@@ -48,6 +48,7 @@ cas:
   regle: Rule
   renvoiEcrit: Argued in essay
   aLireAussi: Further reading
+  note: Note
   casSuivant: Next case
   tousLesTravaux: ← All work
 

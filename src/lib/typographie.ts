@@ -2,6 +2,7 @@
  * Typographie française appliquée au rendu des contenus français.
  * - espace fine insécable (U+202F) avant ; ? ! et à l'intérieur des guillemets « »
  * - espace insécable (U+00A0) avant :
+ * - apostrophe typographique (’) entre deux lettres
  * Seules les espaces déjà saisies sont converties : « 12:30 » ou « https:// » restent intacts.
  */
 import type { Locale } from '../i18n/routes';
@@ -11,6 +12,7 @@ const INSECABLE = ' ';
 
 export function typographieFr(texte: string): string {
   return texte
+    .replace(/(\p{L})'(\p{L})/gu, '$1’$2')
     .replace(/[   ]+([;?!])/g, `${FINE}$1`)
     .replace(/[   ]+:/g, `${INSECABLE}:`)
     .replace(/«[   ]*/g, `«${FINE}`)
