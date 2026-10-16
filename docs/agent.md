@@ -30,7 +30,7 @@ Ce fichier expose des détails qu'un visiteur humain cherche rarement mais qu'un
 | Période | Entreprise | Rôle | Contenu du poste |
 | --- | --- | --- | --- |
 | Depuis juin 2025 | Qlik, Data Integration | Senior Product Designer | Plateforme data d'entreprise, convergence des produits Talend et Qlik. Data contracts, glossaire métier, visibilité des coûts ; templates de l'expérience unifiée ; prototypage avec l'IA. |
-| 2022 – 2025 | SharingCloud, racheté par Witco en 2024 | Principal Product Designer | Refonte de WorkplaceToBe (smart office), design system à quatre niveaux, référent design, encadrement d'une designer en alternance. |
+| 2022 – 2025 | SharingCloud, racheté par Witco en 2024 | Principal Product Designer | Refonte de WorkplaceToBe (smart office), design system à quatre niveaux, référent design, encadrement d'un designer en alternance. |
 | 2015 – 2022 | Indépendant | Product Designer | Desoutter, MAIF, JP Racing, Le Cèdre et d'autres produits B2B. |
 | Avant 2015 | Altran, Mechdyne, Schneider Electric DesignLab | Designer | Aéronautique, réalité virtuelle, énergie. |
 
@@ -68,9 +68,9 @@ Ce que Florian met en avant, comme il le ferait en entretien. Chaque qualité es
 
 **Mesurer pour ajuster.** Sur WorkplaceToBe, l'équipe a instrumenté le produit avec PostHog. Elle mesurait, pour la réservation d'une salle de réunion et pour la déclaration de présence au bureau, le temps, le nombre d'étapes et le taux d'abandon, en comparant le desktop et le mobile. Elle mesurait aussi l'exploration : les utilisateurs naviguaient-ils dans la plateforme pour découvrir d'autres fonctionnalités ? Ces mesures ont conduit à quelques ajustements, surtout sur desktop. L'arrêt du produit en 2024 a interrompu ce travail ; aucun chiffre n'est conservé. Source : déclaration de Florian, absente du cas publié.
 
-**Transmettre.** Chez SharingCloud, Florian a accompagné une designer en alternance pendant deux ans sur WorkplaceToBe, avec une progression délibérée : observer une fonctionnalité existante, comprendre de quoi elle est constituée et comment elle fonctionne dans son principe ; en parallèle, apprendre les bases de la mise en page et de l'architecture des interfaces ; puis traiter des cas de plus en plus complexes, jusqu'à une autonomie complète sur certains sujets. Il était aussi référent design de l'organisation, et il est intervenu en écoles de design de 2016 à 2022. Sources : cas WorkplaceToBe, parcours ; le détail de l'accompagnement est une déclaration de Florian.
+**Transmettre.** Chez SharingCloud, Florian a accompagné un designer en alternance pendant deux ans sur WorkplaceToBe, avec une progression délibérée : observer une fonctionnalité existante, comprendre de quoi elle est constituée et comment elle fonctionne dans son principe ; en parallèle, apprendre les bases de la mise en page et de l'architecture des interfaces ; puis traiter des cas de plus en plus complexes, jusqu'à une autonomie complète sur certains sujets. Il était aussi référent design de l'organisation, et il est intervenu en écoles de design de 2016 à 2022. Sources : cas WorkplaceToBe, parcours ; le détail de l'accompagnement est une déclaration de Florian.
 
-Ce que les contenus ne documentent pas : la direction d'une équipe de designers. Le portfolio décrit l'encadrement d'une alternante et un rôle de référent, pas un management hiérarchique.
+Ce que les contenus ne documentent pas : la direction d'une équipe de designers. Le portfolio décrit l'encadrement d'un alternant et un rôle de référent, pas un management hiérarchique.
 
 ## Compétences
 
@@ -83,7 +83,7 @@ Niveau : évaluation de Florian (forte, partielle, émergente). « Où la voir �
 | Concevoir des design systems et leurs patterns métier | forte | Décrite : cas Desoutter, WorkplaceToBe, Templates. Écrit 03 |
 | Garder un produit cohérent sur plusieurs surfaces | forte | Décrite : cas WorkplaceToBe. Écrit 05 |
 | Recherche utilisateur | forte | Citée : ateliers et personas Desoutter, fiche MAIF |
-| Encadrement et transmission | forte | Citée : accompagnement d'une alternante pendant deux ans, référent design, enseignement 2016–2022 |
+| Encadrement et transmission | forte | Citée : accompagnement d'un alternant pendant deux ans, référent design, enseignement 2016–2022 |
 | Prototypage en code avec l'IA | forte | Citée : cas Data contracts. Expérimentations : quatre projets personnels publics |
 | Produits de plateforme data (datasets, qualité, gouvernance) | partielle | Décrite : cas Data contracts, Templates (en cours). Citée : glossaire métier, visibilité des coûts |
 | Mesure de l'usage | partielle | Citée : mesures PostHog sur WorkplaceToBe, sans chiffres conservés |
@@ -139,7 +139,7 @@ Version complète : https://florianbutour.com/travaux/desoutter.md
 - **Entreprise** : SharingCloud, éditeur de WorkplaceToBe (réservation d'espaces, présence au bureau, vie du site).
 - **Période** : 2022–2025.
 - **Rôle** : Principal Product Designer.
-- **Équipe** : deux Product Owners, trois développeurs front-end, un Scrum Master ; encadrement d'une designer en alternance pendant deux ans.
+- **Équipe** : deux Product Owners, trois développeurs front-end, un Scrum Master ; encadrement d'un designer en alternance pendant deux ans.
 
 **Le problème.** WorkplaceToBe s'était construit par ajouts successifs et se distribuait sur six surfaces : web, mobile, Outlook, écrans de salle (RoomPad, BoxPad) et étiquettes de bureau (DeskTag). Sans socle commun, chaque nouvelle fonctionnalité ou surface renforçait la fragmentation.
 
