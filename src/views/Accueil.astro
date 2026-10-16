@@ -134,7 +134,6 @@ const cv = ui.contact.cv.url;
           {
             ecrits.map((e) => (
               <EntreeDEcrit
-                retrait={false}
                 locale={locale}
                 lang={e.langue !== locale ? e.langue : undefined}
                 titre={e.data.titre}
@@ -405,10 +404,8 @@ const cv = ui.contact.cv.url;
     color: var(--color-text-muted);
   }
 
-  /* Écrits : colonne centrée de 848 px, sans retrait */
+  /* Écrits : pleine largeur comme les travaux, le retrait est porté par le composant */
   .ecrits__liste {
-    max-width: 53rem;
-    margin-inline: auto;
     padding-top: 3rem;
   }
 </style>
