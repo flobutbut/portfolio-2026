@@ -101,6 +101,38 @@ const target = otherLocale(locale);
 </header>
 
 <script>
+  // En-tête collé : il se retire quand on descend et revient dès qu'on remonte.
+  // Sans JavaScript, il reste en haut de page et défile avec elle.
+  const entete = document.querySelector<HTMLElement>('.navigation');
+  if (entete) {
+    const SEUIL = 8; // px parcourus dans un sens avant de basculer : évite les saccades
+    let repere = scrollY;
+    let enAttente = false;
+    const mettreAJour = () => {
+      enAttente = false;
+      const y = Math.max(0, scrollY);
+      entete.classList.toggle('navigation--decollee', y > 0);
+      if (y <= entete.offsetHeight) {
+        entete.classList.remove('navigation--cachee');
+        repere = y;
+        return;
+      }
+      if (Math.abs(y - repere) < SEUIL) return;
+      entete.classList.toggle('navigation--cachee', y > repere);
+      repere = y;
+    };
+    addEventListener(
+      'scroll',
+      () => {
+        if (enAttente) return;
+        enAttente = true;
+        requestAnimationFrame(mettreAJour);
+      },
+      { passive: true },
+    );
+    mettreAJour();
+  }
+
   // Referme le menu mobile quand on suit un lien.
   const menu = document.getElementById('menu-principal');
   menu?.addEventListener('click', (event) => {
@@ -118,6 +150,27 @@ const target = otherLocale(locale);
 </script>
 
 <style>
+  /* Avec JavaScript : collé en haut ; filet dès qu'il recouvre le contenu ; retiré à la descente.
+     Le focus clavier le fait toujours revenir. */
+  :global(.js) .navigation {
+    position: sticky;
+    z-index: 5;
+    top: 0;
+    background: var(--color-background-canvas);
+    transition:
+      transform var(--motion-duration) var(--motion-ease),
+      box-shadow var(--motion-duration) var(--motion-ease);
+  }
+
+  .navigation--decollee {
+    box-shadow: 0 1px 0 var(--color-border-default);
+  }
+
+  /* Le filet sort aussi de l'écran */
+  .navigation--cachee:not(:focus-within) {
+    transform: translateY(calc(-100% - 2px));
+  }
+
   .navigation__inner {
     display: flex;
     align-items: center;

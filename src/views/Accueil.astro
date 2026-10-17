@@ -455,7 +455,7 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
   .methode--collee .methode__figure {
     grid-row: 1 / span 3;
     position: sticky;
-    top: max(1.5rem, calc(50svh - 20rem));
+    top: max(calc(1.5rem + var(--layout-nav-offset, 0px)), calc(50svh - 20rem));
     align-self: start;
     opacity: 0;
     transform: translateY(0.75rem);

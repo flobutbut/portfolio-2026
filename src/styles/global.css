@@ -25,6 +25,16 @@ html {
   }
 }
 
+/* Navigation collée (avec JavaScript) : ancres, focus et éléments collés s'arrêtent sous elle quand elle est visible */
+.js {
+  --layout-nav-offset: var(--layout-nav-height);
+  scroll-padding-top: var(--layout-nav-offset);
+}
+
+.js:has(.navigation--cachee:not(:focus-within)) {
+  --layout-nav-offset: 0px;
+}
+
 body {
   min-height: 100vh;
   display: flex;
