@@ -45,6 +45,7 @@ const { contact } = await getInterface(locale);
     bouton.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(copy);
+        window.posthog?.capture('email_copie');
         statut.textContent = copied;
         window.clearTimeout(minuterie);
         minuterie = window.setTimeout(() => (statut.textContent = ''), 2400);

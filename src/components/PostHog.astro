@@ -7,8 +7,9 @@
  *   aussi être activé dans les réglages du projet PostHog, sinon les événements sont ignorés.
  * - Premier parti : les requêtes passent par /ingest, réécrit vers PostHog dans vercel.json.
  * - Ce qui est mesuré : pages vues, profondeur de lecture (événement de sortie de page) et quatre
- *   clics repérés par leur cible (e-mail, CV, LinkedIn, version agent). Ni capture automatique,
- *   ni enregistrement de session.
+ *   clics repérés par leur cible (e-mail, CV, LinkedIn, version agent), plus les deux copies
+ *   réussies (`email_copie`, `agent_copie`), capturées par les scripts de leurs composants.
+ *   Ni capture automatique, ni enregistrement de session.
  * - Absent en développement et sur les déploiements de prévisualisation, et si la clé manque.
  */
 import { modeApercu } from '../lib/mode';
@@ -45,10 +46,10 @@ if (!modeApercu && !token && !g.__posthogAverti) {
         posthog.register({ langue: document.documentElement.lang });
 
         // Clics mesurés, reconnus à leur cible : aucun attribut à poser dans les composants.
+        // Les copies (e-mail, version agent) sont mesurées par leurs scripts, une fois la copie réussie.
         document.addEventListener('click', function (event) {
           var cible = event.target.closest && event.target.closest('a, button');
           if (!cible) return;
-          if (cible.matches('button[data-copy]')) return posthog.capture('email_copie');
           var href = cible.getAttribute('href') || '';
           if (href.indexOf('mailto:') === 0) return posthog.capture('email_clique');
           if (/\.pdf$/i.test(href)) return posthog.capture('cv_ouvert', { emplacement: location.pathname });

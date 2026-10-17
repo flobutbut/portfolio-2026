@@ -181,6 +181,7 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
       try {
         // Adresse complète sur le domaine consulté (le domaine définitif n'est pas encore basculé)
         await navigator.clipboard.writeText(new URL(copier.dataset.copie ?? '', location.origin).href);
+        window.posthog?.capture('agent_copie', { fichier: copier.dataset.copie });
         statut.textContent = copier.dataset.copieOk ?? '';
         window.clearTimeout(minuterie);
         minuterie = window.setTimeout(() => (statut.textContent = ''), 2400);
