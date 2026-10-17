@@ -1,0 +1,61 @@
+---
+/**
+ * Mesure d'audience PostHog (région EU), en production uniquement.
+ *
+ * - Sans cookie ni stockage : `cookieless_mode: 'always'`, l'identité est un hachage calculé par
+ *   PostHog côté serveur. Aucun bandeau de consentement n'est nécessaire. Le mode sans cookie doit
+ *   aussi être activé dans les réglages du projet PostHog, sinon les événements sont ignorés.
+ * - Premier parti : les requêtes passent par /ingest, réécrit vers PostHog dans vercel.json.
+ * - Ce qui est mesuré : pages vues, profondeur de lecture (événement de sortie de page) et quatre
+ *   clics repérés par leur cible (e-mail, CV, LinkedIn, version agent). Ni capture automatique,
+ *   ni enregistrement de session.
+ * - Absent en développement et sur les déploiements de prévisualisation, et si la clé manque.
+ */
+import { modeApercu } from '../lib/mode';
+
+const token = import.meta.env.PUBLIC_POSTHOG_PROJECT_TOKEN as string | undefined;
+const actif = !modeApercu && Boolean(token);
+
+// Un seul avertissement par build, pas un par page
+const g = globalThis as { __posthogAverti?: boolean };
+if (!modeApercu && !token && !g.__posthogAverti) {
+  g.__posthogAverti = true;
+  console.warn(
+    'PUBLIC_POSTHOG_PROJECT_TOKEN variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once PUBLIC_POSTHOG_PROJECT_TOKEN is configured',
+  );
+}
+---
+
+{
+  actif && (
+    <script is:inline define:vars={{ token }}>
+      if (!window.__posthog) {
+        window.__posthog = true;
+        !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagResult reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+        posthog.init(token, {
+          api_host: '/ingest',
+          ui_host: 'https://eu.posthog.com',
+          defaults: '2026-05-30',
+          cookieless_mode: 'always',
+          person_profiles: 'never',
+          autocapture: false,
+          disable_session_recording: true,
+          disable_surveys: true,
+        });
+        posthog.register({ langue: document.documentElement.lang });
+
+        // Clics mesurés, reconnus à leur cible : aucun attribut à poser dans les composants.
+        document.addEventListener('click', function (event) {
+          var cible = event.target.closest && event.target.closest('a, button');
+          if (!cible) return;
+          if (cible.matches('button[data-copy]')) return posthog.capture('email_copie');
+          var href = cible.getAttribute('href') || '';
+          if (href.indexOf('mailto:') === 0) return posthog.capture('email_clique');
+          if (/\.pdf$/i.test(href)) return posthog.capture('cv_ouvert', { emplacement: location.pathname });
+          if (/linkedin\.com/i.test(href)) return posthog.capture('linkedin_ouvert');
+          if (/^\/agent\.(md|txt)$/.test(href)) return posthog.capture('version_agent_ouverte', { fichier: href });
+        });
+      }
+    </script>
+  )
+}
