@@ -5,6 +5,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Bouton from '../components/Bouton.astro';
+import CopieLienIA from '../components/CopieLienIA.astro';
 import EnTeteDeSection from '../components/EnTeteDeSection.astro';
 import EntreeDeProjet from '../components/EntreeDeProjet.astro';
 import EntreeDEcrit from '../components/EntreeDEcrit.astro';
@@ -26,9 +27,7 @@ const a = await getAccueil(locale);
 const cas = await lister('cas', locale);
 const ecrits = await lister('ecrits', locale);
 const cv = ui.contact.cv.url;
-// Bloc « Pour les agents » : l'adresse affichée sans protocole ; le script copie l'adresse complète.
-// Version .txt : certains outils web d'assistants refusent un fichier .md.
-const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianbutour.com');
+const { agents } = a.position;
 ---
 
 <BaseLayout title={a.titrePage} description={a.description} locale={locale} alternate={path('accueil', otherLocale(locale))}>
@@ -49,8 +48,9 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
         <p>{a.hero.details}</p>
       </div>
       <div class="hero__actions">
-        {cas.length > 0 && <Bouton href="#travaux">{a.hero.voirTravaux}</Bouton>}
+        <CopieLienIA libelle={agents.copier} confirmation={agents.copie} apparence="contour" emplacement="hero" />
         {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{a.hero.cv}</span> : <Bouton apparence="contour" href={cv}>{a.hero.cv}</Bouton>}
+        {cas.length > 0 && <Bouton href="#travaux">{a.hero.voirTravaux}</Bouton>}
       </div>
     </div>
   </section>
@@ -107,17 +107,14 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
         <p class="text-body">{a.position.texte}</p>
         <!-- Pour les agents (Figma 94:685) -->
         <div class="agents">
-          <h3 class="text-label">{a.position.agents.libelle}</h3>
-          <p class="text-body">{a.position.agents.texte}</p>
+          <h3 class="text-label">{agents.libelle}</h3>
+          <p class="text-body">{agents.texte}</p>
           <div class="agents__actions">
-            <p class="agents__adresse text-heading-24">{agent.host}{agent.pathname}</p>
-            <span class="agents__copier" data-copie={agent.pathname} data-copie-ok={a.position.agents.copie}>
-              <Bouton>{a.position.agents.copier}</Bouton>
-            </span>
+            <CopieLienIA libelle={agents.copier} confirmation={agents.copie} emplacement="position" />
+            <!-- Version .txt : certains outils web d'assistants refusent un fichier .md -->
             <Bouton apparence="contour" href={fichiersAgents.agentTexte} hreflang="fr" target="_blank" rel="noopener">
-              {a.position.agents.lire}<span class="visually-hidden"> {a.position.agents.nouvelOnglet}</span>
+              {agents.lire}<span class="visually-hidden"> {agents.nouvelOnglet}</span>
             </Bouton>
-            <p class="agents__statut text-caption" role="status" aria-live="polite"></p>
           </div>
         </div>
       </div>
@@ -170,24 +167,6 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
 <script>
   import { initMethode } from '../scripts/methode';
   initMethode();
-
-  // Pour les agents : copie l'adresse de /agent.md ; sans presse-papiers, le bouton disparaît
-  document.querySelectorAll<HTMLElement>('[data-copie]').forEach((copier) => {
-    const bouton = copier.querySelector('button');
-    const statut = copier.closest('.agents')?.querySelector<HTMLElement>('.agents__statut');
-    if (!bouton || !statut || !navigator.clipboard) return copier.remove();
-    let minuterie: number | undefined;
-    bouton.addEventListener('click', async () => {
-      try {
-        // Adresse complète sur le domaine consulté (le domaine définitif n'est pas encore basculé)
-        await navigator.clipboard.writeText(new URL(copier.dataset.copie ?? '', location.origin).href);
-        window.posthog?.capture('agent_copie', { fichier: copier.dataset.copie });
-        statut.textContent = copier.dataset.copieOk ?? '';
-        window.clearTimeout(minuterie);
-        minuterie = window.setTimeout(() => (statut.textContent = ''), 2400);
-      } catch {}
-    });
-  });
 </script>
 
 <style>
@@ -376,7 +355,6 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
   }
 
   .agents__actions {
-    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -384,29 +362,9 @@ const agent = new URL(fichiersAgents.agentTexte, Astro.site ?? 'https://florianb
     padding-top: 0.5rem;
   }
 
-  .position__texte .agents__adresse {
-    color: var(--color-text-inverse);
-    overflow-wrap: anywhere;
-  }
-
-  /* Sans JavaScript, rien à copier : l'adresse reste lisible et le fichier accessible */
-  :global(html:not(.js)) .agents__copier {
-    display: none;
-  }
-
-  .position__texte .agents__statut {
-    position: absolute;
-    top: calc(100% + 0.75rem);
-    left: 0;
-  }
-
   @media (max-width: 39.99rem) {
     .agents__actions {
       gap: 1rem;
-    }
-
-    .agents__adresse {
-      flex-basis: 100%;
     }
   }
 

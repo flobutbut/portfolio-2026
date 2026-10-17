@@ -150,7 +150,7 @@ const accueil = defineCollection({
         copier: z.string(),
         copie: z.string(),
         lire: z.string(),
-        /** Annoncé aux lecteurs d'écran : le bouton « Lire le fichier » ouvre un nouvel onglet */
+        /** Annoncé aux lecteurs d'écran : le bouton « Lire la version agent » ouvre un nouvel onglet */
         nouvelOnglet: z.string(),
       }),
     }),

@@ -1,0 +1,67 @@
+---
+/**
+ * Bouton « Copier le lien IA » : copie l'adresse de la version agent du site,
+ * puis confirme la copie et dit quoi en faire (la coller dans son assistant IA).
+ * Sans JavaScript ou sans presse-papiers, le bouton n'existe pas : le lien « Lire la version agent » suffit.
+ * Utilisé dans le hero et dans le bloc « Pour les agents » de l'accueil.
+ */
+import Bouton from './Bouton.astro';
+import { fichiersAgents } from '../i18n/routes';
+
+interface Props {
+  libelle: string;
+  /** Message affiché après la copie */
+  confirmation: string;
+  apparence?: 'plein' | 'contour';
+  /** Emplacement du bouton, transmis à la mesure d'audience */
+  emplacement: string;
+}
+
+const { libelle, confirmation, apparence = 'plein', emplacement } = Astro.props;
+---
+
+<span class="copie-ia" data-copie-ia={fichiersAgents.agentTexte} data-confirmation={confirmation} data-emplacement={emplacement}>
+  <Bouton apparence={apparence}>{libelle}</Bouton>
+  <span class="copie-ia__statut text-caption" role="status" aria-live="polite"></span>
+</span>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-copie-ia]').forEach((copie) => {
+    const bouton = copie.querySelector('button');
+    const statut = copie.querySelector<HTMLElement>('.copie-ia__statut');
+    if (!bouton || !statut || !navigator.clipboard) return copie.remove();
+    const { copieIa = '', confirmation = '', emplacement } = copie.dataset;
+    let minuterie: number | undefined;
+    bouton.addEventListener('click', async () => {
+      try {
+        // Adresse complète sur le domaine consulté (le domaine définitif n'est pas encore basculé)
+        await navigator.clipboard.writeText(new URL(copieIa, location.origin).href);
+        window.posthog?.capture('agent_copie', { fichier: copieIa, emplacement });
+        statut.textContent = confirmation;
+        window.clearTimeout(minuterie);
+        minuterie = window.setTimeout(() => (statut.textContent = ''), 4000);
+      } catch {}
+    });
+  });
+</script>
+
+<style>
+  .copie-ia {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* Sans JavaScript, rien à copier */
+  :global(html:not(.js)) .copie-ia {
+    display: none;
+  }
+
+  /* Sous le bouton, hors du flux : la rangée de boutons ne bouge pas */
+  .copie-ia__statut {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    width: max-content;
+    max-width: calc(100vw - 2 * var(--layout-gutter));
+  }
+</style>
