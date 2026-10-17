@@ -9,7 +9,8 @@
  * - Ce qui est mesuré : pages vues, profondeur de lecture (événement de sortie de page) et quatre
  *   clics repérés par leur cible (e-mail, CV, LinkedIn, version agent), plus les deux copies
  *   réussies (`email_copie`, `agent_copie`), capturées par les scripts de leurs composants.
- *   Ni capture automatique, ni enregistrement de session.
+ *   S'y ajoutent, activés dans les réglages du projet PostHog : les clics morts (clics sans effet)
+ *   et les Web Vitals. Pas de capture automatique des clics, ni d'enregistrement de session.
  * - Absent en développement et sur les déploiements de prévisualisation, et si la clé manque.
  */
 import { modeApercu } from '../lib/mode';
