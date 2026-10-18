@@ -13,6 +13,9 @@ strates:
 entree:
   titre: "Unifying business software into one platform"
   description: "A profile-based architecture on a shared data foundation, held together by a governed design system."
+visuel:
+  src: /images/desoutter/apercu.svg
+  alt: "Isometric illustration: a controller linked to several tools, on a shared base"
 cartouche:
   role: "Product designer, freelance"
   duree: "One year, in sprints"
@@ -34,15 +37,24 @@ Bringing this software together into a single product meant having four professi
 
 I chose the installation as the main navigation structure rather than an entry by function — configure, analyse, diagnose. The tree mirrors the relations between pieces of equipment. You enter through the controllers; each controller gives access to its tightening tools; each tool to its programs.
 
-![Planned visual](a-venir "the WebUI tree · four levels, one page")
+```figure
+type: arborescence
+legende: "The WebUI tree · four levels, one page"
+niveaux:
+  - { nom: "System", description: "All the Multis and their state" }
+  - { nom: "Multi", description: "Its tightening units in real time" }
+  - { nom: "Tightening unit", description: "Its programs and properties" }
+  - { nom: "Program (pset)", description: "Viewed, then edited" }
+bandeau: "Same page at every level: title, Overview · Settings · History tabs, breadcrumb to go back up"
+```
 
 At every level, the page has the same shape: a title, the same tabs (overview, settings, history) and a breadcrumb to go back up. Repeating these landmarks is meant to make it easier to move from one level to the next.
 
-![Planned visual](a-venir "Overview: all the controllers and their state")
+![WebUI screen: system view, each Multi with its tools connected, OK, out of tolerance or broken](/images/desoutter/vue-systeme.webp "Overview: all the controllers and their state")
 
-![Planned visual](a-venir "A controller: its tools in real time")
+![WebUI screen: a Multi, its tightening units and their state in real time](/images/desoutter/multi.webp "A controller: its tools in real time")
 
-![Planned visual](a-venir "A tool: its tightening programs, edited in a side panel")
+![WebUI screen: a tightening unit’s programs, one of them edited in a side panel with its curve](/images/desoutter/programmes.webp "A tool: its tightening programs, edited in a side panel")
 
 State rolls up the tree: a tool out of tolerance shows up in its controller’s counter, which shows up in the overview. From the top, you can see where to go down.
 

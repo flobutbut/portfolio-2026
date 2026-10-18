@@ -10,6 +10,9 @@ strates:
   surfaces: true
   designSystem: true
   modele: true
+visuel:
+  src: /images/workplacetobe/apercu.svg
+  alt: "Isometric illustration: several surfaces arranged around one product"
 cartouche:
   role: "Principal Product Designer"
   duree: "2022 – 2025"
@@ -31,7 +34,27 @@ So the problem was not only visual: without a shared foundation, every new featu
 
 I proposed starting **with a shared design system, with the support of the front-end developers**.
 
-![Planned visual](a-venir "shared foundation and surface-specific libraries")
+```figure
+type: schema
+legende: "Fig. 01 · From juxtaposed additions to a shared foundation: before, each surface brings its own components; after, four shared levels."
+blocs:
+  - colonnes:
+      - intitule: "Before"
+        note: "Each addition brings its own components."
+        blocs:
+          - surfaces: ["Web", "Mobile", "Outlook"]
+      - intitule: "After"
+        note: "Patterns carry the unity, libraries the differences."
+        blocs:
+          - bibliotheques:
+              - { surtitre: "Library", nom: "Web and mobile" }
+              - { surtitre: "Library", nom: "Outlook" }
+              - { surtitre: "Library", nom: "Screens and labels" }
+          - couches:
+              - { nom: "Patterns", detail: "book, declare presence", emphase: true }
+              - { nom: "Components", detail: "buttons, fields, icons" }
+              - { nom: "Tokens", detail: "colours, typography, spacing" }
+```
 
 ## Starting again from uses
 
@@ -50,23 +73,92 @@ The data model already existed on the back end. My work consisted in identifying
 
 A booking, a space or a presence had to keep the same meaning, the same vocabulary and the same essential information, whatever the surface.
 
-![Planned visual](a-venir "the objects shared across interfaces: booking, space and presence")
+```figure
+type: schema
+legende: "Fig. 02 · The objects as the interface presents them, read as sentences: space comes back in most uses."
+fond: false
+blocs:
+  - alignee: true
+    chaine:
+      - { objet: "Site", description: "a building" }
+      - { liaison: "contains" }
+      - { objet: "Floor", description: "its zones, its plan" }
+      - { liaison: "contains" }
+      - { objet: "Space", description: "room, desk, parking, bike, locker", emphase: true }
+  - alignee: true
+    chaine:
+      - { objet: "Person", description: "an employee" }
+      - { liaison: "makes" }
+      - { objet: "Booking", description: "a space, a time slot, a person" }
+      - { liaison: "concerns" }
+      - { objet: "Space", description: "room, desk, parking, bike, locker", emphase: true }
+  - alignee: true
+    chaine:
+      - { objet: "Person", description: "an employee" }
+      - { liaison: "declares" }
+      - { objet: "Presence", description: "at the office, remote, absent" }
+  - alignee: true
+    chaine:
+      - { objet: "Team", description: "who is at the office" }
+      - { liaison: "groups" }
+      - { objet: "Person", description: "an employee" }
+  - alignee: true
+    chaine:
+      - { objet: "Site", description: "a building" }
+      - { liaison: "publishes" }
+      - { objet: "News", description: "and events, per site" }
+```
 
 ## One use, several contexts
 
 Web and mobile formed the core of the product. The other surfaces only took on the uses relevant in their context.
 
-| Use case | Web | Mobile | Outlook | RoomPad | BoxPad | DeskTag |
-| --- | --- | --- | --- | --- | --- | --- |
-| Book a room | ● | ● | ● from the invitation | ● at the room | ● | — |
-| Book a desk | ● | ● | ● | — | — | ◐ occupancy |
-| Parking, bike, locker | ● | ● | — | — | — | — |
-| Declare presence | ● | ● | ● | — | — | — |
-| See your team | ● | ● | ● | — | — | — |
-| News | ● | ● | — | — | — | — |
-| Events | ● | ● | — | — | — | — |
-
-● full use · ◐ information only · — absent
+```figure
+type: schema
+legende: "Fig. 03 · One use, several contexts: each use only appears on the surfaces where it makes sense."
+blocs:
+  - usages:
+      lignes:
+        - usage: "Book a room"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook", note: "from the invitation" }
+            - { texte: "RoomPad", note: "at the room" }
+            - { texte: "BoxPad" }
+        - usage: "Book a desk"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook" }
+            - { texte: "DeskTag", note: "occupancy", ton: contour }
+        - usage: "Parking, bike, locker"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+        - usage: "Declare presence"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook" }
+        - usage: "See your team"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook" }
+        - usage: "News"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+        - usage: "Events"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+      legende:
+        - { texte: "full use" }
+        - { texte: "information only", ton: contour }
+      note: "A surface missing from the row does not offer that use."
+```
 
 So a feature was not duplicated everywhere on principle. It only appeared where it made sense: booking from Outlook, acting directly at a room, or showing who occupies a desk.
 
@@ -86,7 +178,9 @@ We identified the shared uses, then kept for each surface those relevant in its 
 
 The new web home brought the main uses together around the employee’s day: their bookings, their team’s presence, events and news from the site.
 
-![Planned visual](a-venir "WorkplaceToBe home screen, My schedule, 2023")
+![WorkplaceToBe home screen, web and mobile](/images/workplacetobe/accueil.webp "Fig. 04 · The home screen, on the web and on mobile: the user’s day, their bookings, their team’s presence.")
+
+![WorkplaceToBe on-site screens: RoomPad outside a room, BoxPad free and occupied, desk labels](/images/workplacetobe/sur-place.webp "Fig. 05 · On site, the interface takes the shape of the space: the RoomPad outside the room, the BoxPad on the booth, the label on the desk.")
 
 The redesign established a shared framework for evolving the interfaces: shared objects, identified uses and adaptation rules. This framework was meant to limit the decisions revisited for each new surface. The case does not, however, document any measure of design time saved or any comparative evaluation of the experience across surfaces.
 

@@ -13,6 +13,9 @@ strates:
 entree:
   titre: "Unifier des logiciels métiers en une plateforme"
   description: "Une architecture par profils sur un socle de données commun, tenue par un design system gouverné."
+visuel:
+  src: /images/desoutter/apercu.svg
+  alt: "Illustration isométrique : un contrôleur relié à plusieurs outils, sur un même socle"
 cartouche:
   role: "Product designer, en indépendant"
   duree: "Un an, en sprints"
@@ -34,15 +37,24 @@ Réunir ces logiciels dans un seul produit, c’était faire cohabiter quatre m�
 
 J’ai choisi l’installation comme structure principale de navigation plutôt qu’une entrée par fonctions — configurer, analyser, diagnostiquer. L’arborescence reproduit les relations entre les équipements. On entre par les contrôleurs ; chaque contrôleur donne accès à ses outils de vissage ; chaque outil à ses programmes.
 
-![Visuel prévu](a-venir "l’arborescence de WebUI · quatre niveaux, une même page")
+```figure
+type: arborescence
+legende: "L’arborescence de WebUI · quatre niveaux, une même page"
+niveaux:
+  - { nom: "Système", description: "Tous les Multi et leur état" }
+  - { nom: "Multi", description: "Ses tightening units en temps réel" }
+  - { nom: "Tightening unit", description: "Ses programmes et ses propriétés" }
+  - { nom: "Programme (pset)", description: "Consulté, puis édité" }
+bandeau: "Même page à chaque niveau : titre, onglets Overview · Settings · History, fil d’Ariane pour remonter"
+```
 
 À chaque niveau, la page a la même forme : un titre, les mêmes onglets (vue d’ensemble, réglages, historique) et un fil d’Ariane pour remonter. La répétition de ces repères vise à faciliter le passage d’un niveau à l’autre.
 
-![Visuel prévu](a-venir "Vue d’ensemble : tous les contrôleurs et leur état")
+![Écran WebUI : vue système, chaque Multi avec ses outils connectés, conformes, hors tolérance ou en panne](/images/desoutter/vue-systeme.webp "Vue d’ensemble : tous les contrôleurs et leur état")
 
-![Visuel prévu](a-venir "Un contrôleur : ses outils en temps réel")
+![Écran WebUI : un Multi, ses tightening units et leur état en temps réel](/images/desoutter/multi.webp "Un contrôleur : ses outils en temps réel")
 
-![Visuel prévu](a-venir "Un outil : ses programmes de vissage, édités en panneau latéral")
+![Écran WebUI : les programmes de vissage d’une tightening unit, l’un d’eux édité en panneau latéral avec sa courbe](/images/desoutter/programmes.webp "Un outil : ses programmes de vissage, édités en panneau latéral")
 
 L’état remonte dans l’arbre : un outil hors tolérance apparaît dans le compteur de son contrôleur, qui apparaît dans la vue d’ensemble. D’en haut, on voit où descendre.
 

@@ -108,12 +108,10 @@ const ecrits = defineCollection({
 });
 
 /* ---------- Accueil : content/<langue>/accueil.yaml ---------- */
+/** Figure de la méthode : illustration placée dans public/, sur fond gris, et sa légende */
 const figure = z.object({
-  type: z.enum(['parcours', 'graphe', 'strates']),
+  src: z.string().startsWith('/', 'src : chemin depuis public/, commençant par « / »'),
   legende: z.string(),
-  elements: z.array(z.string()).min(2),
-  /** Élément mis en avant (index à partir de 0) */
-  actif: z.number().int().nonnegative().optional(),
 });
 
 const accueil = defineCollection({

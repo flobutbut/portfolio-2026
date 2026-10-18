@@ -10,6 +10,9 @@ strates:
   surfaces: true
   designSystem: true
   modele: true
+visuel:
+  src: /images/workplacetobe/apercu.svg
+  alt: "Illustration isométrique : plusieurs surfaces réparties autour d’un même produit"
 cartouche:
   role: "Principal Product Designer"
   duree: "2022 – 2025"
@@ -31,7 +34,27 @@ Le problème n’était donc pas seulement visuel : sans socle commun, chaque no
 
 J’ai proposé de commencer **par un design system partagé, avec le soutien des développeurs front-end**.
 
-![Visuel prévu](a-venir "socle partagé et bibliothèques propres à chaque surface")
+```figure
+type: schema
+legende: "Fig. 01 · D’ajouts juxtaposés à un socle commun : avant, chaque surface apporte ses composants ; après, quatre niveaux partagés."
+blocs:
+  - colonnes:
+      - intitule: "Avant"
+        note: "Chaque ajout apporte ses propres composants."
+        blocs:
+          - surfaces: ["Web", "Mobile", "Outlook"]
+      - intitule: "Après"
+        note: "Les patterns portent l’unité, les bibliothèques les écarts."
+        blocs:
+          - bibliotheques:
+              - { surtitre: "Bibliothèque", nom: "Web et mobile" }
+              - { surtitre: "Bibliothèque", nom: "Outlook" }
+              - { surtitre: "Bibliothèque", nom: "Écrans et étiquettes" }
+          - couches:
+              - { nom: "Patterns", detail: "réserver, déclarer sa présence", emphase: true }
+              - { nom: "Composants", detail: "boutons, champs, icônes" }
+              - { nom: "Tokens", detail: "couleurs, typographie, espacements" }
+```
 
 ## Repartir des usages
 
@@ -50,23 +73,92 @@ Le modèle de données existait déjà côté back-end. Mon travail a consisté 
 
 Une réservation, un espace ou une présence devaient conserver le même sens, le même vocabulaire et les mêmes informations essentielles, quelle que soit la surface.
 
-![Visuel prévu](a-venir "les objets communs aux interfaces : réservation, espace et présence")
+```figure
+type: schema
+legende: "Fig. 02 · Les objets tels que l’interface les présente, lus comme des phrases : l’espace revient dans la plupart des usages."
+fond: false
+blocs:
+  - alignee: true
+    chaine:
+      - { objet: "Site", description: "un bâtiment" }
+      - { liaison: "contient" }
+      - { objet: "Étage", description: "ses zones, son plan" }
+      - { liaison: "contient" }
+      - { objet: "Espace", description: "salle, poste, parking, vélo, casier", emphase: true }
+  - alignee: true
+    chaine:
+      - { objet: "Personne", description: "un collaborateur" }
+      - { liaison: "fait" }
+      - { objet: "Réservation", description: "un espace, un créneau, une personne" }
+      - { liaison: "porte sur" }
+      - { objet: "Espace", description: "salle, poste, parking, vélo, casier", emphase: true }
+  - alignee: true
+    chaine:
+      - { objet: "Personne", description: "un collaborateur" }
+      - { liaison: "déclare" }
+      - { objet: "Présence", description: "au bureau, en télétravail, absent" }
+  - alignee: true
+    chaine:
+      - { objet: "Équipe", description: "qui est au bureau" }
+      - { liaison: "regroupe" }
+      - { objet: "Personne", description: "un collaborateur" }
+  - alignee: true
+    chaine:
+      - { objet: "Site", description: "un bâtiment" }
+      - { liaison: "publie" }
+      - { objet: "Actualité", description: "et événement, par site" }
+```
 
 ## Un usage, plusieurs contextes
 
 Le web et le mobile constituaient le socle du produit. Les autres surfaces ne reprenaient que les usages pertinents dans leur contexte.
 
-| Cas d’usage | Web | Mobile | Outlook | RoomPad | BoxPad | DeskTag |
-| --- | --- | --- | --- | --- | --- | --- |
-| Réserver une salle | ● | ● | ● depuis l’invitation | ● devant la salle | ● | — |
-| Réserver un poste | ● | ● | ● | — | — | ◐ occupation |
-| Parking, vélo, casier | ● | ● | — | — | — | — |
-| Déclarer sa présence | ● | ● | ● | — | — | — |
-| Voir son équipe | ● | ● | ● | — | — | — |
-| Actualités | ● | ● | — | — | — | — |
-| Événements | ● | ● | — | — | — | — |
-
-● usage complet · ◐ information seule · — absent
+```figure
+type: schema
+legende: "Fig. 03 · Un usage, plusieurs contextes : chaque usage n’apparaît que sur les surfaces où il a du sens."
+blocs:
+  - usages:
+      lignes:
+        - usage: "Réserver une salle"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook", note: "depuis l’invitation" }
+            - { texte: "RoomPad", note: "devant la salle" }
+            - { texte: "BoxPad" }
+        - usage: "Réserver un poste"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook" }
+            - { texte: "DeskTag", note: "occupation", ton: contour }
+        - usage: "Parking, vélo, casier"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+        - usage: "Déclarer sa présence"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook" }
+        - usage: "Voir son équipe"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+            - { texte: "Outlook" }
+        - usage: "Actualités"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+        - usage: "Événements"
+          surfaces:
+            - { texte: "Web" }
+            - { texte: "Mobile" }
+      legende:
+        - { texte: "usage complet" }
+        - { texte: "information seule", ton: contour }
+      note: "Une surface absente de la ligne ne propose pas cet usage."
+```
 
 Une fonctionnalité n’était donc pas dupliquée partout par principe. Elle n’apparaissait que là où elle avait du sens : réserver depuis Outlook, agir directement devant une salle ou afficher l’occupant d’un poste.
 
@@ -86,7 +178,9 @@ Nous avons identifié les usages communs, puis retenu pour chaque surface ceux q
 
 Le nouvel accueil web réunissait les principaux usages autour de la journée du collaborateur : ses réservations, la présence de son équipe, les événements et les actualités du site.
 
-![Visuel prévu](a-venir "Écran d’accueil WorkplaceToBe, Mon agenda, 2023")
+![Écran d’accueil WorkplaceToBe, web et mobile](/images/workplacetobe/accueil.webp "Fig. 04 · L’accueil, sur le web et sur mobile : la journée de l’utilisateur, ses réservations, la présence de son équipe.")
+
+![Écrans WorkplaceToBe sur place : RoomPad devant une salle, BoxPad libre et occupé, étiquettes de bureau](/images/workplacetobe/sur-place.webp "Fig. 05 · Sur place, l’interface prend la forme de l’espace : le RoomPad devant la salle, le BoxPad sur le box, l’étiquette sur le bureau.")
 
 La refonte a établi un cadre commun pour faire évoluer les interfaces : des objets partagés, des usages identifiés et des règles de déclinaison. Ce cadre devait limiter les décisions reprises à chaque nouvelle surface. Le cas ne documente toutefois pas de mesure du temps de conception gagné ni d’évaluation comparative de l’expérience entre surfaces.
 

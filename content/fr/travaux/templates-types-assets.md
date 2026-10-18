@@ -11,6 +11,9 @@ strates:
   surfaces: true
   designSystem: true
   modele: false
+visuel:
+  src: /images/templates-types-assets/apercu.svg
+  alt: "Illustration isométrique : des vues empilées, construites sur un même modèle de page"
 cartouche:
   role: "Senior Product Designer"
   duree: "En cours"
@@ -28,6 +31,29 @@ D’un type de ressource à l’autre, aucune vue d’ensemble ne se ressemblait
 
 Deux exemples suffisent. La vue d’ensemble d’un produit de données affiche la liste complète de ses jeux de données ; celle d’un jeu de données affiche son schéma entier. Avec cinq cents colonnes ou une longue liste, la vue perd sa raison d’être : permettre d’identifier la ressource et de comprendre si elle répond au besoin avant d’en explorer le détail.
 
+```figure
+type: schema
+legende: "Fig. 01 · Avant : la vue d’ensemble d’un data product empile tous ses datasets ; celle d’un dataset, son schéma entier."
+blocs:
+  - colonnes:
+      - intitule: "Avant"
+        blocs:
+          - page:
+              surtitre: "Data product"
+              titre: "Vue d’ensemble"
+              blocs:
+                - { bloc: "Résumé", ton: clair }
+                - { bloc: "Liste complète des datasets", ton: clair, lignes: 7, suite: "… et tout le reste, sans fin" }
+      - intitule: "Avant"
+        blocs:
+          - page:
+              surtitre: "Dataset"
+              titre: "Vue d’ensemble"
+              blocs:
+                - { bloc: "Résumé", ton: clair }
+                - { bloc: "Schéma complet · 500 colonnes", ton: clair, lignes: 7, suite: "… et tout le reste, sans fin" }
+```
+
 ## La démarche : un rôle par vue
 
 Plutôt que de corriger chaque page, j’ai proposé de revoir l’architecture des ressources à partir d’une règle simple : chaque vue a un rôle.
@@ -37,7 +63,26 @@ Plutôt que de corriger chaque page, j’ai proposé de revoir l’architecture 
 
 Je propose d’inscrire cette règle dans le design system de l’expérience unifiée sous forme de modèles de page communs. Leur application doit tenir compte des informations nécessaires pour évaluer chaque type de ressource.
 
-![Figure prévue](a-venir "une vue d’ensemble existante, puis la structure proposée — identification, informations utiles à l’évaluation, actions et accès aux vues détaillées")
+```figure
+type: schema
+legende: "Fig. 02 · Après : la vue d’ensemble résume, montre la valeur et invite à agir ; le détail vit dans des vues dédiées, à un clic."
+blocs:
+  - chaine:
+      - intitule: "Après"
+        groupe:
+          - page:
+              surtitre: "Dataset ou data product"
+              titre: "Vue d’ensemble"
+              blocs:
+                - { bloc: "Résumer" }
+                - { bloc: "Montrer la valeur" }
+                - { bloc: "Inviter à agir", ton: bleu }
+      - { liaison: "voir le détail" }
+      - groupe:
+          - objets:
+              - { objet: "Profil, schéma, aperçu", description: "dataset · les cinq cents colonnes, à leur place" }
+              - { objet: "Ressources filtrables", description: "data product · la liste complète, filtrable par dataset" }
+```
 
 ## Faire adopter une architecture
 

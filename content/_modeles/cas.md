@@ -16,7 +16,7 @@ strates:                       # les strates touchées (true / false)
 entree:                        # facultatif : texte de la ligne dans les listes
   titre: "À compléter"
   description: "À compléter"
-# visuel:                      # facultatif : image de la liste, placée dans public/
+# visuel:                      # facultatif : image de la liste, placée dans public/ (PNG ou SVG transparent)
 #   src: /images/mon-cas/apercu.png
 #   alt: Description de l'image
 cartouche:

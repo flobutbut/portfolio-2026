@@ -61,10 +61,8 @@ methode:
         - Cartographie des parcours
         - Arbitrages produit
       figure:
-        type: parcours
-        legende: Fig. 04 · Cadrer
-        elements: [Entretiens et observation terrain, Tests d’utilisabilité, Cartographie des parcours, Arbitrages produit]
-        actif: 3
+        src: /images/methode/cadrer.svg
+        legende: Fig. 04 · Un parcours, ses moments et ses frictions
     - titre: Modéliser
       description: "Je décris le produit avant de le dessiner : ses objets, leurs relations, leurs états, et qui peut agir sur quoi."
       pratiques:
@@ -72,10 +70,8 @@ methode:
         - Architecture de l’information
         - Spécifications versionnables
       figure:
-        type: graphe
-        legende: Fig. 05 · Modéliser
-        elements: [objets, relations, dépendances, états, droits]
-        actif: 0
+        src: /images/methode/modeliser.svg
+        legende: Fig. 05 · Un objet, ses attributs, ses états
     - titre: Systématiser
       description: Je transforme les décisions en règles réutilisables, pour que cinq équipes ne conçoivent pas cinq versions du même concept.
       pratiques:
@@ -83,10 +79,8 @@ methode:
         - Patterns transverses
         - Accessibilité (WCAG, RGAA)
       figure:
-        type: strates
-        legende: Fig. 06 · Systématiser
-        elements: [surfaces, design system, modèle]
-        actif: 1
+        src: /images/methode/systematiser.svg
+        legende: Fig. 06 · Un composant et ses règles d’usage
 
 ecrits:
   titre: Écrits

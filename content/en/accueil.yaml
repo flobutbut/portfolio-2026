@@ -61,10 +61,8 @@ methode:
         - Journey mapping
         - Product trade-offs
       figure:
-        type: parcours
-        legende: Fig. 04 · Frame
-        elements: [Interviews and field observation, Usability testing, Journey mapping, Product trade-offs]
-        actif: 3
+        src: /images/methode/cadrer.svg
+        legende: Fig. 04 · A journey, its moments and its friction points
     - titre: Model
       description: "I describe the product before drawing it: its objects, their relations, their states, and who can act on what."
       pratiques:
@@ -72,10 +70,8 @@ methode:
         - Information architecture
         - Versionable specifications
       figure:
-        type: graphe
-        legende: Fig. 05 · Model
-        elements: [objects, relations, dependencies, states, permissions]
-        actif: 0
+        src: /images/methode/modeliser.svg
+        legende: Fig. 05 · An object, its attributes, its states
     - titre: Systematise
       description: I turn decisions into reusable rules, so that five teams don’t design five versions of the same concept.
       pratiques:
@@ -83,10 +79,8 @@ methode:
         - Cross-product patterns
         - Accessibility (WCAG, RGAA)
       figure:
-        type: strates
-        legende: Fig. 06 · Systematise
-        elements: [surfaces, design system, model]
-        actif: 1
+        src: /images/methode/systematiser.svg
+        legende: Fig. 06 · A component and its usage rules
 
 ecrits:
   titre: Writing

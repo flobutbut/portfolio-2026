@@ -10,6 +10,9 @@ strates:
   surfaces: false
   designSystem: false
   modele: true
+visuel:
+  src: /images/data-contracts/apercu.svg
+  alt: "Illustration isométrique : un jeu de données en couches, relié aux équipes qui l’utilisent"
 cartouche:
   role: "Senior Product Designer"
   duree: "Depuis juin 2025, en cours"
@@ -24,6 +27,26 @@ Depuis juin 2025, je suis Senior Product Designer sur l’intégration de donné
 ## Formaliser ce qui est attendu des données
 
 Ce que signifie une colonne, qui en répond, quelle fraîcheur ou quelle qualité on peut en attendre : un contrat réunit ces engagements pour que producteurs et consommateurs puissent s’y référer. Certaines informations décrivent le sens des données ou les responsabilités ; d’autres peuvent être associées à des contrôles. Déclarer un engagement et vérifier qu’il est tenu sont deux fonctions distinctes.
+
+```figure
+type: schema
+legende: "Fig. 01 · Avant : entre ceux qui produisent un jeu de données et ceux qui l’utilisent, des attentes que chacun suppose et que personne n’a écrites."
+blocs:
+  - chaine:
+      - { objet: "Producteurs", description: "l’équipe qui publie le jeu de données" }
+      - { liaison: "publie" }
+      - { objet: "Jeu de données", description: "une table, ses colonnes" }
+      - { liaison: "alimente" }
+      - { objet: "Consommateurs", description: "les équipes et usages qui en dépendent" }
+  - puces:
+      intitule: "Ce que chacun suppose, écrit nulle part"
+      pointille: true
+      elements:
+        - { texte: "Que signifie cette colonne ?", ton: gris }
+        - { texte: "Qui en répond ?", ton: gris }
+        - { texte: "Quelle fraîcheur ?", ton: gris }
+        - { texte: "Quelle qualité ?", ton: gris }
+```
 
 ## La démarche : définir l’engagement avant de dessiner l’écran
 
@@ -45,7 +68,17 @@ Nous avons d’abord listé tout ce qu’un contrat peut garantir, puis donné d
 
 L’objectif est de partager le vocabulaire et les comportements récurrents, tout en conservant les différences entre types de garanties. Les écrans et les prototypes permettent ensuite d’éprouver ces règles.
 
-![Figure prévue](a-venir "le contrat relie les engagements envers les consommateurs aux informations et aux mesures du jeu de données")
+```figure
+type: schema
+legende: "Fig. 02 · Le contrat s’appuie sur le jeu de données : il réutilise ses mesures de qualité au lieu d’en inventer, et garantit leur respect à ceux qui en dépendent."
+blocs:
+  - chaine:
+      - { objet: "Jeu de données", description: "ses mesures de qualité : dimensions, règles de validation" }
+      - { liaison: "réutilise", sens: gauche }
+      - { objet: "Data contract", description: "des garanties explicites, vérifiées par le système, avec un responsable", emphase: true }
+      - { liaison: "garantit à" }
+      - { objet: "Consommateurs", description: "les équipes et usages qui dépendent des données" }
+```
 
 ## Le prototype comme outil de décision
 

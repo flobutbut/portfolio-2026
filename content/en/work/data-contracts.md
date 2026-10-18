@@ -10,6 +10,9 @@ strates:
   surfaces: false
   designSystem: false
   modele: true
+visuel:
+  src: /images/data-contracts/apercu.svg
+  alt: "Isometric illustration: a layered dataset, linked to the teams that use it"
 cartouche:
   role: "Senior Product Designer"
   duree: "Since June 2025, in progress"
@@ -24,6 +27,26 @@ Since June 2025, I have been Senior Product Designer on data integration at Qlik
 ## Formalising what is expected of data
 
 What a column means, who is accountable for it, what freshness or quality can be expected: a contract brings these commitments together so that producers and consumers can refer to them. Some information describes the meaning of the data or responsibilities; other information can be tied to checks. Declaring a commitment and verifying that it is kept are two distinct functions.
+
+```figure
+type: schema
+legende: "Fig. 01 · Before: between those who produce a dataset and those who use it, expectations everyone assumes and no one has written down."
+blocs:
+  - chaine:
+      - { objet: "Producers", description: "the team that publishes the dataset" }
+      - { liaison: "publishes" }
+      - { objet: "Dataset", description: "a table, its columns" }
+      - { liaison: "feeds" }
+      - { objet: "Consumers", description: "the teams and uses that depend on it" }
+  - puces:
+      intitule: "What everyone assumes, written nowhere"
+      pointille: true
+      elements:
+        - { texte: "What does this column mean?", ton: gris }
+        - { texte: "Who is accountable for it?", ton: gris }
+        - { texte: "How fresh?", ton: gris }
+        - { texte: "What quality?", ton: gris }
+```
 
 ## The approach: define the commitment before drawing the screen
 
@@ -45,7 +68,17 @@ We first listed everything a contract can guarantee, then gave rules to each typ
 
 The goal is to share vocabulary and recurring behaviours, while keeping the differences between types of guarantees. Screens and prototypes then make it possible to test these rules.
 
-![Planned figure](a-venir "the contract links commitments to consumers with the dataset’s information and measures")
+```figure
+type: schema
+legende: "Fig. 02 · The contract relies on the dataset: it reuses its quality measures instead of inventing new ones, and guarantees they are met to those who depend on them."
+blocs:
+  - chaine:
+      - { objet: "Dataset", description: "its quality measures: dimensions, validation rules" }
+      - { liaison: "reuses", sens: gauche }
+      - { objet: "Data contract", description: "explicit guarantees, checked by the system, with an owner", emphase: true }
+      - { liaison: "guarantees to" }
+      - { objet: "Consumers", description: "the teams and uses that depend on the data" }
+```
 
 ## The prototype as a decision tool
 

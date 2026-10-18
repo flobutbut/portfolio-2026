@@ -11,6 +11,9 @@ strates:
   surfaces: true
   designSystem: true
   modele: false
+visuel:
+  src: /images/templates-types-assets/apercu.svg
+  alt: "Isometric illustration: stacked views, built on a shared page template"
 cartouche:
   role: "Senior Product Designer"
   duree: "In progress"
@@ -28,6 +31,29 @@ From one resource type to the next, no overview shared the same structure. Each 
 
 Two examples are enough. The overview of a data product displays the full list of its datasets; that of a dataset displays its entire schema. With five hundred columns or a long list, the view loses its purpose: to identify the resource and understand whether it meets the need before exploring its details.
 
+```figure
+type: schema
+legende: "Fig. 01 · Before: a data product’s overview stacks all its datasets; a dataset’s, its entire schema."
+blocs:
+  - colonnes:
+      - intitule: "Before"
+        blocs:
+          - page:
+              surtitre: "Data product"
+              titre: "Overview"
+              blocs:
+                - { bloc: "Summary", ton: clair }
+                - { bloc: "Full list of datasets", ton: clair, lignes: 7, suite: "… and everything else, endlessly" }
+      - intitule: "Before"
+        blocs:
+          - page:
+              surtitre: "Dataset"
+              titre: "Overview"
+              blocs:
+                - { bloc: "Summary", ton: clair }
+                - { bloc: "Full schema · 500 columns", ton: clair, lignes: 7, suite: "… and everything else, endlessly" }
+```
+
 ## The approach: one role per view
 
 Rather than fixing each page, I proposed revisiting the architecture of resources from a simple rule: each view has a role.
@@ -37,7 +63,26 @@ Rather than fixing each page, I proposed revisiting the architecture of resource
 
 I propose writing this rule into the design system of the unified experience as shared page templates. Applying them must take into account the information needed to evaluate each resource type.
 
-![Planned figure](a-venir "an existing overview, then the proposed structure — identification, information useful for evaluation, actions and access to detailed views")
+```figure
+type: schema
+legende: "Fig. 02 · After: the overview summarises, shows the value and invites action; the details live in dedicated views, one click away."
+blocs:
+  - chaine:
+      - intitule: "After"
+        groupe:
+          - page:
+              surtitre: "Dataset or data product"
+              titre: "Overview"
+              blocs:
+                - { bloc: "Summarise" }
+                - { bloc: "Show the value" }
+                - { bloc: "Invite action", ton: bleu }
+      - { liaison: "see the details" }
+      - groupe:
+          - objets:
+              - { objet: "Profile, schema, preview", description: "dataset · the five hundred columns, in their place" }
+              - { objet: "Filterable resources", description: "data product · the full list, filterable by dataset" }
+```
 
 ## Getting an architecture adopted
 

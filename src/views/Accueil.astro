@@ -28,6 +28,8 @@ const cas = await lister('cas', locale);
 const ecrits = await lister('ecrits', locale);
 const cv = ui.contact.cv.url;
 const { agents } = a.position;
+// Illustrations des cartes de strates (Figma 111:5234), décoratives : le titre de la carte les nomme
+const ILLUSTRATIONS_STRATES = { surfaces: 'surfaces', designSystem: 'design-system', modele: 'modele' } as const;
 const copieIA = {
   libelle: agents.copier,
   confirmation: agents.copie,
@@ -73,6 +75,7 @@ const copieIA = {
       {
         STRATES.map((cle) => (
           <li class="strates__carte">
+            <img class="strates__illustration" src={`/images/strates/${ILLUSTRATIONS_STRATES[cle]}.svg`} alt="" width="378" height="250" loading="lazy" decoding="async" />
             <h3 class="strates__nom text-heading-24">{ui.strates[cle]}</h3>
             <p class="text-body">{a.strates[cle].description}</p>
             <p class="text-caption libelle">{a.strates[cle].exemples}</p>
@@ -98,6 +101,7 @@ const copieIA = {
                 meta={c.data.meta}
                 strates={c.data.strates}
                 href={c.href}
+                visuel={c.data.visuel}
               />
             ))
           }
@@ -131,20 +135,26 @@ const copieIA = {
 
   <!-- Méthode -->
   <section class="container section methode" aria-labelledby="methode-titre" data-methode>
-    <EnTeteDeSection titre={a.methode.titre} id="methode-titre" />
-    <div class="methode__grille">
-      {
-        a.methode.piliers.map((p, i) => (
-          <>
-            <div class="methode__pilier" style={`--rang: ${i + 1}`} data-pilier={i}>
-              <PilierDeMethode titre={p.titre} description={p.description} pratiques={p.pratiques} />
-            </div>
-            <div class="methode__figure" style={`--rang: ${i + 1}`} data-figure={i}>
-              <FigureMethode {...p.figure} id={`fig-methode-${i}`} />
-            </div>
-          </>
-        ))
-      }
+    <div class="methode__tete" data-methode-tete>
+      <EnTeteDeSection titre={a.methode.titre} id="methode-titre" />
+    </div>
+    <div class="methode__piste" data-methode-piste>
+      <div class="methode__grille" data-methode-scene>
+        {
+          a.methode.piliers.map((p, i) => (
+            <>
+              <div class="methode__pilier" style={`--rang: ${i + 1}`} data-pilier={i}>
+                <PilierDeMethode titre={p.titre} description={p.description} pratiques={p.pratiques} />
+              </div>
+              <div class="methode__figure" style={`--rang: ${i + 1}`} data-figure={i}>
+                <FigureMethode {...p.figure} />
+              </div>
+            </>
+          ))
+        }
+      </div>
+      <!-- Course de défilement : la scène reste collée le temps de passer d'un pilier à l'autre -->
+      <div class="methode__course" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -308,6 +318,12 @@ const copieIA = {
     border-left: 0;
   }
 
+  .strates__illustration {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+
   .strates__nom {
     padding: 0.375rem 0.5rem;
     background: var(--color-background-brand);
@@ -419,12 +435,44 @@ const copieIA = {
     }
   }
 
-  /* Avec JavaScript, desktop, sans prefers-reduced-motion : figure collée (voir scripts/methode.ts) */
+  /* Avec JavaScript, desktop, sans prefers-reduced-motion (voir scripts/methode.ts) :
+     l'en-tête de section et la scène (piliers + figure) restent collés ; le défilement fait passer
+     d'un pilier à l'autre. Le pilier actif est complet, les autres se réduisent à leur titre (Figma 119:8515). */
+  .methode--collee .methode__tete {
+    position: sticky;
+    z-index: 3;
+    top: var(--layout-nav-offset, 0px);
+    padding-top: 1.5rem;
+    margin-top: -1.5rem;
+    background: var(--color-background-canvas);
+    transition: top var(--motion-duration) var(--motion-ease);
+  }
+
+  /* Les piliers s'empilent en haut ; la dernière rangée absorbe la hauteur de la figure */
+  .methode--collee .methode__grille {
+    grid-template-rows: auto auto 1fr;
+    position: sticky;
+    top: calc(var(--layout-nav-offset, 0px) + var(--methode-tete, 0px));
+    transition: top var(--motion-duration) var(--motion-ease);
+  }
+
+  /* Une demi-hauteur d'écran de défilement par pilier suivant */
+  .methode--collee .methode__course {
+    height: 100svh;
+  }
+
+  .methode--collee .methode__pilier {
+    position: relative;
+    grid-row: var(--rang);
+    align-self: start;
+  }
+
+  /* Les figures se superposent dans la colonne de droite et apparaissent en fondu */
   .methode--collee .methode__figure {
     grid-row: 1 / span 3;
-    position: sticky;
-    top: max(calc(1.5rem + var(--layout-nav-offset, 0px)), calc(50svh - 20rem));
     align-self: start;
+    padding-block: 1.5rem 0;
+    container-type: inline-size;
     opacity: 0;
     transform: translateY(0.75rem);
     transition:
@@ -437,22 +485,39 @@ const copieIA = {
     transform: none;
   }
 
-  /* Chaque pilier occupe une bonne part d'écran : la figure a le temps de rester collée */
-  .methode--collee .methode__pilier {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 70svh;
+  /* La figure tient dans l'écran sous l'en-tête : proportions Figma (676 × 578) tant que la hauteur le permet */
+  .methode--collee .methode__figure :global(.fig-methode__cadre) {
+    aspect-ratio: auto;
+    height: min(85.5cqw, calc(100svh - var(--layout-nav-offset, 0px) - var(--methode-tete, 0px) - 6rem));
   }
 
-  /* Les piliers inactifs s'estompent en restant lisibles (AA) : seuls les textes passent en gris,
-     les étiquettes de strate ne bougent pas (elles ne sont pas interactives) */
-  .methode--collee .methode__pilier :global(:is(h3, p)) {
+  /* Piliers inactifs : titre seul, en gris (contraste AA conservé). Description et pratiques sont
+     masquées visuellement mais restent lisibles par un lecteur d'écran. */
+  .methode--collee .methode__pilier :global(h3) {
     transition: color var(--motion-duration-long) var(--motion-ease);
   }
 
-  .methode--collee .methode__pilier:not([data-actif]) :global(:is(h3, p)) {
+  .methode--collee .methode__pilier:not([data-actif]) :global(h3) {
     color: var(--color-text-muted);
+  }
+
+  .methode--collee .methode__pilier:not([data-actif]) :global(:is(.pilier__description, .pilier__pratiques)) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .methode--collee .methode__pilier[data-actif] :global(:is(.pilier__description, .pilier__pratiques)) {
+    animation: methode-detail var(--motion-duration-long) var(--motion-ease);
+  }
+
+  @keyframes methode-detail {
+    from {
+      opacity: 0;
+    }
   }
 
   /* Écrits : pleine largeur comme les travaux, le retrait est porté par le composant */

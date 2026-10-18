@@ -70,16 +70,21 @@ const Titre = `h${niveau}` as 'h2' | 'h3';
     padding-left: 0;
   }
 
+  /* Illustration transparente, sans fond (Figma 111:5234) */
   .entree-projet__visuel {
     flex: 0 0 25rem;
     aspect-ratio: 4 / 3;
+  }
+
+  /* Visuel prévu mais pas encore fourni (aperçu) : un aplat réserve la place */
+  .entree-projet__visuel:empty {
     background: var(--color-surface-placeholder);
   }
 
   .entree-projet__visuel :global(img) {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .entree-projet__corps {

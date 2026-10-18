@@ -7,6 +7,7 @@ import YAML from 'yaml';
 import { versionMarkdown, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
 import { resoudre, type Element } from './contenu';
+import { texteFigure } from './figures';
 
 type Ui = Awaited<ReturnType<typeof getInterface>>;
 
@@ -19,8 +20,7 @@ function nettoyer(md: string): string {
     md
       // Bloc figure en YAML → légende et éléments
       .replace(/^```figure\n([\s\S]*?)^```$/gm, (_, yaml: string) => {
-        const f = YAML.parse(yaml) as { legende?: string; elements?: string[] };
-        return [f.legende, f.elements?.join(' → ')].filter(Boolean).join(' : ');
+        return texteFigure(YAML.parse(yaml));
       })
       // Paragraphe réduit à une image → son texte alternatif ; visuel prévu → rien
       .replace(/^!\[([^\]]*)\]\(([^\s)]+)(?:\s+"[^"]*")?\)\s*$/gm, (_, alt: string, url: string) =>
