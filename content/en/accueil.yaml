@@ -37,7 +37,16 @@ position:
     libelle: For agents
     texte: "This site applies that principle to itself: one body of content, one version for humans, one for agents. If you hand its reading to an AI assistant, give it the link to that version: it states what each case proves and what belongs to the team. Nothing is hidden there."
     copier: Copy the AI link
-    copie: Link copied. Paste it into your AI assistant.
+    copie: Prompt copied — paste it into your AI assistant
+    # Preview of the copied text: tooltip (hover, focus) or dialog (touch screens)
+    apercu: This text will be copied
+    # Confirmation dialog, on touch screens
+    confirmer: Copy
+    annuler: Cancel
+    # Copied text; {lien} becomes the agent version's address, followed by ?src=prompt
+    prompt: |-
+      Here is the profile of Florian Butour, Senior Product Designer, in a format designed to be read by an AI assistant: {lien}
+      Read it, then help me understand his background, how he works, and how well he fits the role I’m hiring for. Rely only on this document: if something isn’t in it, say so. If you can’t open the link, tell me instead of guessing.
     lire: Read the agent version →
     nouvelOnglet: "(opens in a new tab)"
 

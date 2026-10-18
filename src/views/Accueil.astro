@@ -28,6 +28,14 @@ const cas = await lister('cas', locale);
 const ecrits = await lister('ecrits', locale);
 const cv = ui.contact.cv.url;
 const { agents } = a.position;
+const copieIA = {
+  libelle: agents.copier,
+  confirmation: agents.copie,
+  apercu: agents.apercu,
+  prompt: agents.prompt,
+  confirmer: agents.confirmer,
+  annuler: agents.annuler,
+};
 ---
 
 <BaseLayout title={a.titrePage} description={a.description} locale={locale} alternate={path('accueil', otherLocale(locale))}>
@@ -48,7 +56,7 @@ const { agents } = a.position;
         <p>{a.hero.details}</p>
       </div>
       <div class="hero__actions">
-        <CopieLienIA libelle={agents.copier} confirmation={agents.copie} apparence="contour" emplacement="hero" />
+        <CopieLienIA {...copieIA} apparence="contour" alignement="fin" emplacement="hero" />
         {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{a.hero.cv}</span> : <Bouton apparence="contour" href={cv}>{a.hero.cv}</Bouton>}
         {cas.length > 0 && <Bouton href="#travaux">{a.hero.voirTravaux}</Bouton>}
       </div>
@@ -110,7 +118,7 @@ const { agents } = a.position;
           <h3 class="text-label">{agents.libelle}</h3>
           <p class="text-body">{agents.texte}</p>
           <div class="agents__actions">
-            <CopieLienIA libelle={agents.copier} confirmation={agents.copie} emplacement="position" />
+            <CopieLienIA {...copieIA} emplacement="position" />
             <!-- Version .txt : certains outils web d'assistants refusent un fichier .md -->
             <Bouton apparence="contour" href={fichiersAgents.agentTexte} hreflang="fr" target="_blank" rel="noopener">
               {agents.lire}<span class="visually-hidden"> {agents.nouvelOnglet}</span>
@@ -224,6 +232,7 @@ const { agents } = a.position;
   }
 
   .hero__actions {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
@@ -355,6 +364,7 @@ const { agents } = a.position;
   }
 
   .agents__actions {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;

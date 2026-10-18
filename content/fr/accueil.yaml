@@ -37,7 +37,16 @@ position:
     libelle: Pour les agents
     texte: "Ce site applique ce principe à lui-même : un seul contenu, une version pour les humains, une pour les agents. Si vous confiez sa lecture à un assistant IA, donnez-lui le lien de cette version : elle dit ce que chaque cas prouve et ce qui revient à l’équipe. Rien n’y est caché."
     copier: Copier le lien IA
-    copie: Lien copié. Collez-le dans votre assistant IA.
+    copie: Prompt copié — collez-le dans votre assistant IA
+    # Aperçu du texte copié : infobulle (survol, focus) ou modale (écran tactile)
+    apercu: Ce texte sera copié
+    # Modale de confirmation, sur écran tactile
+    confirmer: Copier
+    annuler: Annuler
+    # Texte copié ; {lien} devient l’adresse de la version agent, suivie de ?src=prompt
+    prompt: |-
+      Voici le profil de Florian Butour, Senior Product Designer, dans un format conçu pour être lu par un assistant IA : {lien}
+      Lis-le, puis aide-moi à comprendre son parcours, sa façon de travailler et son adéquation avec le poste que je cherche à pourvoir. Appuie-toi uniquement sur ce document : si une information n’y figure pas, dis-le. Si tu ne peux pas ouvrir le lien, signale-le plutôt que de deviner.
     lire: Lire la version agent →
     nouvelOnglet: "(s’ouvre dans un nouvel onglet)"
 

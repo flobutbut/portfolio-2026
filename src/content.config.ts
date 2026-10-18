@@ -149,6 +149,11 @@ const accueil = defineCollection({
         texte: z.string(),
         copier: z.string(),
         copie: z.string(),
+        apercu: z.string(),
+        confirmer: z.string(),
+        annuler: z.string(),
+        /** Prompt copié ; doit contenir {lien}, remplacé par l'adresse de la version agent */
+        prompt: z.string().refine((t) => t.includes('{lien}'), 'Le prompt doit contenir {lien}'),
         lire: z.string(),
         /** Annoncé aux lecteurs d'écran : le bouton « Lire la version agent » ouvre un nouvel onglet */
         nouvelOnglet: z.string(),
