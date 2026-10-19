@@ -85,7 +85,7 @@ const image = new URL(ogPath(Astro.url.pathname), site).href;
             choix = nav.indexOf('fr') === 0 ? 'fr' : 'en';
             localStorage.setItem('langue', choix);
           }
-          if (choix !== ici) location.replace(new URL(lien.href).pathname + location.search + location.hash);
+          if (choix !== ici) (window.__redirectionLangue = true), location.replace(new URL(lien.href).pathname + location.search + location.hash);
         } catch (e) {}
       })();
     </script>

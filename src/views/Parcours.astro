@@ -34,7 +34,7 @@ const sep = locale === 'fr' ? ' : ' : ': ';
         <p class="text-lead intro__texte">{p.introduction}</p>
         <div class="intro__actions">
           {visibles.cas && <Bouton href={path('travaux', locale)}>{p.voirTravaux}</Bouton>}
-          {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{p.cv}</span> : <Bouton apparence="contour" href={cv}>{p.cv}</Bouton>}
+          {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{p.cv}</span> : <Bouton apparence="contour" href={cv} data-emplacement="parcours">{p.cv}</Bouton>}
         </div>
       </div>
     </section>

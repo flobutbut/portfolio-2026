@@ -6,11 +6,17 @@
  *   PostHog côté serveur. Aucun bandeau de consentement n'est nécessaire. Le mode sans cookie doit
  *   aussi être activé dans les réglages du projet PostHog, sinon les événements sont ignorés.
  * - Premier parti : les requêtes passent par /ingest, réécrit vers PostHog dans vercel.json.
- * - Ce qui est mesuré : pages vues, profondeur de lecture (événement de sortie de page) et quatre
- *   clics repérés par leur cible (e-mail, CV, LinkedIn, version agent), plus les deux copies
- *   réussies (`email_copie`, `agent_copie`), capturées par les scripts de leurs composants.
+ * - Ce qui est mesuré : pages vues, profondeur de lecture (événement de sortie de page) et les
+ *   intentions de contact : `email_copie` (copie réussie ou lien mailto), `cv_telecharge`,
+ *   `linkedin_clic`, plus `agent_copie` et `version_agent_ouverte`. Chaque événement porte `langue`
+ *   et `page` (propriétés communes) ; `emplacement` vient du `data-emplacement` le plus proche.
  *   S'y ajoutent, activés dans les réglages du projet PostHog : les clics morts (clics sans effet)
  *   et les Web Vitals. Pas de capture automatique des clics, ni d'enregistrement de session.
+ * - Les clics qui quittent la page (CV, LinkedIn, mailto) partent par sendBeacon, sans attendre :
+ *   la navigation n'est jamais retenue, même si PostHog est bloqué ou lent.
+ * - Trafic interne : `?interne=1` pose un marqueur (localStorage `interne`) qui empêche le
+ *   chargement de PostHog sur ce navigateur ; `?interne=0` le retire. Le paramètre est retiré de
+ *   l'adresse et une confirmation s'affiche une fois. Sans localStorage, la visite est suivie.
  * - Absent en développement et sur les déploiements de prévisualisation, et si la clé manque.
  */
 import { modeApercu } from '../lib/mode';
@@ -31,7 +37,35 @@ if (!modeApercu && !token && !g.__posthogAverti) {
 {
   actif && (
     <script is:inline define:vars={{ token }}>
-      if (!window.__posthog) {
+      // Trafic interne : traité avant tout chargement de PostHog
+      var interne = false;
+      try {
+        var adresse = new URL(location.href);
+        var demande = adresse.searchParams.get('interne');
+        if (demande === '1') localStorage.setItem('interne', '1');
+        if (demande === '0') localStorage.removeItem('interne');
+        interne = localStorage.getItem('interne') === '1';
+        if (demande === '1' || demande === '0') {
+          adresse.searchParams.delete('interne');
+          history.replaceState(history.state, '', adresse.pathname + adresse.search + adresse.hash);
+          // Confirmation discrète, sauf si la page part vers l'autre langue (elle s'affichera là-bas)
+          if (!window.__redirectionLangue) {
+            document.addEventListener('DOMContentLoaded', function () {
+              var avis = document.createElement('p');
+              avis.setAttribute('role', 'status');
+              avis.className = 'text-caption';
+              avis.textContent = interne ? 'Suivi PostHog désactivé sur ce navigateur.' : 'Suivi PostHog réactivé sur ce navigateur.';
+              avis.style.cssText =
+                'position:fixed;z-index:100;bottom:1rem;left:1rem;margin:0;padding:0.5rem 0.75rem;' +
+                'background:var(--color-background-canvas);color:var(--color-text-primary);border:2px solid var(--color-border-ink);';
+              document.body.append(avis);
+              setTimeout(function () { avis.remove(); }, 4000);
+            });
+          }
+        }
+      } catch (e) {}
+
+      if (!interne && !window.__posthog) {
         window.__posthog = true;
         !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags getFeatureFlag getFeatureFlagResult reloadFeatureFlags group updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures getActiveMatchingSurveys getSurveys getNextSurveyStep onSessionId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
         posthog.init(token, {
@@ -44,17 +78,22 @@ if (!modeApercu && !token && !g.__posthogAverti) {
           disable_session_recording: true,
           disable_surveys: true,
         });
-        posthog.register({ langue: document.documentElement.lang });
+        posthog.register({ langue: document.documentElement.lang, page: location.pathname });
 
-        // Clics mesurés, reconnus à leur cible : aucun attribut à poser dans les composants.
-        // Les copies (e-mail, version agent) sont mesurées par leurs scripts, une fois la copie réussie.
+        // Clics mesurés, reconnus à leur cible. La copie de l'e-mail et celle du lien IA sont
+        // mesurées par les scripts de leurs composants, une fois la copie réussie.
+        // Ceux qui quittent la page partent tout de suite par sendBeacon, sans retenir la navigation.
+        var sortie = { transport: 'sendBeacon', send_instantly: true };
         document.addEventListener('click', function (event) {
-          var cible = event.target.closest && event.target.closest('a, button');
+          var cible = event.target.closest && event.target.closest('a[href]');
           if (!cible) return;
-          var href = cible.getAttribute('href') || '';
-          if (href.indexOf('mailto:') === 0) return posthog.capture('email_clique');
-          if (/\.pdf$/i.test(href)) return posthog.capture('cv_ouvert', { emplacement: location.pathname });
-          if (/linkedin\.com/i.test(href)) return posthog.capture('linkedin_ouvert');
+          var href = cible.getAttribute('href');
+          var lieu = cible.closest('[data-emplacement]');
+          var emplacement = lieu ? lieu.getAttribute('data-emplacement') : undefined;
+          var cv = href.match(/\/cv\/[^/]*-(fr|en)\.pdf$/i);
+          if (href.indexOf('mailto:') === 0) return posthog.capture('email_copie', { methode: 'mailto', emplacement: emplacement }, sortie);
+          if (cv) return posthog.capture('cv_telecharge', { version: cv[1].toLowerCase(), emplacement: emplacement }, sortie);
+          if (/linkedin\.com/i.test(href)) return posthog.capture('linkedin_clic', { emplacement: emplacement }, sortie);
           if (/^\/agent\.(md|txt)$/.test(href)) return posthog.capture('version_agent_ouverte', { fichier: href });
         });
       }

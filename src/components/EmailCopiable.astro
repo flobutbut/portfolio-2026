@@ -41,15 +41,17 @@ const { contact } = await getInterface(locale);
     bouton.setAttribute('aria-label', `${copy}, ${copyLabel}`);
     lien.replaceWith(bouton);
 
+    const emplacement = bouton.closest<HTMLElement>('[data-emplacement]')?.dataset.emplacement;
     let minuterie: number | undefined;
     bouton.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(copy);
-        window.posthog?.capture('email_copie');
+        window.posthog?.capture('email_copie', { methode: 'copie', emplacement });
         statut.textContent = copied;
         window.clearTimeout(minuterie);
         minuterie = window.setTimeout(() => (statut.textContent = ''), 2400);
       } catch {
+        window.posthog?.capture('email_copie', { methode: 'mailto', emplacement }, { transport: 'sendBeacon', send_instantly: true });
         window.location.href = `mailto:${copy}`;
       }
     });
