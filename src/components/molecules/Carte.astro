@@ -1,0 +1,273 @@
+---
+/**
+ * Molécule · Carte (Figma 2:489, 9:1600, 2:491)
+ * Un titre, un texte, une méta et un groupe d'étiquettes, avec ou sans visuel.
+ *
+ * Apparence « ligne » (listes de travaux et d'écrits) : filet sous la carte, toute la carte mène au contenu
+ * (le lien du titre s'étend à toute la carte). Au survol et au focus clavier, un fond gris léger balaie
+ * la carte de gauche à droite. Les étiquettes restent immobiles : elles ne sont pas interactives.
+ * - Taille L : titre Heading/40. Sans visuel, étiquettes en colonne à droite du texte ;
+ *   avec visuel (400 × 300, à gauche), étiquettes sous le texte.
+ * - Taille M : titre Heading/24, étiquettes en ligne sous le texte.
+ * - Retrait de 304 px sur desktop (supprimé sous 64rem) : par défaut en taille M, et en taille L sans visuel.
+ *
+ * Apparence « cadre » (cartes des strates) : bordure, visuel en haut, pas de lien ;
+ * le titre peut être une Étiquette L (`titreEtiquette`).
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Etiquette from '../atomes/Etiquette.astro';
+import GroupeEtiquettes, { type ItemEtiquette } from './GroupeEtiquettes.astro';
+
+interface Props {
+  taille?: 'L' | 'M';
+  apparence?: 'ligne' | 'cadre';
+  titre: string;
+  texte: string;
+  meta?: string;
+  /** Adresse du contenu (apparence ligne) */
+  href?: string;
+  /** Visuel optionnel ; sans `src`, un aplat réserve la place (aperçu). */
+  visuel?: { src?: ImageMetadata | string; alt: string; largeur?: number; hauteur?: number };
+  etiquettes?: ItemEtiquette[];
+  etiquettesLibelle?: string;
+  retrait?: boolean;
+  /** Titre rendu comme une Étiquette L (apparence cadre) */
+  titreEtiquette?: boolean;
+  niveau?: 2 | 3 | 4;
+  /** Langue du contenu, si elle diffère de celle de la page */
+  lang?: string;
+}
+
+const {
+  taille = 'M',
+  apparence = 'ligne',
+  titre,
+  texte,
+  meta,
+  href,
+  visuel,
+  etiquettes,
+  etiquettesLibelle,
+  titreEtiquette = false,
+  niveau = 3,
+  lang,
+} = Astro.props;
+const retrait = Astro.props.retrait ?? (apparence === 'ligne' && (taille === 'M' || !visuel));
+const Titre = `h${niveau}` as 'h2' | 'h3' | 'h4';
+const ligne = apparence === 'ligne';
+const groupe = etiquettes && etiquettes.length > 0;
+const orientation = taille === 'L' ? 'verticale' : 'horizontale';
+---
+
+{
+  ligne ? (
+    <article class:list={['carte', 'carte--ligne', `carte--${taille.toLowerCase()}`, { 'carte--retrait': retrait }]} lang={lang}>
+      {visuel && (
+        <div class="carte__visuel">
+          {typeof visuel.src === 'string' && <img src={visuel.src} alt={visuel.alt} loading="lazy" decoding="async" />}
+          {visuel.src && typeof visuel.src !== 'string' && (
+            <Image src={visuel.src} alt={visuel.alt} widths={[400, 800]} sizes="(min-width: 40rem) 400px, 100vw" />
+          )}
+        </div>
+      )}
+      <div class="carte__corps">
+        <div class="carte__texte">
+          <Titre class={taille === 'L' ? 'text-heading-40' : 'text-heading-24'}>
+            <a class="carte__lien" href={href}>
+              {titre}
+            </a>
+          </Titre>
+          <p class="carte__description text-body">{texte}</p>
+          {meta && <p class="carte__meta text-caption">{meta}</p>}
+        </div>
+        {groupe && (visuel || taille === 'M') && (
+          <GroupeEtiquettes etiquettes={etiquettes} libelle={etiquettesLibelle} orientation={orientation} replier="mobile" />
+        )}
+      </div>
+      {groupe && !visuel && taille === 'L' && (
+        <GroupeEtiquettes etiquettes={etiquettes} libelle={etiquettesLibelle} orientation={orientation} replier="mobile" />
+      )}
+    </article>
+  ) : (
+    <article class:list={['carte', 'carte--cadre', `carte--${taille.toLowerCase()}`]} lang={lang}>
+      {visuel && typeof visuel.src === 'string' && (
+        <img
+          class="carte__illustration"
+          src={visuel.src}
+          alt={visuel.alt}
+          width={visuel.largeur}
+          height={visuel.hauteur}
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+      {titreEtiquette ? (
+        <Etiquette taille="L" balise={Titre}>
+          {titre}
+        </Etiquette>
+      ) : (
+        <Titre class={taille === 'L' ? 'text-heading-40' : 'text-heading-24'}>{titre}</Titre>
+      )}
+      <p class="text-body">{texte}</p>
+      {meta && <p class="carte__meta text-caption">{meta}</p>}
+    </article>
+  )
+}
+
+<style>
+  /* ---------- Apparence ligne ---------- */
+  .carte--ligne {
+    position: relative;
+    isolation: isolate;
+    padding-block: var(--space-48);
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .carte--retrait {
+    padding-left: var(--layout-offset);
+  }
+
+  /* Balayage au survol et au focus clavier, comme l'aplat des boutons et de la navigation */
+  .carte--ligne::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: var(--color-background-subtle);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--motion-duration-long) var(--motion-ease);
+  }
+
+  .carte--ligne:focus-within::before {
+    transform: scaleX(1);
+  }
+
+  @media (hover: hover) {
+    .carte--ligne:hover::before {
+      transform: scaleX(1);
+    }
+  }
+
+  .carte__lien {
+    text-decoration: none;
+  }
+
+  /* Toute la carte est cliquable */
+  .carte__lien::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .carte__texte {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .carte__description {
+    color: var(--color-text-secondary);
+  }
+
+  .carte__meta {
+    color: var(--color-text-muted);
+  }
+
+  /* Taille L : texte et étiquettes côte à côte, ou visuel à gauche */
+  .carte--ligne.carte--l {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-40);
+  }
+
+  .carte--l .carte__corps {
+    flex: 1 1 0;
+    max-width: 45rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+    min-width: 0;
+  }
+
+  .carte--l .carte__texte {
+    gap: var(--space-8);
+  }
+
+  /* Illustration transparente, sans fond (Figma 111:5234) */
+  .carte__visuel {
+    flex: 0 0 25rem;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Visuel prévu mais pas encore fourni (aperçu) : un aplat réserve la place */
+  .carte__visuel:empty {
+    background: var(--color-surface-placeholder);
+  }
+
+  .carte__visuel :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Taille M : texte puis étiquettes en ligne */
+  .carte--ligne.carte--m .carte__corps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .carte--m .carte__texte {
+    gap: var(--space-2);
+    max-width: 50rem;
+  }
+
+  /* Tablette : plus de retrait, visuel réduit */
+  @media (max-width: 63.99rem) {
+    .carte--retrait {
+      padding-left: 0;
+    }
+
+    .carte__visuel {
+      flex-basis: 40%;
+    }
+  }
+
+  /* Mobile : une colonne */
+  @media (max-width: 39.99rem) {
+    .carte--ligne {
+      padding-block: var(--space-32);
+    }
+
+    .carte--ligne.carte--l {
+      flex-direction: column;
+      gap: var(--space-24);
+    }
+
+    .carte__visuel {
+      flex-basis: auto;
+      width: 100%;
+    }
+
+    .carte--l .carte__corps {
+      gap: var(--space-24);
+    }
+  }
+
+  /* ---------- Apparence cadre ---------- */
+  .carte--cadre {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    height: 100%;
+    padding: var(--space-32);
+    border: 1px solid var(--color-border-default);
+  }
+
+  .carte__illustration {
+    width: 100%;
+    height: auto;
+    margin-bottom: var(--space-8);
+  }
+</style>

@@ -40,6 +40,7 @@ async function cartes(): Promise<Map<string, Carte>> {
     m.set(path('ecrits', locale), { surtitre: site, titre: ui.navigation.ecrits, locale });
     m.set(path('parcours', locale), { surtitre: site, titre: p.titre, locale });
     m.set(path('contact', locale), { surtitre: site, titre: ui.navigation.contact, locale });
+    m.set(path('systeme', locale), { surtitre: site, titre: ui.systeme.titre, locale });
     for (const c of await lister('cas', locale))
       m.set(c.href, { surtitre: `${site} · ${ui.cas.surtitre} ${String(c.numero).padStart(2, '0')}`, titre: c.data.titre, locale, strates: c.data.strates });
     for (const e of await lister('ecrits', locale))

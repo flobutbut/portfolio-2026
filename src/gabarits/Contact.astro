@@ -1,0 +1,63 @@
+---
+/**
+ * Page Contact (Figma 54:671)
+ * Titre, puis Planche/Contact en variante sombre : message, adresse en grand copiable, filet.
+ * Le pied de page n'y répète pas l'adresse.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnTete from '../components/molecules/EnTete.astro';
+import EmailCopiable from '../components/organismes/EmailCopiable.astro';
+import Planche from '../components/organismes/Planche.astro';
+import { otherLocale, path, type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = await getInterface(locale);
+---
+
+<BaseLayout
+  title={ui.navigation.contact}
+  description={ui.metadonnees.contact}
+  locale={locale}
+  alternate={path('contact', otherLocale(locale))}
+  piedAvecEmail={false}
+>
+  <div class="container container--etroit page-tete">
+    <EnTete titre={ui.navigation.contact} niveau={1} espace="page" filet={false} />
+  </div>
+
+  <Planche titre={ui.planche.titre} texte={ui.planche.texte} sombre>
+    <div class="contact-email" data-emplacement="contact">
+      <EmailCopiable locale={locale} />
+    </div>
+  </Planche>
+</BaseLayout>
+
+<style>
+  /* La planche sombre rejoint le pied de page, même sur une page plus courte que l'écran */
+  :global(main:has(.planche--sombre)) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(main > .planche--sombre) {
+    flex: 1;
+  }
+
+  .contact-email {
+    padding-top: var(--space-72);
+    padding-bottom: var(--space-64);
+    border-bottom: 1px solid var(--color-border-on-dark);
+  }
+
+  @media (max-width: 39.99rem) {
+    .contact-email {
+      padding-top: var(--space-48);
+      padding-bottom: var(--space-48);
+    }
+  }
+</style>

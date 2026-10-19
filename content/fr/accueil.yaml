@@ -38,9 +38,11 @@ position:
     texte: "Ce site applique ce principe à lui-même : un seul contenu, une version pour les humains, une pour les agents. Si vous confiez sa lecture à un assistant IA, donnez-lui le lien de cette version : elle dit ce que chaque cas prouve et ce qui revient à l’équipe. Rien n’y est caché."
     copier: Copier le lien IA
     copie: "Prompt copié : collez-le dans votre assistant IA"
-    # Aperçu du texte copié : infobulle (survol, focus) ou modale (écran tactile)
+    # Si le navigateur refuse la copie, la modal s’ouvre avec le texte
+    echec: "Copie impossible : sélectionnez le texte et copiez-le"
+    # Aperçu du texte copié : tooltip (hover, focus) ou modal (écran tactile)
     apercu: Ce texte sera copié
-    # Modale de confirmation, sur écran tactile
+    # Modal de confirmation, sur écran tactile
     confirmer: Copier
     annuler: Annuler
     # Texte copié ; {lien} devient l’adresse de la version agent, suivie de ?src=prompt

@@ -4,7 +4,7 @@ numero: 3
 slug: data-contracts
 statut: publie
 titre: "Rendre explicites les engagements autour des données"
-chapo: "Chez Qlik, je conçois un outil de contrats de données pour expliciter les engagements entre les équipes qui produisent un jeu de données et celles qui l’utilisent. L’enjeu : relier ces engagements aux informations et aux mesures de qualité déjà présentes dans la plateforme. Ce travail est en cours."
+chapo: "Chez Qlik, je conçois un outil de data contracts pour expliciter les engagements entre les équipes qui produisent un dataset et celles qui l’utilisent. L’enjeu : relier ces engagements aux informations et aux mesures de qualité déjà présentes dans la plateforme. Ce travail est en cours."
 meta: "Qlik · Intégration de données"
 strates:
   surfaces: false
@@ -12,7 +12,7 @@ strates:
   modele: true
 visuel:
   src: /images/data-contracts/apercu.svg
-  alt: "Illustration isométrique : un jeu de données en couches, relié aux équipes qui l’utilisent"
+  alt: "Illustration isométrique : un dataset en couches, relié aux équipes qui l’utilisent"
 cartouche:
   role: "Senior Product Designer"
   duree: "Depuis juin 2025, en cours"
@@ -30,12 +30,12 @@ Ce que signifie une colonne, qui en répond, quelle fraîcheur ou quelle qualit�
 
 ```figure
 type: schema
-legende: "Fig. 01 · Avant : entre ceux qui produisent un jeu de données et ceux qui l’utilisent, des attentes que chacun suppose et que personne n’a écrites."
+legende: "Fig. 01 · Avant : entre ceux qui produisent un dataset et ceux qui l’utilisent, des attentes que chacun suppose et que personne n’a écrites."
 blocs:
   - chaine:
-      - { objet: "Producteurs", description: "l’équipe qui publie le jeu de données" }
+      - { objet: "Producteurs", description: "l’équipe qui publie le dataset" }
       - { liaison: "publie" }
-      - { objet: "Jeu de données", description: "une table, ses colonnes" }
+      - { objet: "Dataset", description: "une table, ses colonnes" }
       - { liaison: "alimente" }
       - { objet: "Consommateurs", description: "les équipes et usages qui en dépendent" }
   - puces:
@@ -56,7 +56,7 @@ Dans le modèle proposé, le contrat constitue un objet du produit à part enti�
 
 ## Partir de ce qui existe déjà
 
-Le contrat ne naît pas de rien : il s’appuie sur un jeu de données qui a déjà ses propres mesures de qualité, par dimensions et par règles de validation. La première question n’était donc pas « à quoi ressemble un contrat ? », mais « quelle relation le lie au jeu de données ? ».
+Le contrat ne naît pas de rien : il s’appuie sur un dataset qui a déjà ses propres mesures de qualité, par dimensions et par règles de validation. La première question n’était donc pas « à quoi ressemble un contrat ? », mais « quelle relation le lie au dataset ? ».
 
 J’ai choisi de m’appuyer sur ces mesures plutôt que de créer un second système de mesure propre aux contrats. Cette relation devait éviter de dupliquer la description de la qualité. Elle ne dispense pas de préciser ce que chaque engagement exige : une mesure commune et le seuil attendu par un consommateur ne sont pas la même chose.
 
@@ -70,10 +70,10 @@ L’objectif est de partager le vocabulaire et les comportements récurrents, to
 
 ```figure
 type: schema
-legende: "Fig. 02 · Le contrat s’appuie sur le jeu de données : il réutilise ses mesures de qualité au lieu d’en inventer, et garantit leur respect à ceux qui en dépendent."
+legende: "Fig. 02 · Le contrat s’appuie sur le dataset : il réutilise ses mesures de qualité au lieu d’en inventer, et garantit leur respect à ceux qui en dépendent."
 blocs:
   - chaine:
-      - { objet: "Jeu de données", description: "ses mesures de qualité : dimensions, règles de validation" }
+      - { objet: "Dataset", description: "ses mesures de qualité : dimensions, règles de validation" }
       - { liaison: "réutilise", sens: gauche }
       - { objet: "Data contract", description: "des garanties explicites, vérifiées par le système, avec un responsable", emphase: true }
       - { liaison: "garantit à" }

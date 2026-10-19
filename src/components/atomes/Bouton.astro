@@ -1,0 +1,137 @@
+---
+/**
+ * Atome · Bouton (Figma 2:493, 8:480)
+ * Variantes :
+ * - plein   : fond clair ; au survol, un aplat bleu balaie le bouton depuis son bord gauche (1 px au repos) ;
+ * - contour : filet blanc, pour les surfaces sombres ; au survol, un aplat blanc balaie le bouton ;
+ * - accent  : aplat bleu, texte blanc (action principale sur fond clair) ;
+ * - filet   : filet encre, fond blanc (action secondaire sur fond clair).
+ * Tailles : M (16 × 24) et S (12 × 20).
+ * Rendu en <a> si `href` est fourni, en <button> sinon (type « button » par défaut, `type` le remplace).
+ * Si `href` vaut encore « À compléter » (aperçu), le bouton est indisponible : texte seul, sans lien.
+ */
+import type { HTMLAttributes } from 'astro/types';
+import { isTodo } from '../../lib/todo';
+
+type Props = {
+  variante?: 'plein' | 'contour' | 'accent' | 'filet';
+  taille?: 'M' | 'S';
+  href?: string;
+} & Omit<HTMLAttributes<'a'> & HTMLAttributes<'button'>, 'class'>;
+
+const { variante = 'plein', taille = 'M', href, type, ...attrs } = Astro.props;
+const indisponible = href !== undefined && isTodo(href);
+const Tag = href ? 'a' : 'button';
+const classes = ['bouton', 'text-body', `bouton--${variante}`, `bouton--${taille.toLowerCase()}`];
+---
+
+{
+  indisponible ? (
+    <span class:list={[...classes, 'bouton--indisponible', 'todo']} title={href}>
+      <span class="bouton__libelle"><slot /></span>
+    </span>
+  ) : (
+    <Tag class:list={classes} href={href} type={href ? undefined : (type ?? 'button')} {...attrs}>
+      <span class="bouton__libelle"><slot /></span>
+    </Tag>
+  )
+}
+
+<style>
+  .bouton {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    border: 0;
+    white-space: pre;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color var(--motion-duration) var(--motion-ease);
+  }
+
+  .bouton--m {
+    padding: var(--space-16) var(--space-24);
+  }
+
+  .bouton--s {
+    padding: var(--space-12) var(--space-20);
+  }
+
+  /* Aplat de survol des variantes plein et contour */
+  .bouton--plein::before,
+  .bouton--contour::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-block: 0;
+    left: 0;
+    width: 1px;
+    transition: width var(--motion-duration) var(--motion-ease);
+  }
+
+  .bouton--plein {
+    background: var(--color-background-canvas);
+    color: var(--color-text-primary);
+  }
+
+  .bouton--plein::before {
+    background: var(--color-background-brand);
+  }
+
+  .bouton--contour {
+    background: none;
+    color: var(--color-text-inverse);
+    box-shadow: inset 0 0 0 2px var(--color-border-white);
+  }
+
+  .bouton--contour::before {
+    width: 0;
+    background: var(--color-background-canvas);
+  }
+
+  .bouton--accent {
+    background: var(--color-background-brand);
+    color: var(--color-text-inverse);
+  }
+
+  .bouton--filet {
+    background: var(--color-background-canvas);
+    box-shadow: inset 0 0 0 1px var(--color-border-ink);
+    color: var(--color-text-primary);
+  }
+
+  /* Indisponible (aperçu seulement) : neutre, sans aplat au survol */
+  .bouton--indisponible {
+    cursor: default;
+  }
+
+  .bouton--indisponible::before {
+    display: none;
+  }
+
+  .bouton--plein.bouton--indisponible {
+    background: var(--color-surface-inactive);
+    color: var(--color-text-supporting);
+  }
+
+  .bouton--contour.bouton--indisponible {
+    box-shadow: inset 0 0 0 2px var(--color-border-on-dark);
+    color: var(--color-text-on-dark-muted);
+  }
+
+  @media (hover: hover) {
+    .bouton--plein:hover::before,
+    .bouton--contour:hover::before {
+      width: 100%;
+    }
+
+    .bouton--plein:not(.bouton--indisponible):hover {
+      color: var(--color-text-inverse);
+    }
+
+    .bouton--contour:not(.bouton--indisponible):hover {
+      color: var(--color-text-primary);
+    }
+  }
+</style>

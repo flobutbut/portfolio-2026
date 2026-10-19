@@ -4,18 +4,18 @@
  * Hero · Strates · Travaux · Position · Méthode · Écrits
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Bouton from '../components/Bouton.astro';
-import CopieLienIA from '../components/CopieLienIA.astro';
-import EnTeteDeSection from '../components/EnTeteDeSection.astro';
-import EntreeDeProjet from '../components/EntreeDeProjet.astro';
-import EntreeDEcrit from '../components/EntreeDEcrit.astro';
-import PilierDeMethode from '../components/PilierDeMethode.astro';
-import FigureMethode from '../components/FigureMethode.astro';
+import Bouton from '../components/atomes/Bouton.astro';
+import Encart from '../components/atomes/Encart.astro';
+import Carte from '../components/molecules/Carte.astro';
+import EnTete from '../components/molecules/EnTete.astro';
+import Figure from '../components/molecules/Figure.astro';
+import CopieLienIA from '../components/organismes/CopieLienIA.astro';
+import PilierDeMethode from '../components/organismes/PilierDeMethode.astro';
 import { fichiersAgents, otherLocale, path, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
+import { carteDeCas, carteDEcrit } from '../lib/cartes';
 import { getAccueil, lister } from '../lib/contenu';
 import { STRATES } from '../lib/strates';
-import { isTodo } from '../lib/todo';
 
 interface Props {
   locale: Locale;
@@ -33,6 +33,7 @@ const ILLUSTRATIONS_STRATES = { surfaces: 'surfaces', designSystem: 'design-syst
 const copieIA = {
   libelle: agents.copier,
   confirmation: agents.copie,
+  echec: agents.echec,
   apercu: agents.apercu,
   prompt: agents.prompt,
   confirmer: agents.confirmer,
@@ -58,8 +59,8 @@ const copieIA = {
         <p>{a.hero.details}</p>
       </div>
       <div class="hero__actions">
-        <CopieLienIA {...copieIA} apparence="contour" alignement="fin" emplacement="hero" />
-        {isTodo(cv) ? <span class="bouton-todo todo text-body" title={cv}>{a.hero.cv}</span> : <Bouton apparence="contour" href={cv} data-emplacement="hero">{a.hero.cv}</Bouton>}
+        <CopieLienIA {...copieIA} variante="contour" alignement="fin" emplacement="hero" />
+        <Bouton variante="contour" href={cv} data-emplacement="hero">{a.hero.cv}</Bouton>
         {cas.length > 0 && <Bouton href="#travaux">{a.hero.voirTravaux}</Bouton>}
       </div>
     </div>
@@ -67,18 +68,24 @@ const copieIA = {
 
   <!-- Strates -->
   <section class="container section" aria-labelledby="strates-titre" data-apparition>
-    <EnTeteDeSection titre={a.strates.titre} id="strates-titre" />
+    <EnTete titre={a.strates.titre} id="strates-titre" />
     <div class="strates__intro">
-      <p class="text-lead">{a.strates.introduction}</p>
+      <Encart>
+        <p class="text-lead">{a.strates.introduction}</p>
+      </Encart>
     </div>
     <ul class="strates__cartes" role="list">
       {
         STRATES.map((cle) => (
-          <li class="strates__carte">
-            <img class="strates__illustration" src={`/images/strates/${ILLUSTRATIONS_STRATES[cle]}.svg`} alt="" width="378" height="250" loading="lazy" decoding="async" />
-            <h3 class="strates__nom text-heading-24">{ui.strates[cle]}</h3>
-            <p class="text-body">{a.strates[cle].description}</p>
-            <p class="text-caption libelle">{a.strates[cle].exemples}</p>
+          <li class="strates__item">
+            <Carte
+              apparence="cadre"
+              titre={ui.strates[cle]}
+              titreEtiquette
+              texte={a.strates[cle].description}
+              meta={a.strates[cle].exemples}
+              visuel={{ src: `/images/strates/${ILLUSTRATIONS_STRATES[cle]}.svg`, alt: '', largeur: 378, hauteur: 250 }}
+            />
           </li>
         ))
       }
@@ -89,20 +96,11 @@ const copieIA = {
   {
     cas.length > 0 && (
       <section id="travaux" class="container section" aria-labelledby="travaux-titre" data-apparition>
-        <EnTeteDeSection titre={a.travaux.titre} id="travaux-titre" />
+        <EnTete titre={a.travaux.titre} id="travaux-titre" />
         <div>
           {
             cas.map((c) => (
-              <EntreeDeProjet
-                locale={locale}
-                lang={c.langue !== locale ? c.langue : undefined}
-                titre={c.data.entree?.titre ?? c.data.titre}
-                description={c.data.entree?.description ?? c.data.chapo}
-                meta={c.data.meta}
-                strates={c.data.strates}
-                href={c.href}
-                visuel={c.data.visuel}
-              />
+              <Carte {...carteDeCas(c, locale, ui)} />
             ))
           }
         </div>
@@ -124,7 +122,7 @@ const copieIA = {
           <div class="agents__actions">
             <CopieLienIA {...copieIA} emplacement="position" />
             <!-- Version .txt : certains outils web d'assistants refusent un fichier .md -->
-            <Bouton apparence="contour" href={fichiersAgents.agentTexte} hreflang="fr" target="_blank" rel="noopener">
+            <Bouton variante="contour" href={fichiersAgents.agentTexte} hreflang="fr" target="_blank" rel="noopener">
               {agents.lire}<span class="visually-hidden"> {agents.nouvelOnglet}</span>
             </Bouton>
           </div>
@@ -136,7 +134,7 @@ const copieIA = {
   <!-- Méthode -->
   <section class="container section methode" aria-labelledby="methode-titre" data-methode>
     <div class="methode__tete" data-methode-tete>
-      <EnTeteDeSection titre={a.methode.titre} id="methode-titre" />
+      <EnTete titre={a.methode.titre} id="methode-titre" />
     </div>
     <div class="methode__piste" data-methode-piste>
       <div class="methode__grille" data-methode-scene>
@@ -147,7 +145,7 @@ const copieIA = {
                 <PilierDeMethode titre={p.titre} description={p.description} pratiques={p.pratiques} />
               </div>
               <div class="methode__figure" style={`--rang: ${i + 1}`} data-figure={i}>
-                <FigureMethode {...p.figure} />
+                <Figure {...p.figure} />
               </div>
             </>
           ))
@@ -162,18 +160,11 @@ const copieIA = {
   {
     ecrits.length > 0 && (
       <section class="container section" aria-labelledby="ecrits-titre" data-apparition>
-        <EnTeteDeSection titre={a.ecrits.titre} id="ecrits-titre" />
+        <EnTete titre={a.ecrits.titre} id="ecrits-titre" />
         <div class="ecrits__liste">
           {
             ecrits.map((e) => (
-              <EntreeDEcrit
-                locale={locale}
-                lang={e.langue !== locale ? e.langue : undefined}
-                titre={e.data.titre}
-                these={e.data.these}
-                strates={e.data.strates}
-                href={e.href}
-              />
+              <Carte {...carteDEcrit(e, locale, ui)} />
             ))
           }
         </div>
@@ -209,8 +200,8 @@ const copieIA = {
   .hero__surface {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding: 8.5rem var(--layout-gutter) 3rem var(--bord);
+    gap: var(--space-24);
+    padding: var(--layout-section) var(--layout-gutter) var(--space-48) var(--bord);
   }
 
   .hero__surface h1 {
@@ -221,7 +212,7 @@ const copieIA = {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 2rem var(--bord) 2rem var(--layout-gutter);
+    padding: var(--space-32) var(--bord) var(--space-32) var(--layout-gutter);
     background: var(--color-background-brand);
     color: var(--color-text-inverse);
   }
@@ -231,27 +222,17 @@ const copieIA = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;
-    padding: 2rem var(--bord);
+    gap: var(--space-32);
+    padding: var(--space-32) var(--bord);
     background: var(--color-background-inverse);
     color: var(--color-text-inverse);
-  }
-
-  .hero__identite strong {
-    font-weight: 500;
   }
 
   .hero__actions {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .bouton-todo {
-    padding: 1rem 1.5rem;
-    box-shadow: inset 0 0 0 2px var(--color-border-on-dark);
-    color: var(--color-text-on-dark-muted);
+    gap: var(--space-12);
   }
 
   @media (max-width: 63.99rem) {
@@ -261,7 +242,7 @@ const copieIA = {
     }
 
     .hero__surface {
-      padding-top: 5rem;
+      padding-top: var(--space-80);
     }
 
     .hero__marque {
@@ -276,23 +257,21 @@ const copieIA = {
 
   /* ---------- Sections ---------- */
   .section {
-    padding-top: 8.75rem;
-    padding-bottom: 2.5rem;
+    padding-top: var(--layout-section);
+    padding-bottom: var(--space-40);
   }
 
 
   @media (max-width: 39.99rem) {
     .section {
-      padding-top: 5rem;
+      padding-top: var(--space-80);
     }
   }
 
   /* ---------- Strates ---------- */
-  /* Introduction sur fond background/subtle, alignée sur le texte des cartes */
+  /* Introduction en encart, alignée sur le texte des cartes */
   .strates__intro {
-    margin-bottom: 2rem;
-    padding: 1.5rem 2rem;
-    background: var(--color-background-subtle);
+    margin-bottom: var(--space-32);
   }
 
   .strates__intro p {
@@ -302,32 +281,13 @@ const copieIA = {
   .strates__cartes {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    padding: 0 0 2rem;
+    padding: 0 0 var(--space-32);
     list-style: none;
   }
 
-  .strates__carte {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 2rem;
-    border: 1px solid var(--color-border-default);
-  }
-
-  .strates__carte + .strates__carte {
+  /* Cartes encadrées, bordures fusionnées */
+  .strates__item + .strates__item :global(.carte) {
     border-left: 0;
-  }
-
-  .strates__illustration {
-    width: 100%;
-    height: auto;
-    margin-bottom: 0.5rem;
-  }
-
-  .strates__nom {
-    padding: 0.375rem 0.5rem;
-    background: var(--color-background-brand);
-    color: var(--color-text-inverse);
   }
 
   @media (max-width: 63.99rem) {
@@ -335,7 +295,7 @@ const copieIA = {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .strates__carte + .strates__carte {
+    .strates__item + .strates__item :global(.carte) {
       border-left: 1px solid var(--color-border-default);
       border-top: 0;
     }
@@ -343,7 +303,7 @@ const copieIA = {
 
   /* ---------- Position ---------- */
   .position {
-    margin-top: 6.25rem;
+    margin-top: var(--space-96);
     background: var(--color-background-brand);
     color: var(--color-text-inverse);
   }
@@ -351,15 +311,15 @@ const copieIA = {
   .position__inner {
     display: grid;
     grid-template-columns: 18.75rem minmax(0, 1fr);
-    gap: 0.5rem;
-    padding-top: 7.5rem;
-    padding-bottom: 7rem;
+    gap: var(--space-8);
+    padding-top: var(--space-128);
+    padding-bottom: var(--space-112);
   }
 
   .position__texte {
     display: flex;
     flex-direction: column;
-    gap: 2.25rem;
+    gap: var(--space-40);
   }
 
   .position__texte p {
@@ -370,13 +330,9 @@ const copieIA = {
   .agents {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    padding-top: 2rem;
+    gap: var(--space-20);
+    padding-top: var(--space-32);
     border-top: 1px solid var(--color-border-white);
-  }
-
-  .agents h3 {
-    font-weight: 400;
   }
 
   .agents__actions {
@@ -384,21 +340,21 @@ const copieIA = {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1.5rem;
-    padding-top: 0.5rem;
+    gap: var(--space-24);
+    padding-top: var(--space-8);
   }
 
   @media (max-width: 39.99rem) {
     .agents__actions {
-      gap: 1rem;
+      gap: var(--space-16);
     }
   }
 
   @media (max-width: 63.99rem) {
     .position__inner {
       grid-template-columns: minmax(0, 1fr);
-      gap: 1.5rem;
-      padding-block: 5rem;
+      gap: var(--space-24);
+      padding-block: var(--space-80);
     }
   }
 
@@ -406,8 +362,8 @@ const copieIA = {
   .methode__grille {
     display: grid;
     grid-template-columns: minmax(0, 488fr) minmax(0, 800fr);
-    column-gap: 2.5rem;
-    padding-block: 2.75rem;
+    column-gap: var(--space-40);
+    padding-block: var(--space-48);
     border-bottom: 1px solid var(--color-border-default);
   }
 
@@ -420,7 +376,7 @@ const copieIA = {
   .methode__figure {
     grid-column: 2;
     grid-row: var(--rang);
-    padding-block: 1.5rem;
+    padding-block: var(--space-24);
   }
 
   @media (max-width: 63.99rem) {
@@ -442,8 +398,8 @@ const copieIA = {
     position: sticky;
     z-index: 3;
     top: var(--layout-nav-offset, 0px);
-    padding-top: 1.5rem;
-    margin-top: -1.5rem;
+    padding-top: var(--space-24);
+    margin-top: calc(-1 * var(--space-24));
     background: var(--color-background-canvas);
     transition: top var(--motion-duration) var(--motion-ease);
   }
@@ -456,7 +412,7 @@ const copieIA = {
     transition: top var(--motion-duration) var(--motion-ease);
   }
 
-  /* Une demi-hauteur d'écran de défilement par pilier suivant */
+  /* Une hauteur d'écran de défilement, partagée à parts égales entre les piliers (scripts/methode.ts) */
   .methode--collee .methode__course {
     height: 100svh;
   }
@@ -471,7 +427,7 @@ const copieIA = {
   .methode--collee .methode__figure {
     grid-row: 1 / span 3;
     align-self: start;
-    padding-block: 1.5rem 0;
+    padding-block: var(--space-24) 0;
     container-type: inline-size;
     opacity: 0;
     transform: translateY(0.75rem);
@@ -486,7 +442,7 @@ const copieIA = {
   }
 
   /* La figure tient dans l'écran sous l'en-tête : proportions Figma (676 × 578) tant que la hauteur le permet */
-  .methode--collee .methode__figure :global(.fig-methode__cadre) {
+  .methode--collee .methode__figure :global(.figure__cadre) {
     aspect-ratio: auto;
     height: min(85.5cqw, calc(100svh - var(--layout-nav-offset, 0px) - var(--methode-tete, 0px) - 6rem));
   }
@@ -501,7 +457,7 @@ const copieIA = {
     color: var(--color-text-muted);
   }
 
-  .methode--collee .methode__pilier:not([data-actif]) :global(:is(.pilier__description, .pilier__pratiques)) {
+  .methode--collee .methode__pilier:not([data-actif]) :global(:is(.pilier__description, .groupe-etiquettes)) {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -510,7 +466,7 @@ const copieIA = {
     white-space: nowrap;
   }
 
-  .methode--collee .methode__pilier[data-actif] :global(:is(.pilier__description, .pilier__pratiques)) {
+  .methode--collee .methode__pilier[data-actif] :global(:is(.pilier__description, .groupe-etiquettes)) {
     animation: methode-detail var(--motion-duration-long) var(--motion-ease);
   }
 
@@ -522,6 +478,6 @@ const copieIA = {
 
   /* Écrits : pleine largeur comme les travaux, le retrait est porté par le composant */
   .ecrits__liste {
-    padding-top: 3rem;
+    padding-top: var(--space-48);
   }
 </style>

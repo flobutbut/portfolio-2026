@@ -38,6 +38,7 @@ position:
     texte: "This site applies that principle to itself: one body of content, one version for humans, one for agents. If you hand its reading to an AI assistant, give it the link to that version: it states what each case proves and what belongs to the team. Nothing is hidden there."
     copier: Copy the AI link
     copie: "Prompt copied: paste it into your AI assistant"
+    echec: "Copy failed: select the text and copy it"
     # Preview of the copied text: tooltip (hover, focus) or dialog (touch screens)
     apercu: This text will be copied
     # Confirmation dialog, on touch screens

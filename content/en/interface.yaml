@@ -85,6 +85,7 @@ contact:
     url: /cv/florian-butour-cv-en.pdf
   ecrits: Writing
   versionAgent: Agent version
+  designSystem: Design system
   localisation: Nantes · fully remote
 
 # Markdown versions of case studies and writing (/en/work/<slug>.md…), for agents
@@ -101,6 +102,10 @@ agents:
   contenusLies: Related content
   pageWeb: Web page
 
+# Design system page: tokens and components of the site
+systeme:
+  titre: Design system
+
 pageIntrouvable:
   titre: Page not found
   texte: This address does not lead to any page.
@@ -112,3 +117,4 @@ metadonnees:
   travaux: Case studies by Florian Butour, Senior Product Designer.
   ecrits: Essays by Florian Butour on designing systems, models and design systems.
   contact: "Contact Florian Butour, Senior Product Designer: a role, a product, a question."
+  systeme: "The design system of this site: colour, type, weight and spacing tokens, and the components that use them."

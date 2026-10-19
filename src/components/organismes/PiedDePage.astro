@@ -1,15 +1,16 @@
 ---
 /**
- * Strates/Contact (Figma 2:492), pied de page
+ * Organisme · Pied de page (Figma 2:492, « Contact »)
  * Adresse en grand dans la colonne de 1 120 px, filet, puis signature, liens et localisation
  * sur toute la largeur. Sur la page Contact, l'adresse est déjà dans la page : `avecEmail={false}`.
  */
+import Lien from '../atomes/Lien.astro';
 import EmailCopiable from './EmailCopiable.astro';
-import type { Locale } from '../i18n/routes';
-import { fichiersAgents, path } from '../i18n/routes';
-import { getInterface } from '../i18n/ui';
-import { isTodo } from '../lib/todo';
-import { contenusVisibles } from '../lib/contenu';
+import type { Locale } from '../../i18n/routes';
+import { fichiersAgents, path } from '../../i18n/routes';
+import { getInterface } from '../../i18n/ui';
+import { isTodo } from '../../lib/todo';
+import { contenusVisibles } from '../../lib/contenu';
 
 interface Props {
   locale: Locale;
@@ -25,6 +26,7 @@ const liens = [
   { libelle: contact.cv.libelle, url: contact.cv.url, externe: false },
   ...(visibles.ecrits ? [{ libelle: contact.ecrits, url: path('ecrits', locale), externe: false }] : []),
   { libelle: contact.versionAgent, url: fichiersAgents.agent, externe: false },
+  { libelle: contact.designSystem, url: path('systeme', locale), externe: false },
 ];
 ---
 
@@ -51,9 +53,9 @@ const liens = [
                 {lien.libelle}
               </span>
             ) : (
-              <a href={lien.url} rel={lien.externe ? 'me noopener' : undefined}>
+              <Lien href={lien.url} rel={lien.externe ? 'me noopener' : undefined}>
                 {lien.libelle}
-              </a>
+              </Lien>
             )}
           </>
         ))
@@ -70,16 +72,16 @@ const liens = [
   }
 
   .contact__email {
-    padding-top: 4.5rem;
-    padding-bottom: 4rem;
+    padding-top: var(--space-72);
+    padding-bottom: var(--space-64);
     border-bottom: 1px solid var(--color-border-on-dark);
   }
 
   .contact__meta {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
-    padding: 1.5rem 2rem;
+    gap: var(--space-16);
+    padding: var(--space-24) var(--space-32);
     color: var(--color-text-on-dark-muted);
   }
 
@@ -95,13 +97,8 @@ const liens = [
     text-align: right;
   }
 
-  .contact__meta a {
-    text-decoration: none;
-  }
-
-  .contact__meta a:hover {
+  .contact__meta :global(a:hover) {
     color: var(--color-text-inverse);
-    text-decoration: underline;
   }
 
   .contact__meta .todo {
@@ -110,13 +107,13 @@ const liens = [
 
   @media (max-width: 39.99rem) {
     .contact__email {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
+      padding-top: var(--space-48);
+      padding-bottom: var(--space-48);
     }
 
     .contact__meta {
       flex-direction: column;
-      gap: 0.75rem;
+      gap: var(--space-12);
       padding-inline: var(--layout-gutter);
     }
 

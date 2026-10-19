@@ -1,0 +1,1127 @@
+---
+/**
+ * Gabarit · Design system (/systeme, /en/system)
+ * Cinq niveaux : jetons, atomes, molécules, organismes, gabarits. Sommaire vertical collé à gauche (desktop).
+ * Valeurs et propriétés viennent du code (lib/systeme.ts), le sens de content/<langue>/systeme.yaml.
+ * Chaque composant a sa fiche : rôle, aperçu, variantes, propriétés, règles, accessibilité, exemple.
+ * Les mêmes informations sont publiées pour les agents en Markdown et en JSON (lib/systemeAgents.ts).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Bouton from '../components/atomes/Bouton.astro';
+import Encart from '../components/atomes/Encart.astro';
+import Etiquette from '../components/atomes/Etiquette.astro';
+import Lien from '../components/atomes/Lien.astro';
+import Carte from '../components/molecules/Carte.astro';
+import EnTete from '../components/molecules/EnTete.astro';
+import Figure from '../components/molecules/Figure.astro';
+import GroupeEtiquettes from '../components/molecules/GroupeEtiquettes.astro';
+import Infobulle from '../components/molecules/Infobulle.astro';
+import Modale from '../components/molecules/Modale.astro';
+import CopieLienIA from '../components/organismes/CopieLienIA.astro';
+import EmailCopiable from '../components/organismes/EmailCopiable.astro';
+import PilierDeMethode from '../components/organismes/PilierDeMethode.astro';
+import Planche from '../components/organismes/Planche.astro';
+import { otherLocale, path, type Locale } from '../i18n/routes';
+import { getInterface } from '../i18n/ui';
+import { carteDeCas, carteDEcrit, etiquettesStrates } from '../lib/cartes';
+import { getAccueil, lister, resoudre as resoudreContenus } from '../lib/contenu';
+import { modeApercu } from '../lib/mode';
+import { EXEMPLES, NIVEAUX, composantsSource, gabaritsSource, getSysteme, jetonsDe, resoudre, stylesTexte } from '../lib/systeme';
+import { ECRITS_SYSTEME } from '../lib/systemeAgents';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = await getInterface(locale);
+const doc = await getSysteme(locale);
+const L = doc.libelles;
+const j = doc.jetons;
+const a = await getAccueil(locale);
+const cas = await lister('cas', locale);
+const ecrits = await lister('ecrits', locale);
+const ecritsLies = await resoudreContenus('ecrits', locale, ECRITS_SYSTEME);
+const casAvecVisuel = cas.find((c) => c.data.visuel?.src) ?? cas[0];
+const pilier = a.methode.piliers[0];
+const { agents } = a.position;
+const base = path('systeme', locale);
+
+// Sommaire : cinq niveaux, chacun avec ses entrées
+const JETONS = [
+  { id: 'couleurs', titre: j.couleurs.titre },
+  { id: 'typographie', titre: j.typographie.titre },
+  { id: 'graisses', titre: j.graisses.titre },
+  { id: 'espacements', titre: j.espacements.titre },
+  { id: 'mise-en-page', titre: j.miseEnPage.titre },
+  { id: 'mouvement', titre: j.mouvement.titre },
+];
+const idDe = (id: string) => id.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+const sommaire = [
+  { id: 'jetons', titre: doc.niveaux.jetons.titre, items: JETONS },
+  ...NIVEAUX.map((niveau) => ({
+    id: niveau,
+    titre: doc.niveaux[niveau].titre,
+    items: composantsSource.filter((c) => c.niveau === niveau).map((c) => ({ id: idDe(c.id), titre: doc.composants[c.id].nom })),
+  })),
+  { id: 'gabarits', titre: doc.niveaux.gabarits.titre, items: [] },
+];
+
+// Adresse d'exemple de chaque gabarit
+const exemplesGabarits: Record<string, string | undefined> = {
+  Accueil: path('accueil', locale),
+  ListeTravaux: path('travaux', locale),
+  Cas: cas[0]?.href,
+  ListeEcrits: path('ecrits', locale),
+  Ecrit: ecrits[0]?.href,
+  Parcours: path('parcours', locale),
+  Contact: path('contact', locale),
+  Systeme: base,
+};
+const nomDe = (id: string) => doc.composants[id]?.nom ?? id;
+const etiquettesExemple = etiquettesStrates(casAvecVisuel?.data.strates ?? { surfaces: true, designSystem: true, modele: false }, ui);
+---
+
+<BaseLayout
+  title={doc.titre}
+  description={ui.metadonnees.systeme}
+  locale={locale}
+  alternate={path('systeme', otherLocale(locale))}
+  markdown={`${base}.md`}
+>
+  <header class="container page-tete systeme-tete">
+    <p class="text-label libelle">{doc.surtitre}</p>
+    <EnTete titre={doc.titre} niveau={1} filet={false} />
+    <div class="systeme-tete__intro">
+      {doc.introduction.map((p) => <p class="text-lead">{p}</p>)}
+    </div>
+    <section class="agents" aria-labelledby="pour-les-agents">
+      <Encart>
+        <h2 id="pour-les-agents" class="text-heading-24 agents__titre">{doc.agents.titre}</h2>
+        {doc.agents.texte.map((p) => <p class="text-body agents__texte">{p}</p>)}
+        <ul class="agents__liens" role="list">
+          <li><Lien texte="text-ui" href={`${base}.md`}>{doc.agents.markdown} (.md) →</Lien></li>
+          <li><Lien texte="text-ui" href={`${base}.json`}>{doc.agents.json} (.json) →</Lien></li>
+        </ul>
+        {
+          ecritsLies.length > 0 && (
+            <>
+              <p class="text-label libelle agents__libelle">{doc.agents.ecritsLies}</p>
+              <ul class="agents__liens" role="list">
+                {ecritsLies.map((e) => (
+                  <li>
+                    <Lien texte="text-ui" href={e.href}>
+                      {`${ui.ecrit.surtitre} ${String(e.numero).padStart(2, '0')} · ${e.data.titre} →`}
+                    </Lien>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </Encart>
+    </section>
+  </header>
+
+  <div class="container systeme" data-emplacement="systeme">
+    <nav class="sommaire" aria-label={L.sommaire}>
+      <ol class="sommaire__niveaux" role="list">
+        {
+          sommaire.map((niveau, i) => (
+            <li class="sommaire__niveau">
+              <a class="sommaire__niveau-titre text-label" href={`#${niveau.id}`} data-sommaire={niveau.id}>
+                {`${i + 1} · ${niveau.titre}`}
+              </a>
+              {niveau.items.length > 0 && (
+                <ul class="sommaire__liste" role="list">
+                  {niveau.items.map((item) => (
+                    <li>
+                      <a class="sommaire__lien text-ui" href={`#${item.id}`} data-sommaire={item.id}>
+                        {item.titre}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="systeme__contenu">
+      <!-- ================= 1 · Jetons ================= -->
+      <section class="niveau" aria-labelledby="jetons">
+        <EnTete titre={`1 · ${doc.niveaux.jetons.titre}`} id="jetons" />
+        <p class="text-lead niveau__description">{doc.niveaux.jetons.description}</p>
+
+        <section class="fiche" id="couleurs" aria-labelledby="couleurs-titre" data-sommaire-cible>
+          <h3 id="couleurs-titre" class="text-heading-24">{j.couleurs.titre}</h3>
+          <p class="text-body fiche__description">{j.couleurs.description}</p>
+          <div class="tableau" role="region" aria-label={`${j.couleurs.titre}, ${L.jeton}`} tabindex="0">
+            <table class="text-caption">
+              <thead><tr><th scope="col">{L.jeton}</th><th scope="col">{L.valeur}</th><th scope="col">{L.usage}</th></tr></thead>
+              <tbody>
+                {
+                  jetonsDe('--color-').map((t) => (
+                    <tr>
+                      <td>
+                        <span class="pastille" style={`background: var(${t.nom})`} />
+                        <code>{t.nom}</code>
+                      </td>
+                      <td><code>{t.valeur}</code></td>
+                      <td>{j.couleurs.usages[t.nom]}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <h4 class="text-label libelle">{L.regles}</h4>
+          <ul class="puces text-body">{j.couleurs.regles.map((r) => <li>{r}</li>)}</ul>
+        </section>
+
+        <section class="fiche" id="typographie" aria-labelledby="typographie-titre" data-sommaire-cible>
+          <h3 id="typographie-titre" class="text-heading-24">{j.typographie.titre}</h3>
+          <p class="text-body fiche__description">{j.typographie.description}</p>
+          <ul class="styles" role="list">
+            {
+              stylesTexte.map((s) => (
+                <li class="style">
+                  <p class={s.classe}>{L.exempleTexte}</p>
+                  <p class="text-caption note">
+                    <code>.{s.classe}</code> · {resoudre(s.declarations['font-size'] ?? '')} / {resoudre(s.declarations['line-height'] ?? '')} ·{' '}
+                    {j.typographie.roles[s.classe]}
+                  </p>
+                </li>
+              ))
+            }
+          </ul>
+          <h4 class="text-label libelle">{L.regles}</h4>
+          <ul class="puces text-body">{j.typographie.regles.map((r) => <li>{r}</li>)}</ul>
+        </section>
+
+        <section class="fiche" id="graisses" aria-labelledby="graisses-titre" data-sommaire-cible>
+          <h3 id="graisses-titre" class="text-heading-24">{j.graisses.titre}</h3>
+          <p class="text-body fiche__description">{j.graisses.description}</p>
+          <ul class="styles" role="list">
+            {
+              jetonsDe('--font-weight-').map((t) => (
+                <li class="style style--graisse">
+                  <p class="text-heading-24" style={`font-weight: var(${t.nom})`}>Archivo</p>
+                  <p class="text-lead" style={`font-weight: var(${t.nom})`}>Schibsted Grotesk</p>
+                  <p class="text-caption note">
+                    <code>{t.nom}</code> · {t.valeur} · {j.graisses.usages[t.nom]}
+                  </p>
+                </li>
+              ))
+            }
+          </ul>
+          <h4 class="text-label libelle">{L.regles}</h4>
+          <ul class="puces text-body">{j.graisses.regles.map((r) => <li>{r}</li>)}</ul>
+        </section>
+
+        <section class="fiche" id="espacements" aria-labelledby="espacements-titre" data-sommaire-cible>
+          <h3 id="espacements-titre" class="text-heading-24">{j.espacements.titre}</h3>
+          <p class="text-body fiche__description">{j.espacements.description}</p>
+          <ul class="espacements" role="list">
+            {
+              jetonsDe('--space-').map((t) => (
+                <li class="espacement">
+                  <code class="text-caption">{t.nom}</code>
+                  <span class="espacement__barre" style={`width: var(${t.nom})`} />
+                  <span class="text-caption note">{t.valeur}</span>
+                </li>
+              ))
+            }
+          </ul>
+          <h4 class="text-label libelle">{L.regles}</h4>
+          <ul class="puces text-body">{j.espacements.regles.map((r) => <li>{r}</li>)}</ul>
+        </section>
+
+        {
+          [
+            { id: 'mise-en-page', groupe: j.miseEnPage, prefixe: '--layout-' },
+            { id: 'mouvement', groupe: j.mouvement, prefixe: '--motion-' },
+          ].map(({ id, groupe, prefixe }) => (
+            <section class="fiche" id={id} aria-labelledby={`${id}-titre`} data-sommaire-cible>
+              <h3 id={`${id}-titre`} class="text-heading-24">
+                {groupe.titre}
+              </h3>
+              <p class="text-body fiche__description">{groupe.description}</p>
+              <div class="tableau" role="region" aria-label={`${groupe.titre}, ${L.jeton}`} tabindex="0">
+                <table class="text-caption">
+                  <thead>
+                    <tr>
+                      <th scope="col">{L.jeton}</th>
+                      <th scope="col">{L.valeur}</th>
+                      <th scope="col">{L.usage}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {jetonsDe(prefixe).map((t) => (
+                      <tr>
+                        <td>
+                          <code>{t.nom}</code>
+                        </td>
+                        <td>
+                          <code>{t.valeur}</code>
+                        </td>
+                        <td>{groupe.usages[t.nom]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <h4 class="text-label libelle">{L.regles}</h4>
+              <ul class="puces text-body">
+                {groupe.regles.map((r) => (
+                  <li>{r}</li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </section>
+
+      <!-- ================= 2 à 4 · Atomes, molécules, organismes ================= -->
+      {
+        NIVEAUX.map((niveau, i) => (
+          <section class="niveau" aria-labelledby={niveau}>
+            <EnTete titre={`${i + 2} · ${doc.niveaux[niveau].titre}`} id={niveau} />
+            <p class="text-lead niveau__description">{doc.niveaux[niveau].description}</p>
+
+            {composantsSource
+              .filter((c) => c.niveau === niveau)
+              .map((c) => {
+                const d = doc.composants[c.id];
+                const id = idDe(c.id);
+                return (
+                  <section class="fiche" id={id} aria-labelledby={`${id}-titre`} data-sommaire-cible>
+                    <div class="fiche__tete">
+                      <h3 id={`${id}-titre`} class="text-heading-24">
+                        {d.nom}
+                      </h3>
+                      <p class="text-caption note">
+                        <code>{c.id}</code> · <code>{c.fichier}</code>
+                        {c.figma.length > 0 && ` · ${L.figma} ${c.figma.join(', ')}`}
+                      </p>
+                    </div>
+                    <p class="text-lead fiche__role">{d.role}</p>
+
+                    {/* ---------- Aperçu ---------- */}
+                    <div class="fiche__apercu">
+                      {c.id === 'Bouton' && (
+                        <>
+                          <div class="scene">
+                            <Bouton variante="accent" href={path('travaux', locale)}>
+                              {a.hero.voirTravaux}
+                            </Bouton>
+                            <Bouton variante="filet" href={path('parcours', locale)}>
+                              {ui.navigation.parcours}
+                            </Bouton>
+                            <Bouton variante="accent" taille="S" href={path('travaux', locale)}>
+                              {a.hero.voirTravaux}
+                            </Bouton>
+                            <Bouton variante="filet" taille="S" href={path('parcours', locale)}>
+                              {ui.navigation.parcours}
+                            </Bouton>
+                          </div>
+                          <div class="scene scene--sombre">
+                            <Bouton variante="plein" href={path('travaux', locale)}>
+                              {a.hero.voirTravaux}
+                            </Bouton>
+                            <Bouton variante="contour" href={ui.contact.cv.url}>
+                              {a.hero.cv}
+                            </Bouton>
+                            {modeApercu && (
+                              <Bouton variante="contour" href="À compléter : exemple">
+                                {L.indisponible}
+                              </Bouton>
+                            )}
+                          </div>
+                        </>
+                      )}
+                      {c.id === 'Encart' && (
+                        <div class="scene scene--blanche">
+                          <Encart>
+                            <p class="text-lead">{a.strates.introduction}</p>
+                          </Encart>
+                        </div>
+                      )}
+                      {c.id === 'Etiquette' && (
+                        <div class="scene scene--colonne">
+                          <div class="scene__largeur-strates">
+                            <Etiquette etatTexte={ui.strates.touchee}>{ui.strates.surfaces}</Etiquette>
+                          </div>
+                          <div class="scene__largeur-strates">
+                            <Etiquette etat={false} etatTexte={ui.strates.nonTouchee}>
+                              {ui.strates.modele}
+                            </Etiquette>
+                          </div>
+                          <div class="scene__largeur-strates">
+                            <Etiquette taille="L">{ui.strates.designSystem}</Etiquette>
+                          </div>
+                        </div>
+                      )}
+                      {c.id === 'Lien' && (
+                        <div class="scene scene--blanche scene--liens">
+                          <Lien texte="text-ui" href={path('ecrits', locale)}>
+                            {ui.ecrit.tousLesEcrits}
+                          </Lien>
+                          {cas[0] && (
+                            <Lien texte="text-heading-24" href={cas[0].href}>
+                              {`${cas[0].data.titre} →`}
+                            </Lien>
+                          )}
+                        </div>
+                      )}
+                      {c.id === 'Carte' && (
+                        <>
+                          {casAvecVisuel && (
+                            <div class="scene scene--blanche">
+                              <Carte {...carteDeCas(casAvecVisuel, locale, ui)} niveau={4} />
+                              <Carte {...carteDeCas(casAvecVisuel, locale, ui, null)} retrait={false} niveau={4} />
+                            </div>
+                          )}
+                          {ecrits[0] && (
+                            <div class="scene scene--blanche">
+                              <Carte {...carteDEcrit(ecrits[0], locale, ui)} niveau={4} />
+                            </div>
+                          )}
+                          <div class="scene scene--blanche scene--cadre">
+                            <Carte
+                              apparence="cadre"
+                              titre={ui.strates.surfaces}
+                              titreEtiquette
+                              texte={a.strates.surfaces.description}
+                              meta={a.strates.surfaces.exemples}
+                              visuel={{ src: '/images/strates/surfaces.svg', alt: '', largeur: 378, hauteur: 250 }}
+                              niveau={4}
+                            />
+                          </div>
+                        </>
+                      )}
+                      {c.id === 'EnTete' && (
+                        <>
+                          <div class="scene scene--blanche" aria-hidden="true">
+                            <EnTete titre={a.methode.titre} />
+                          </div>
+                          <div class="scene scene--blanche" aria-hidden="true">
+                            <EnTete titre={ui.navigation.parcours} espace="page" filet={false} />
+                          </div>
+                        </>
+                      )}
+                      {c.id === 'Figure' && (
+                        <div class="scene scene--blanche scene--figure">
+                          <Figure {...pilier.figure} />
+                        </div>
+                      )}
+                      {c.id === 'GroupeEtiquettes' && (
+                        <div class="scene scene--colonne">
+                          <GroupeEtiquettes etiquettes={etiquettesExemple} libelle={ui.strates.libelle} replier="mobile" />
+                          <GroupeEtiquettes etiquettes={etiquettesExemple} libelle={ui.strates.libelle} orientation="horizontale" replier="mobile" />
+                        </div>
+                      )}
+                      {c.id === 'Infobulle' && (
+                        <div class="scene scene--infobulle">
+                          <Infobulle id="infobulle-exemple" titre={agents.apercu}>
+                            {agents.prompt.split('{lien}')[0]}
+                          </Infobulle>
+                        </div>
+                      )}
+                      {c.id === 'Modale' && (
+                        <div class="scene">
+                          <Bouton variante="accent" data-ouvrir-modale="modale-exemple">
+                            {agents.apercu}
+                          </Bouton>
+                          <Modale id="modale-exemple" titre={agents.apercu}>
+                            {agents.prompt.split('{lien}')[0]}
+                            <Fragment slot="actions">
+                              <Bouton variante="accent" taille="S" type="submit" value="confirmer">
+                                {agents.confirmer}
+                              </Bouton>
+                              <Bouton variante="filet" taille="S" type="submit" value="annuler">
+                                {agents.annuler}
+                              </Bouton>
+                            </Fragment>
+                          </Modale>
+                        </div>
+                      )}
+                      {c.id === 'CopieLienIA' && (
+                        <div class="scene scene--copie">
+                          <CopieLienIA
+                            libelle={agents.copier}
+                            confirmation={agents.copie}
+                            echec={agents.echec}
+                            apercu={agents.apercu}
+                            prompt={agents.prompt}
+                            confirmer={agents.confirmer}
+                            annuler={agents.annuler}
+                            emplacement="systeme"
+                          />
+                        </div>
+                      )}
+                      {c.id === 'EmailCopiable' && (
+                        <div class="scene scene--sombre scene--email">
+                          <EmailCopiable locale={locale} />
+                        </div>
+                      )}
+                      {c.id === 'PilierDeMethode' && (
+                        <div class="scene scene--blanche">
+                          <PilierDeMethode titre={pilier.titre} description={pilier.description} pratiques={pilier.pratiques} niveau={4} />
+                        </div>
+                      )}
+                      {c.id === 'Planche' && (
+                        <>
+                          <div class="scene scene--pleine scene--blanche">
+                            <Planche libelle={ui.planche.libelle} titre={ui.planche.titre} texte={ui.planche.texte} nom={`${d.nom} · ${L.apercu}`} niveau={4} />
+                          </div>
+                          <div class="scene scene--pleine">
+                            <Planche titre={ui.planche.titre} texte={ui.planche.texte} sombre nom={`${d.nom} · ${d.props.sombre}`} niveau={4}>
+                              <p class="text-caption emplacement">{L.slotExemple}</p>
+                            </Planche>
+                          </div>
+                        </>
+                      )}
+                      {(c.id === 'Navigation' || c.id === 'PiedDePage') && <p class="text-body note">{L.enPlace}</p>}
+                    </div>
+
+                    {/* ---------- Documentation ---------- */}
+                    <div class="fiche__doc">
+                      <div class="fiche__bloc">
+                        <h4 class="text-label libelle">{L.variantes}</h4>
+                        <ul class="puces text-body">
+                          {d.variantes.map((v) => (
+                            <li>{v}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {c.proprietes.length > 0 && (
+                        <div class="fiche__bloc fiche__bloc--large">
+                          <h4 class="text-label libelle" id={`${id}-props`}>
+                            {L.propriete}
+                          </h4>
+                          <div class="tableau" role="region" aria-labelledby={`${id}-titre ${id}-props`} tabindex="0">
+                            <table class="text-caption">
+                              <thead>
+                                <tr>
+                                  <th scope="col">{L.propriete}</th>
+                                  <th scope="col">{L.type}</th>
+                                  <th scope="col">{L.defaut}</th>
+                                  <th scope="col">{L.description}</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {c.proprietes.map((p) => (
+                                  <tr>
+                                    <td>
+                                      <code>{p.nom}</code>
+                                    </td>
+                                    <td>
+                                      <code>{p.type}</code>
+                                    </td>
+                                    <td>{p.defaut ? <code>{p.defaut}</code> : p.obligatoire ? L.obligatoire : ''}</td>
+                                    <td>{d.props[p.nom]}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      )}
+
+                      {c.slots.length > 0 && (
+                        <div class="fiche__bloc">
+                          <h4 class="text-label libelle">{L.slots}</h4>
+                          <ul class="puces text-body">
+                            {c.slots.map((s) => (
+                              <li>
+                                <code>{s === 'defaut' ? L.slotDefaut : s}</code> : {d.slots[s]}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+
+                      <div class="fiche__colonnes">
+                        <div class="fiche__bloc">
+                          <h4 class="text-label libelle">{L.faire}</h4>
+                          <ul class="puces puces--faire text-body">
+                            {d.faire.map((x) => (
+                              <li>{x}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div class="fiche__bloc">
+                          <h4 class="text-label libelle">{L.eviter}</h4>
+                          <ul class="puces puces--eviter text-body">
+                            {d.eviter.map((x) => (
+                              <li>{x}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                      <div class="fiche__bloc">
+                        <h4 class="text-label libelle">{L.accessibilite}</h4>
+                        <ul class="puces text-body">
+                          {d.accessibilite.map((x) => (
+                            <li>{x}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {(c.composeDe.length > 0 || c.utilisePar.length > 0) && (
+                        <dl class="fiche__relations text-body">
+                          {c.composeDe.length > 0 && (
+                            <div>
+                              <dt class="text-label libelle">{L.composeDe}</dt>
+                              <dd>
+                                {c.composeDe.map((x, k) => (
+                                  <>
+                                    {k > 0 && ', '}
+                                    <a href={`#${idDe(x)}`}>{nomDe(x)}</a>
+                                  </>
+                                ))}
+                              </dd>
+                            </div>
+                          )}
+                          {c.utilisePar.length > 0 && (
+                            <div>
+                              <dt class="text-label libelle">{L.utilisePar}</dt>
+                              <dd>
+                                {c.utilisePar.map((x, k) => (
+                                  <>
+                                    {k > 0 && ', '}
+                                    {doc.composants[x] ? <a href={`#${idDe(x)}`}>{nomDe(x)}</a> : <a href="#gabarits">{x}</a>}
+                                  </>
+                                ))}
+                              </dd>
+                            </div>
+                          )}
+                        </dl>
+                      )}
+
+                      <div class="fiche__bloc fiche__bloc--large">
+                        <h4 class="text-label libelle">{L.exemple}</h4>
+                        <pre class="code text-caption" tabindex="0"><code>{EXEMPLES[c.id]}</code></pre>
+                      </div>
+                    </div>
+                  </section>
+                );
+              })}
+          </section>
+        ))
+      }
+
+      <!-- ================= 5 · Gabarits ================= -->
+      <section class="niveau" aria-labelledby="gabarits" data-sommaire-cible id="niveau-gabarits">
+        <EnTete titre={`5 · ${doc.niveaux.gabarits.titre}`} id="gabarits" />
+        <p class="text-lead niveau__description">{doc.niveaux.gabarits.description}</p>
+        <div class="tableau" role="region" aria-label={`${doc.niveaux.gabarits.titre}, ${L.page}`} tabindex="0">
+          <table class="text-caption">
+            <thead>
+              <tr><th scope="col">{L.page}</th><th scope="col">{L.description}</th><th scope="col">{L.composeDe}</th></tr>
+            </thead>
+            <tbody>
+              {
+                gabaritsSource.map((g) => (
+                  <tr>
+                    <td>
+                      {exemplesGabarits[g.id] ? <a href={exemplesGabarits[g.id]}>{g.id}</a> : g.id}
+                      <br />
+                      <code class="note">{g.fichier}</code>
+                    </td>
+                    <td>{doc.gabarits[g.id]}</td>
+                    <td>
+                      {g.composants.map((x, k) => (
+                        <>
+                          {k > 0 && ', '}
+                          <a href={`#${idDe(x)}`}>{nomDe(x)}</a>
+                        </>
+                      ))}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Sommaire : le lien de la fiche en cours de lecture est marqué (aria-current). Sans JavaScript, rien ne change.
+  const liens = new Map<string, HTMLAnchorElement>();
+  document.querySelectorAll<HTMLAnchorElement>('[data-sommaire]').forEach((l) => liens.set(l.dataset.sommaire ?? '', l));
+  const cibles = [...document.querySelectorAll<HTMLElement>('[data-sommaire-cible]')];
+  if (liens.size && 'IntersectionObserver' in window) {
+    const visibles = new Set<string>();
+    const marquer = () => {
+      const cible = cibles.find((c) => visibles.has(c.id));
+      const active = cible?.id === 'niveau-gabarits' ? 'gabarits' : cible?.id;
+      liens.forEach((lien, id) => (id === active ? lien.setAttribute('aria-current', 'true') : lien.removeAttribute('aria-current')));
+    };
+    const observateur = new IntersectionObserver(
+      (entrees) => {
+        for (const e of entrees) e.isIntersecting ? visibles.add(e.target.id) : visibles.delete(e.target.id);
+        marquer();
+      },
+      { rootMargin: '-20% 0px -60% 0px' },
+    );
+    cibles.forEach((c) => observateur.observe(c));
+  }
+
+  // Exemple de modale : un bouton l'ouvre
+  document.querySelectorAll<HTMLElement>('[data-ouvrir-modale]').forEach((bouton) =>
+    bouton.addEventListener('click', () => document.querySelector<HTMLDialogElement>(`#${bouton.dataset.ouvrirModale}`)?.showModal()),
+  );
+</script>
+
+<style>
+  /* ---------- En-tête de page ---------- */
+  .systeme-tete {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+    padding-bottom: var(--space-80);
+  }
+
+  .systeme-tete__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    max-width: 50rem;
+    color: var(--color-text-secondary);
+  }
+
+  .agents {
+    max-width: 50rem;
+  }
+
+  .agents__titre {
+    margin-bottom: var(--space-12);
+  }
+
+  .agents__texte + .agents__texte {
+    margin-top: var(--space-12);
+  }
+
+  .agents__liens {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    margin-top: var(--space-20);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* text/muted n'atteint que 4,3:1 sur background/subtle : le libellé passe en text/secondary */
+  .agents__libelle {
+    margin-top: var(--space-24);
+    color: var(--color-text-secondary);
+  }
+
+  /* ---------- Grille : sommaire à gauche (260 px), contenu à droite ---------- */
+  .systeme {
+    display: grid;
+    grid-template-columns: var(--layout-strates-width) minmax(0, 1fr);
+    column-gap: var(--space-64);
+    align-items: start;
+    padding-bottom: var(--space-128);
+  }
+
+  .sommaire {
+    position: sticky;
+    top: calc(var(--layout-nav-offset, 0px) + var(--space-32));
+    max-height: calc(100svh - var(--layout-nav-offset, 0px) - var(--space-64));
+    overflow-y: auto;
+    padding-top: var(--space-8);
+    transition: top var(--motion-duration) var(--motion-ease);
+  }
+
+  .sommaire__niveaux {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+    padding: 0;
+    list-style: none;
+  }
+
+  .sommaire__niveau {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .sommaire__niveau-titre {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+
+  .sommaire__niveau-titre[aria-current] {
+    color: var(--color-text-primary);
+  }
+
+  .sommaire__liste {
+    padding: 0;
+    list-style: none;
+    border-left: 1px solid var(--color-border-default);
+  }
+
+  /* Repère de la fiche en cours : barre bleue sur le filet, comme la barre de la navigation */
+  .sommaire__lien {
+    position: relative;
+    display: block;
+    padding: var(--space-4) var(--space-16);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .sommaire__lien::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    left: -1px;
+    width: 0;
+    background: var(--color-background-brand);
+    transition: width var(--motion-duration) var(--motion-ease);
+  }
+
+  .sommaire__lien[aria-current]::before {
+    width: var(--space-4);
+  }
+
+  .sommaire__lien[aria-current] {
+    color: var(--color-text-primary);
+  }
+
+  @media (hover: hover) {
+    .sommaire__lien:hover,
+    .sommaire__niveau-titre:hover {
+      color: var(--color-text-primary);
+      text-decoration: underline;
+    }
+  }
+
+  /* ---------- Contenu ---------- */
+  .systeme__contenu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-128);
+    min-width: 0;
+  }
+
+  .niveau__description {
+    max-width: 50rem;
+    padding-top: var(--space-24);
+    color: var(--color-text-secondary);
+  }
+
+  .fiche {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+    padding-block: var(--space-64);
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .fiche__tete {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .fiche__role,
+  .fiche__description {
+    max-width: 50rem;
+  }
+
+  .fiche__description {
+    color: var(--color-text-secondary);
+  }
+
+  .fiche__apercu {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .fiche__doc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+  }
+
+  .fiche__bloc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+    min-width: 0;
+  }
+
+  .fiche__colonnes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-40);
+  }
+
+  .fiche__relations {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .fiche__relations dd {
+    margin-top: var(--space-4);
+  }
+
+  .note {
+    color: var(--color-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  code {
+    font-family: var(--font-mono);
+  }
+
+  .puces {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    max-width: 50rem;
+    padding-left: var(--space-20);
+    color: var(--color-text-secondary);
+  }
+
+  .puces--faire li::marker {
+    content: '+  ';
+    color: var(--color-background-brand);
+  }
+
+  .puces--eviter li::marker {
+    content: '−  ';
+    color: var(--color-text-muted);
+  }
+
+  .code {
+    overflow-x: auto;
+    padding: var(--space-20) var(--space-24);
+    background: var(--color-background-inverse);
+    color: var(--color-text-inverse);
+    white-space: pre;
+  }
+
+  /* ---------- Tableaux ---------- */
+  .tableau {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: var(--space-12) var(--space-16) var(--space-12) 0;
+    border-bottom: 1px solid var(--color-border-default);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    border-bottom-color: var(--color-border-ink);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-regular);
+  }
+
+  td:first-child {
+    white-space: nowrap;
+  }
+
+  .pastille {
+    display: inline-block;
+    width: var(--space-16);
+    height: var(--space-16);
+    margin-right: var(--space-8);
+    vertical-align: middle;
+    box-shadow: inset 0 0 0 1px var(--color-border-default);
+  }
+
+  /* ---------- Jetons ---------- */
+  .styles {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    list-style: none;
+  }
+
+  .style {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding-block: var(--space-20);
+    border-top: 1px solid var(--color-border-default);
+  }
+
+  .style--graisse {
+    gap: var(--space-4);
+  }
+
+  .espacements {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: 0;
+    list-style: none;
+  }
+
+  .espacement {
+    display: grid;
+    grid-template-columns: 7rem var(--space-128) minmax(0, 1fr);
+    gap: var(--space-16);
+    align-items: center;
+  }
+
+  .espacement__barre {
+    height: var(--space-16);
+    background: var(--color-background-brand);
+  }
+
+  /* ---------- Scènes : surfaces sur lesquelles un composant est posé ---------- */
+  .scene {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-16);
+    padding: var(--space-32);
+    background: var(--color-background-subtle);
+  }
+
+  .scene--blanche {
+    display: block;
+    padding-block: 0;
+    background: var(--color-background-canvas);
+    box-shadow: inset 0 0 0 1px var(--color-border-default);
+  }
+
+  .scene--sombre {
+    background: var(--color-background-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  .scene--colonne {
+    flex-direction: column;
+    gap: var(--space-24);
+  }
+
+  .scene__largeur-strates {
+    width: var(--layout-strates-width);
+  }
+
+  .scene--liens {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+    padding: var(--space-32);
+  }
+
+  .scene--cadre {
+    max-width: 26rem;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .scene--figure {
+    padding: var(--space-32);
+  }
+
+  .scene--figure > :global(*) {
+    max-width: 42rem;
+  }
+
+  /* L'infobulle est montrée ouverte, à sa place dans le flux */
+  .scene--infobulle :global(.infobulle) {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .scene--copie {
+    padding-bottom: var(--space-96);
+  }
+
+  .scene--email {
+    padding-block: var(--space-48) var(--space-64);
+  }
+
+  .scene--pleine {
+    display: block;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .emplacement {
+    padding-block: var(--space-24) var(--space-56);
+    color: var(--color-text-on-dark-muted);
+  }
+
+  /* ---------- Tablette et mobile ---------- */
+  @media (max-width: 63.99rem) {
+    .systeme {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-48);
+    }
+
+    .sommaire {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      padding-bottom: var(--space-32);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .sommaire__niveaux {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    }
+
+    .systeme__contenu {
+      gap: var(--space-80);
+    }
+
+    .fiche__colonnes {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 39.99rem) {
+    .scene {
+      padding: var(--space-20);
+    }
+
+    .scene--blanche,
+    .scene--pleine {
+      padding: 0;
+    }
+
+    .scene--liens,
+    .scene--figure {
+      padding: var(--space-20);
+    }
+
+    .espacement {
+      grid-template-columns: 6rem minmax(0, 1fr);
+    }
+
+    .espacement .note {
+      display: none;
+    }
+  }
+</style>

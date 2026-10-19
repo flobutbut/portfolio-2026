@@ -1,0 +1,28 @@
+---
+/**
+ * Atome · Lien, hors du texte courant (les liens du texte courant sont stylés par .prose).
+ * Variante discrète : sans soulignement, souligné au survol. Le style de texte (text-ui, text-heading-24…)
+ * est passé par `texte`.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  href: string;
+  /** Classe de style de texte, par exemple « text-ui » */
+  texte?: string;
+} & Omit<HTMLAttributes<'a'>, 'class'>;
+
+const { href, texte, ...attrs } = Astro.props;
+---
+
+<a class:list={['lien', texte]} href={href} {...attrs}><slot /></a>
+
+<style>
+  .lien {
+    text-decoration: none;
+  }
+
+  .lien:hover {
+    text-decoration: underline;
+  }
+</style>

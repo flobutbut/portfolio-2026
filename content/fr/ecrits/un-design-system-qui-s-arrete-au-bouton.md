@@ -14,7 +14,7 @@ casCites: [4, 1]
 ecritsLies: [2, 4]
 ---
 
-Quand une équipe lance un design system, elle commence presque toujours au même endroit : des couleurs, une typographie, puis des boutons, des champs, des cases à cocher, des modales. C'est utile, nécessaire même. C'est la partie la plus facilement identifiable du système. Bien la concevoir demande déjà de traiter les interactions, les états et l'accessibilité.
+Quand une équipe lance un design system, elle commence presque toujours au même endroit : des couleurs, une typographie, puis des boutons, des champs, des cases à cocher, des modals. C'est utile, nécessaire même. C'est la partie la plus facilement identifiable du système. Bien la concevoir demande déjà de traiter les interactions, les états et l'accessibilité.
 
 Souvent, le design system s'arrête là. Il reste alors à partager les décisions qui organisent les tâches à l'échelle des pages et des parcours.
 
@@ -26,11 +26,11 @@ Or un produit n'est pas une collection de champs et de boutons. C'est un ensembl
 
 ## Un pattern métier encode une intention
 
-Chez Qlik, chaque type de ressource avait sa propre vue d'ensemble, construite au fil des besoins. J'ai proposé un modèle de page commun pour aider à identifier la ressource, comprendre son utilité et accéder aux actions pertinentes. Cette proposition est en cours de travail. Elle organise l'information autour d'une intention, tout en laissant à chaque type de ressource son contenu propre.
+Chez Qlik, chaque asset type avait son propre overview, construit au fil des besoins. J'ai proposé un modèle de page commun pour aider à identifier l'asset, comprendre son utilité et accéder aux actions pertinentes. Cette proposition est en cours de travail. Elle organise l'information autour d'une intention, tout en laissant à chaque asset type son contenu propre.
 
-Le modèle associe une structure à cette intention. Sa réutilisation dépend de ce que les tâches ont réellement en commun ; le contenu nécessaire pour évaluer un jeu de données ne sera pas celui d'un projet de pipeline.
+Le modèle associe une structure à cette intention. Sa réutilisation dépend de ce que les tâches ont réellement en commun ; le contenu nécessaire pour évaluer un dataset ne sera pas celui d'un pipeline project.
 
-Chez Desoutter, on retrouvait la même logique à une autre échelle. Chaque niveau de l'installation, du contrôleur à l'outil puis au programme de vissage, suivait le même gabarit : où suis-je, dans quel état est ce que je regarde, que contient-il, que puis-je y faire. Ce gabarit n'était pas un composant. Il encodait la manière dont un technicien descend dans son installation pour comprendre et régler un problème.
+Chez Desoutter, on retrouvait la même logique à une autre échelle. Chaque niveau de l'installation, du controller à l'outil puis au pset, suivait le même template : où suis-je, dans quel état est ce que je regarde, que contient-il, que puis-je y faire. Ce template n'était pas un composant. Il encodait la manière dont un technicien descend dans son installation pour comprendre et régler un problème.
 
 Les composants stabilisent les interactions élémentaires. Les patterns métier organisent leur combinaison autour de tâches récurrentes, dans le vocabulaire du produit.
 
@@ -46,7 +46,7 @@ Leur conception demande un travail spécifique. Il faut comprendre le métier, r
 
 Un pattern métier sans règles d'usage se dégrade vite. Chaque équipe l'adapte un peu, et en quelques versions il ne veut plus rien dire. Les règles d'usage disent quand il s'applique, quand il ne s'applique pas, et ce qu'il doit contenir. Ce ne sont pas des contraintes ajoutées après coup : c'est ce qui transmet l'intention à ceux qui n'étaient pas là quand le pattern a été conçu, équipes ou agents qui contribuent à construire les interfaces.
 
-Une règle possible pour la vue d'ensemble serait : présenter les informations nécessaires pour identifier la ressource et décider de la suite ; donner un accès explicite aux vues exhaustives ; conserver un aperçu du détail lorsqu'il est indispensable à cette décision. Ce dernier point compte : alléger une page ne justifie pas de déplacer systématiquement toute information détaillée.
+Une règle possible pour l'overview serait : présenter les informations nécessaires pour identifier l'asset et décider de la suite ; donner un accès explicite aux vues exhaustives ; conserver un aperçu du détail lorsqu'il est indispensable à cette décision. Ce dernier point compte : alléger une page ne justifie pas de déplacer systématiquement toute information détaillée.
 
 ## Les limites
 

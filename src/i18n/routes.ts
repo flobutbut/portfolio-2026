@@ -14,6 +14,7 @@ export const routes = {
   ecrits: { fr: '/ecrits', en: '/en/writing' },
   parcours: { fr: '/parcours', en: '/en/background' },
   contact: { fr: '/contact', en: '/en/contact' },
+  systeme: { fr: '/systeme', en: '/en/system' },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type RouteKey = keyof typeof routes;

@@ -1,0 +1,58 @@
+---
+/**
+ * Atome · Étiquette (Figma 2:494, « Strate »)
+ * Bandeau de texte, non interactif et jamais animé.
+ * - Taille S : Caption, bandeau de 28 px (6 + 16 + 6). On : aplat bleu, texte blanc atténué. Off : neutres.
+ * - Taille L : Heading/24 sur aplat bleu, texte blanc. Sert de titre (par exemple dans une carte encadrée).
+ * L'état est aussi donné en texte aux technologies d'assistance (`etatTexte`).
+ */
+interface Props {
+  taille?: 'S' | 'L';
+  etat?: boolean;
+  /** Texte lu après le libellé, par exemple « touchée » ou « non touchée ». */
+  etatTexte?: string;
+  /** Élément rendu : span par défaut, titre quand l'étiquette nomme un bloc. */
+  balise?: 'span' | 'h2' | 'h3' | 'h4';
+}
+
+const { taille = 'S', etat = true, etatTexte, balise: Balise = 'span' } = Astro.props;
+---
+
+<Balise
+  class:list={[
+    'etiquette',
+    `etiquette--${taille.toLowerCase()}`,
+    taille === 'L' ? 'text-heading-24' : 'text-caption',
+    etat ? 'etiquette--on' : 'etiquette--off',
+  ]}
+>
+  <slot />{etatTexte && <span class="visually-hidden"> ({etatTexte})</span>}
+</Balise>
+
+<style>
+  .etiquette {
+    display: block;
+    padding: var(--space-6) var(--space-8);
+  }
+
+  .etiquette--s {
+    /* 6 + 16 + 6 = 28 px de haut */
+    line-height: 1rem;
+    white-space: nowrap;
+  }
+
+  .etiquette--on {
+    background: var(--color-background-brand);
+    color: var(--color-text-on-brand-muted);
+  }
+
+  .etiquette--l.etiquette--on {
+    color: var(--color-text-inverse);
+  }
+
+  .etiquette--off {
+    background: var(--color-surface-inactive);
+    /* text/supporting : contraste AA sur surface/inactive (5,4:1) */
+    color: var(--color-text-supporting);
+  }
+</style>

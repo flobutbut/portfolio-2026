@@ -1,6 +1,6 @@
 ---
 /**
- * Strates/En-tête de section (Figma 2:488)
+ * Molécule · En-tête (Figma 2:488, « En-tête de section »)
  * Titre Display/64 posé sur un filet encre de 3 px. Utilisé pour Travaux, Méthode, Écrits…
  * En tête de page intérieure (Figma 9:1779, 9:1967, 54:673) : 72 px sous le titre ;
  * le filet est présent sur les listes, absent sur Parcours et Contact.
@@ -25,11 +25,11 @@ const Titre = `h${niveau}` as 'h1' | 'h2';
 
 <style>
   .en-tete-de-section--section {
-    padding-bottom: 1.25rem;
+    padding-bottom: var(--space-20);
   }
 
   .en-tete-de-section--page {
-    padding-bottom: 4.5rem;
+    padding-bottom: var(--space-72);
   }
 
   .en-tete-de-section--filet {
@@ -38,7 +38,7 @@ const Titre = `h${niveau}` as 'h1' | 'h2';
 
   @media (max-width: 39.99rem) {
     .en-tete-de-section--page {
-      padding-bottom: 2.5rem;
+      padding-bottom: var(--space-40);
     }
   }
 </style>

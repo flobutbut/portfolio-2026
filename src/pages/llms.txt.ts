@@ -44,6 +44,8 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     `- [Parcours](${url(path('parcours', 'fr'))})`,
     `- [Contact](${url(path('contact', 'fr'))}): ${ui.contact.email}`,
+    `- [${ui.systeme.titre}](${url(`${path('systeme', 'fr')}.md`)}): ${ui.metadonnees.systeme}`,
+    `- [${ui.systeme.titre} (JSON)](${url(`${path('systeme', 'fr')}.json`)}): tokens au format W3C Design Tokens, composants avec propriétés et règles d’usage`,
     `- [${ui.contact.cv.libelle}](${url(ui.contact.cv.url)})`,
     '',
     '## Optional',

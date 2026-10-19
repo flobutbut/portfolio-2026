@@ -1,0 +1,78 @@
+---
+/**
+ * Molécule · Infobulle (Figma 111:5507) : boîte flottante qui montre un texte avant une action.
+ * Elle s'ouvre au survol et au focus clavier de son hôte, l'élément parent marqué `data-infobulle-hote`
+ * (positionné en relatif). Le script de l'hôte pilote deux classes :
+ * - `infobulle-haut` : placée au-dessus quand la place manque en dessous ;
+ * - `infobulle-masquee` : refermée (Échap, après l'action), conformément à WCAG 1.4.13.
+ * `alignement="fin"` (desktop) : alignée sur le bord droit de l'hôte.
+ * Le contenu (slot) est le texte montré ; `id` permet de la lier au déclencheur (aria-describedby).
+ */
+interface Props {
+  id: string;
+  titre: string;
+  alignement?: 'debut' | 'fin';
+}
+
+const { id, titre, alignement = 'debut' } = Astro.props;
+---
+
+<span class:list={['infobulle', 'boite-flottante', 'text-caption', `infobulle--${alignement}`]} id={id} role="tooltip">
+  <span class="boite-flottante__titre">{titre}</span>
+  <span class="infobulle__texte"><slot /></span>
+</span>
+
+<style>
+  .infobulle {
+    position: absolute;
+    z-index: 4;
+    top: calc(100% + var(--space-12));
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      opacity var(--motion-duration) var(--motion-ease),
+      visibility 0s var(--motion-duration);
+  }
+
+  /* Pont invisible entre le déclencheur et l'infobulle : le pointeur peut s'y rendre sans la fermer */
+  .infobulle::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 100%;
+    height: 0.75rem;
+  }
+
+  /* Pas assez de place sous l'hôte : au-dessus */
+  :global(.infobulle-haut) > .infobulle {
+    top: auto;
+    bottom: calc(100% + var(--space-12));
+  }
+
+  :global(.infobulle-haut) > .infobulle::before {
+    top: 100%;
+    bottom: auto;
+  }
+
+  :global([data-infobulle-hote]:has(:focus-visible):not(.infobulle-masquee)) > .infobulle {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity var(--motion-duration) var(--motion-ease);
+  }
+
+  @media (hover: hover) {
+    :global([data-infobulle-hote]:hover:not(.infobulle-masquee)) > .infobulle {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity var(--motion-duration) var(--motion-ease);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .infobulle--fin {
+      left: auto;
+      right: 0;
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+/**
+ * Molécule · Modale (Figma 111:5507) : boîte de dialogue native (<dialog>), même boîte que l'Infobulle.
+ * Le contenu (slot) est le texte montré ; les actions (slot « actions ») sont des Boutons de taille S
+ * placés dans un formulaire `method="dialog"` : leur `value` devient la valeur de retour de la modale.
+ * Ouverture par le script de la page (`showModal()`), fermeture par les actions, par Échap ou par un clic hors de la boîte.
+ */
+interface Props {
+  id: string;
+  titre: string;
+}
+
+const { id, titre } = Astro.props;
+---
+
+<dialog class="modale boite-flottante text-caption" id={id} aria-labelledby={`${id}-titre`}>
+  <p class="boite-flottante__titre" id={`${id}-titre`}>{titre}</p>
+  <p class="modale__texte"><slot /></p>
+  <form class="modale__actions" method="dialog">
+    <slot name="actions" />
+  </form>
+</dialog>
+
+<script>
+  // Un clic sur le fond (hors de la boîte) referme la modale
+  document.querySelectorAll<HTMLDialogElement>('dialog.modale').forEach((modale) =>
+    modale.addEventListener('click', (e) => {
+      if (e.target === modale) modale.close('annuler');
+    }),
+  );
+</script>
+
+<style>
+  .modale {
+    margin: auto;
+    gap: var(--space-16);
+    max-height: calc(100dvh - 2 * var(--layout-gutter));
+    overflow-y: auto;
+  }
+
+  .modale:not([open]) {
+    display: none;
+  }
+
+  .modale::backdrop {
+    background: var(--color-background-overlay);
+  }
+
+  .modale__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-12);
+    padding-top: var(--space-8);
+  }
+</style>

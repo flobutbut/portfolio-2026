@@ -1,0 +1,481 @@
+# Documentation du design system « Strates », version française.
+# Publiée sur /systeme, et pour les agents sur /systeme.md et /systeme.json.
+# Les valeurs des tokens et les propriétés des composants (types, valeurs par défaut, slots) sont lues
+# dans le code au build : ce fichier n'en donne que le sens. Un token ou une propriété sans description
+# fait échouer le build, comme une description sans token ou sans propriété.
+
+titre: Design system
+surtitre: Système « Strates »
+
+introduction:
+  - "Le système de ce site, du token au template de page. Trois couleurs portent la page : le blanc pour lire, le bleu pour affirmer, le noir pour identifier. Deux familles de caractères : Archivo pour les titres, Schibsted Grotesk pour tout le reste."
+  - "Il est organisé en cinq niveaux, chacun construit avec le précédent. Les composants sont génériques : une card, un bouton, un tag, avec leurs variantes. Leur usage dans le site est décrit au niveau des organismes et des templates."
+
+agents:
+  titre: Pour les agents
+  texte:
+    - Chaque token et chaque composant de cette page existe aussi en Markdown et en JSON. Les tokens y suivent le format du W3C Design Tokens Community Group ; chaque composant y porte son niveau, son fichier, ses propriétés, ses règles d’usage et un exemple de code.
+    - Valeurs et propriétés sont lues dans le code au moment de la publication. La documentation ne peut donc pas décrire un composant qui n’existe plus, ni omettre une propriété.
+  markdown: Version Markdown
+  json: Tokens et composants en JSON
+  ecritsLies: Écrits liés
+
+niveaux:
+  jetons:
+    titre: Tokens
+    description: Les décisions de base, nommées par rôle et jamais par valeur. Aucun composant n’utilise une couleur, une taille ou un spacing qui n’est pas un token.
+  atomes:
+    titre: Atomes
+    description: Les plus petits éléments d’interface, sans contenu métier. Ils n’utilisent que des tokens.
+  molecules:
+    titre: Molécules
+    description: "Des atomes assemblés en un élément qui a une fonction : une card, un header, un tooltip."
+  organismes:
+    titre: Organismes
+    description: "Des molécules et des atomes assemblés pour une tâche du site : copier un lien, présenter un pilier de méthode, naviguer."
+  gabarits:
+    titre: Templates
+    description: Les structures de page. Chaque template sert les deux langues ; les pages ne font que lui passer la langue.
+
+libelles:
+  sommaire: Sommaire du design system
+  jeton: Token
+  valeur: Valeur
+  usage: Usage
+  style: Style
+  classe: Classe
+  taille: Taille et interligne
+  role: Rôle
+  propriete: Propriété
+  type: Type
+  defaut: Défaut
+  description: Description
+  obligatoire: obligatoire
+  slots: Contenu (slots)
+  slotDefaut: principal
+  variantes: Variantes
+  faire: À faire
+  eviter: À éviter
+  accessibilite: Accessibilité
+  exemple: Exemple
+  composeDe: Composé de
+  utilisePar: Utilisé par
+  fichier: Fichier
+  figma: Figma
+  regles: Règles
+  apercu: Aperçu
+  page: Page
+  exempleTexte: Rendre lisibles des systèmes complexes
+  indisponible: Indisponible
+  slotExemple: Contenu passé en slot (sur la page Contact, l’adresse copiable)
+  enPlace: Présenté en place, en haut et en bas de cette page.
+
+jetons:
+  couleurs:
+    titre: Couleurs
+    description: "Un seul mode, sans mode sombre : les sections noires jouent ce rôle dans la page. Les contrastes sont calculés selon WCAG 2.1."
+    regles:
+      - Un seul accent, le bleu, toujours en aplat.
+      - Sur le bleu, le texte passe par text/inverse, text/on-brand-secondary ou text/on-brand-muted, jamais par text/muted.
+      - Le noir encadre l’identité (barre sous le hero, footer). Pas de troisième fond.
+      - "text/muted (4,7:1) sert à la méta et aux légendes, à partir de 12 px, jamais à une phrase qu’on doit lire. Il reste sur canvas : sur background/subtle, il tombe à 4,3:1, sous le seuil AA."
+      - Un composant n’utilise que ces rôles (`--color-<groupe>-<nom>`), jamais une valeur en dur.
+    usages:
+      --color-background-canvas: Fond de page.
+      --color-background-brand: Colonne du hero, bloc Position, tags On, aplat de hover.
+      --color-background-inverse: Barre d’identité, planche sombre, footer.
+      --color-background-subtle: Encart, cadre des figures, boîte flottante, hover des cards.
+      --color-background-overlay: Voile derrière une modal ouverte.
+      --color-surface-inactive: Tag Off.
+      --color-surface-placeholder: Emplacement d’un visuel pas encore livré (aperçu seulement).
+      --color-text-primary: Titres et texte courant. 19,4:1 sur canvas.
+      --color-text-secondary: Texte de second plan. 14,4:1 sur canvas.
+      --color-text-muted: Méta, légendes, libellés. 4,7:1 sur canvas.
+      --color-text-supporting: Texte d’un tag Off. 5,4:1 sur surface/inactive.
+      --color-text-inverse: Texte sur bleu ou sur noir. 8,5:1 sur brand, 19,4:1 sur inverse.
+      --color-text-on-brand-secondary: Texte secondaire sur bleu. 6,4:1 sur brand.
+      --color-text-on-brand-muted: Texte d’un tag On. 5,9:1 sur brand.
+      --color-text-on-dark-muted: Texte secondaire sur noir. 6,9:1 sur inverse.
+      --color-border-default: Séparateurs discrets entre lignes et cards. Décoratif.
+      --color-border-ink: Filet sous les titres, contour du bouton filet, boîte flottante.
+      --color-border-white: Contour du bouton sur fond sombre.
+      --color-border-on-dark: Séparateurs sur noir.
+  typographie:
+    titre: Styles de texte
+    description: Neuf styles, mêmes noms que dans Figma. Les tailles sont fluides entre 375 et 1 440 px de large ; Body, UI, Caption et Label ne descendent jamais sous leur taille.
+    regles:
+      - Archivo ne sert qu’aux titres, jamais à une phrase de plus de trois lignes.
+      - Les capitales passent par Label, jamais par le texte saisi.
+      - Un début de phrase appuyé passe par Body Strong ou par `strong`, jamais par un font weight appliqué à la main.
+      - Chaque style fixe son font weight, quel que soit l’élément qui le porte (un titre h3 en Label reste en Regular).
+    roles:
+      text-display: Titre de page, accroche du hero, phrase du bloc Position, adresse e-mail.
+      text-heading-40: Titres de section et de card L, titres de pilier.
+      text-heading-24: Titres de card M, intertitres, tag L.
+      text-lead: Chapô, encarts, phrase de la colonne bleue.
+      text-body: Texte courant.
+      text-body-strong: Début de phrase appuyé.
+      text-ui: Navigation, liens de suite, sommaire.
+      text-caption: Méta, légendes, tags S.
+      text-label: Surtitres et libellés de section, en capitales.
+  graisses:
+    titre: Font weights
+    description: Quatre font weights seulement. Le gras à 700 n’existe pas dans le système.
+    regles:
+      - Un font weight passe toujours par un token ou par un style de texte.
+      - "`strong` est en Medium partout, par une règle globale."
+    usages:
+      --font-weight-regular: Texte courant, Lead, Caption, Label.
+      --font-weight-medium: UI, Body Strong, mise en valeur (`strong`), titres des boîtes flottantes.
+      --font-weight-extrabold: Heading/40 et Heading/24.
+      --font-weight-black: Display.
+  espacements:
+    titre: Spacing
+    description: Une seule échelle, nommée en pixels, sur une base de 4 px. Les paliers de 2 et 6 px servent aux réglages fins, comme le bandeau des tags.
+    regles:
+      - Marges, retraits, écarts et positions n’utilisent que l’échelle `--space-<px>`.
+      - Toutes les dimensions en pixels sont paires.
+      - Les grandes mesures de layout passent par les tokens `--layout-*`.
+  miseEnPage:
+    titre: Layout
+    description: Les mesures qui structurent les pages.
+    regles:
+      - Une seule marge latérale, `--layout-gutter`, 56 px sur desktop, 20 px sur mobile.
+      - "Breakpoints : mobile sous 40rem, tablette de 40 à 64rem, desktop au-delà."
+    usages:
+      --layout-max: Largeur maximale du contenu (1 440 px).
+      --layout-gutter: Marge latérale unique, de 20 à 56 px.
+      --layout-nav-height: Hauteur de la navigation (86 px).
+      --layout-offset: Retrait des cards dans les listes (304 px).
+      --layout-strates-width: Colonne des groupes de tags verticaux (260 px).
+      --layout-section: Haut des sections de l’accueil et du hero, page 404 (140 px).
+      --layout-ecrit-tete: Haut des pages d’écrit (264 px).
+      --layout-page-tete: Haut des pages intérieures, de 80 à 280 px.
+  mouvement:
+    titre: Mouvement
+    description: Le mouvement n’existe que s’il révèle une structure. Avec prefers-reduced-motion, les durées passent à zéro et tout s’affiche dans son état final.
+    regles:
+      - Les tags ne sont jamais animés.
+      - Les apparitions n’ont lieu qu’une fois, à l’entrée dans l’écran.
+    usages:
+      --motion-duration: Hovers, aplats des boutons et de la navigation (200 ms).
+      --motion-duration-long: Balayage des cards, apparitions, figures de la méthode (400 ms).
+      --motion-ease: Courbe commune à tous les mouvements.
+
+composants:
+  Bouton:
+    nom: Bouton
+    role: Déclenche une action ou mène à une page. Rendu en lien s’il a une adresse, en bouton sinon.
+    variantes:
+      - "plein : fond clair ; au hover, un aplat bleu balaie le bouton depuis son bord gauche."
+      - "contour : filet blanc, pour les surfaces sombres ; au hover, un aplat blanc."
+      - "accent : aplat bleu, texte blanc. Action principale sur fond clair."
+      - "filet : filet encre sur fond blanc. Action secondaire sur fond clair."
+      - "Tailles M (16 × 24 px) et S (12 × 20 px)."
+      - "Indisponible : si l’adresse vaut encore « À compléter », le bouton devient un texte neutre (aperçu seulement)."
+    faire:
+      - Un libellé court qui dit l’action ou la destination.
+      - Sur fond sombre, plein ou contour ; sur fond clair, accent ou filet.
+    eviter:
+      - "Un bouton pour un lien de texte courant : utiliser Lien."
+      - Deux boutons accent côte à côte.
+    accessibilite:
+      - "Focus visible : contour de 2 px en couleur du texte."
+      - "Hors d’un formulaire, `type` vaut « button » ; il peut être remplacé (« submit » dans une modal)."
+    props:
+      variante: Apparence du bouton.
+      taille: M par défaut, S dans les boîtes flottantes.
+      href: Adresse ; sans elle, le bouton est un élément button.
+    slots:
+      defaut: Libellé.
+  Encart:
+    nom: Encart
+    role: Isole un texte d’introduction sur un fond gris léger.
+    variantes:
+      - Une seule apparence. La marge intérieure passe de 24 × 32 à 20 px sur mobile.
+    faire:
+      - Un paragraphe en Lead, placé juste sous un header.
+    eviter:
+      - Plusieurs encarts à la suite.
+      - Un encart pour une alerte ou un message d’état.
+    accessibilite:
+      - Le fond est décoratif ; le texte garde ses contrastes (17,8:1 en text/primary).
+    props: {}
+    slots:
+      defaut: Texte de l’encart.
+  Etiquette:
+    nom: Tag
+    role: Un bandeau de texte qui qualifie un contenu, par exemple une strate touchée ou une pratique.
+    variantes:
+      - "Taille S : Caption sur un bandeau de 28 px. On en bleu, Off en gris."
+      - "Taille L : Heading/24 sur aplat bleu, texte blanc. Sert de titre."
+    faire:
+      - Donner l’état en texte avec `etatTexte` quand On et Off ont un sens.
+      - Regrouper les tags d’un même contenu dans un Groupe de tags.
+    eviter:
+      - Animer un tag ou le rendre cliquable.
+      - Un tag pour une action.
+    accessibilite:
+      - "L’état n’est jamais porté par la couleur seule : `etatTexte` est lu après le libellé."
+      - "Off : text/supporting sur surface/inactive, 5,4:1."
+    props:
+      taille: S (bandeau) ou L (titre).
+      etat: On (vrai) ou Off (faux).
+      etatTexte: Texte lu après le libellé, par exemple « touchée ».
+      balise: Élément rendu ; un niveau de titre quand le tag nomme un bloc.
+    slots:
+      defaut: Libellé.
+  Lien:
+    nom: Lien
+    role: Un lien hors du texte courant, sans soulignement au repos, souligné au hover.
+    variantes:
+      - Le style de texte est libre (UI, Heading/24…).
+    faire:
+      - Un libellé qui dit la destination, avec une flèche quand il mène à la suite.
+    eviter:
+      - "Un lien dans un paragraphe : le texte courant souligne ses liens."
+    accessibilite:
+      - Hors du texte courant, sa place et son style suffisent à le reconnaître ; le focus reste visible.
+    props:
+      href: Adresse.
+      texte: Classe du style de texte, par exemple « text-ui ».
+    slots:
+      defaut: Libellé.
+  Carte:
+    nom: Card
+    role: Présente un contenu en résumé, avec ou sans visuel, et mène à lui.
+    variantes:
+      - "Apparence ligne, taille L : titre Heading/40, texte et méta. Sans visuel, tags en colonne à droite ; avec visuel (400 × 300, à gauche), tags sous le texte."
+      - "Apparence ligne, taille M : titre Heading/24, tags en ligne sous le texte."
+      - "Apparence cadre : bordure, visuel en haut, pas de lien ; le titre peut être un tag L."
+      - "Retrait de 304 px sur desktop : par défaut en taille M et en taille L sans visuel."
+    faire:
+      - Empiler les cards ligne en liste, séparées par leur filet.
+      - "Garder la même taille dans une même liste : L pour les cas, M pour les écrits."
+    eviter:
+      - "Un deuxième lien dans une card ligne : toute la card est déjà cliquable."
+      - Une card cadre pour un contenu à ouvrir.
+    accessibilite:
+      - Le lien est porté par le titre et s’étend à toute la card ; il n’y a qu’un arrêt de tabulation.
+      - Au focus clavier, le fond balaie la card comme au hover.
+      - Le niveau du titre suit la hiérarchie de la page (`niveau`).
+    props:
+      taille: L ou M.
+      apparence: ligne (liste cliquable) ou cadre (bloc encadré).
+      titre: Titre de la card.
+      texte: Description ou thèse.
+      meta: Ligne de méta en Caption, par exemple « entreprise · domaine ».
+      href: Adresse du contenu (apparence ligne).
+      visuel: Image et son texte alternatif ; sans image, un aplat réserve la place en aperçu.
+      etiquettes: Tags du Groupe de tags.
+      etiquettesLibelle: Nom de la liste de tags pour les technologies d’assistance.
+      retrait: Retrait de 304 px sur desktop.
+      titreEtiquette: Titre rendu en tag L (apparence cadre).
+      niveau: Niveau du titre.
+      lang: Langue du contenu, si elle diffère de celle de la page.
+  EnTete:
+    nom: Header
+    role: Ouvre une page ou une section par un titre en Display.
+    variantes:
+      - "Section : 20 px sous le titre, posé sur un filet encre de 3 px."
+      - "Page : 72 px sous le titre (40 px sur mobile), avec ou sans filet."
+    faire:
+      - Un seul header de niveau 1 par page.
+    eviter:
+      - "Un header pour un titre de card ou de bloc : utiliser les styles Heading."
+    accessibilite:
+      - "`niveau` fixe h1 ou h2 ; `id` permet de nommer la section qui le contient."
+    props:
+      titre: Texte du titre.
+      niveau: 1 en tête de page, 2 dans une section.
+      id: Identifiant du titre, pour aria-labelledby et les ancres.
+      espace: section ou page.
+      filet: Filet encre sous le titre.
+  Figure:
+    nom: Figure
+    role: Une illustration sur fond gris et sa légende, dans un cadre aux proportions fixes.
+    variantes:
+      - Le cadre garde ses proportions (`ratio`) ; des figures de même rang se remplacent sans que la page bouge.
+    faire:
+      - Une légende qui décrit ce que montre la figure.
+    eviter:
+      - Une légende qui répète le titre voisin.
+    accessibilite:
+      - Par défaut l’illustration est décorative (alt vide) et la légende la décrit ; un texte alternatif peut être passé.
+    props:
+      src: Adresse de l’image, dans public/.
+      legende: Légende en Caption.
+      alt: Texte alternatif ; vide si la légende suffit.
+      ratio: Proportions du cadre.
+  GroupeEtiquettes:
+    nom: Groupe de tags
+    role: Une liste de tags S, chacun On ou Off.
+    variantes:
+      - "Verticale : colonne de 260 px. Horizontale : bandeaux de 140 px."
+      - "Repli sous un breakpoint : en ligne, avec des tags étirés (mobile) ou à leur largeur (tablette)."
+    faire:
+      - Les mêmes tags dans le même ordre pour un même type de contenu (les trois strates, toujours dans l’ordre surfaces, design system, modèle).
+    eviter:
+      - Mélanger des tags de natures différentes dans un groupe.
+    accessibilite:
+      - Une liste nommée par `libelle` ; chaque état est lu en texte.
+    props:
+      etiquettes: Libellé, état et texte d’état de chaque tag.
+      libelle: Nom de la liste pour les technologies d’assistance.
+      orientation: verticale ou horizontale.
+      replier: Breakpoint sous lequel le groupe passe en ligne.
+  Infobulle:
+    nom: Tooltip
+    role: Montre un texte avant une action, au hover et au focus clavier de son hôte.
+    variantes:
+      - Sous l’hôte, ou au-dessus quand la place manque ; alignée au début ou à la fin de l’hôte.
+    faire:
+      - Montrer ce qui va se passer (le texte qui sera copié), pas répéter le libellé.
+    eviter:
+      - Une information indispensable qu’on ne trouve nulle part ailleurs sur un écran tactile.
+    accessibilite:
+      - "WCAG 1.4.13 : elle reste ouverte sous le pointeur, se referme par Échap et ne masque rien de façon durable."
+      - Liée au déclencheur par aria-describedby (`id`).
+    props:
+      id: Identifiant, pour aria-describedby.
+      titre: Titre de la boîte.
+      alignement: Bord de l’hôte auquel elle s’aligne (desktop).
+    slots:
+      defaut: Texte montré.
+  Modale:
+    nom: Modal
+    role: Une boîte de dialogue qui demande une confirmation.
+    variantes:
+      - Même boîte que le tooltip ; actions en boutons S, accent puis filet.
+    faire:
+      - Deux actions au plus, l’action principale en premier.
+    eviter:
+      - Une modal ouverte sans action de la personne.
+    accessibilite:
+      - Élément dialog natif ouvert par showModal() ; le focus y est piégé et Échap la ferme.
+      - Un clic hors de la boîte la ferme.
+    props:
+      id: Identifiant ; le titre reçoit `<id>-titre`.
+      titre: Titre de la boîte.
+    slots:
+      defaut: Texte montré.
+      actions: Boutons, dont la valeur devient la valeur de retour de la modal.
+  CopieLienIA:
+    nom: Copier le lien IA
+    role: Copie un prompt prêt à coller dans un assistant IA, avec l’adresse de la version agent du site.
+    variantes:
+      - "Avec hover : le tooltip montre le texte, le clic copie."
+      - "Écran tactile : la modal montre le texte et demande confirmation."
+      - "Si le navigateur refuse la copie, la modal s’ouvre avec le texte à copier à la main."
+    faire:
+      - Toujours montrer le texte avant de le copier.
+    eviter:
+      - Copier sans confirmation sur un écran tactile.
+    accessibilite:
+      - Absent sans JavaScript ou sans presse-papiers ; le lien vers la version agent suffit alors.
+      - Le résultat est annoncé dans une zone role="status".
+    props:
+      libelle: Libellé du bouton.
+      confirmation: Message après la copie.
+      echec: Message si la copie échoue.
+      apercu: Titre du tooltip et de la modal.
+      prompt: Texte copié ; {lien} y devient l’adresse de la version agent.
+      confirmer: Action principale de la modal.
+      annuler: Action secondaire de la modal.
+      variante: Variante du bouton.
+      alignement: Alignement du tooltip.
+      emplacement: Emplacement, transmis à la mesure d’audience.
+  EmailCopiable:
+    nom: E-mail copiable
+    role: L’adresse e-mail en grand, copiée en un clic.
+    variantes:
+      - Au hover et au focus, le texte passe en bleu de gauche à droite.
+    faire:
+      - Une seule adresse en grand par page.
+    eviter:
+      - "L’utiliser sur fond clair : le texte est blanc au repos."
+    accessibilite:
+      - Sans JavaScript ou sans presse-papiers, l’adresse reste un lien mailto.
+      - Le bouton annonce l’adresse et l’action ; le résultat est annoncé dans une zone role="status".
+      - En mode de contraste forcé, le texte revient à une couleur pleine.
+    props:
+      locale: Langue des textes.
+  Navigation:
+    nom: Navigation
+    role: Le logo, les sections du site et le lien vers l’autre langue.
+    variantes:
+      - "États d’un lien : repos, hover (aplat bleu), page active (barre de 8 px)."
+      - "Mobile : menu plein écran sur l’API Popover native."
+      - Collée en haut, retirée à la descente, de retour à la remontée.
+    faire:
+      - N’afficher une section qu’une fois un contenu publié.
+    eviter:
+      - Un lien vers l’autre langue sans page équivalente.
+    accessibilite:
+      - aria-current vaut « page » sur la page exacte, « true » sur une sous-page.
+      - Le menu mobile s’ouvre et se ferme sans JavaScript, et par Échap.
+      - Le focus clavier fait toujours revenir la navigation.
+    props:
+      locale: Langue de la page.
+      alternate: Adresse de la page équivalente dans l’autre langue.
+  PiedDePage:
+    nom: Footer
+    role: L’adresse e-mail en grand, la signature, les liens utiles et la localisation.
+    variantes:
+      - Sans l’adresse en grand sur la page Contact, qui la porte déjà.
+    faire:
+      - Des liens courts, séparés par des points médians.
+    eviter:
+      - Y répéter la navigation principale.
+    accessibilite:
+      - Région contentinfo, nommée par un titre masqué.
+    props:
+      locale: Langue des textes.
+      avecEmail: Affiche l’adresse en grand.
+  PilierDeMethode:
+    nom: Pilier de méthode
+    role: Un temps de la méthode, sa phrase et ses pratiques.
+    variantes:
+      - Sur l’accueil (desktop, avec JavaScript), le pilier actif est complet et les autres se réduisent à leur titre.
+    faire:
+      - Des pratiques courtes, en tags On.
+    eviter:
+      - "Des pratiques en tags Off : elles décrivent ce qui est fait, toutes sont On."
+    accessibilite:
+      - Réduits, les piliers inactifs gardent leur texte pour les lecteurs d’écran.
+    props:
+      titre: Nom du pilier.
+      description: Phrase du pilier.
+      pratiques: Pratiques, en tags.
+      niveau: Niveau du titre.
+  Planche:
+    nom: Planche
+    role: Un message de fin de page, un titre sur plusieurs lignes et des paragraphes.
+    variantes:
+      - "Claire, avant le footer."
+      - "Sombre, suivie d’un contenu passé en slot ; elle rejoint le footer (page Contact)."
+    faire:
+      - Un titre court, une ligne par idée.
+    eviter:
+      - Deux planches sur une même page.
+    accessibilite:
+      - Région nommée par son titre, ou par `nom` si la page en montre plusieurs.
+    props:
+      libelle: Surtitre en Label.
+      titre: Titre, une ligne par entrée.
+      texte: Paragraphes en Lead.
+      sombre: Variante sombre.
+      nom: Nom de la région.
+      niveau: Niveau du titre.
+    slots:
+      defaut: Contenu sous le texte (variante sombre).
+
+gabarits:
+  Accueil: Hero, strates, travaux, position, méthode et écrits.
+  ListeTravaux: Liste des cas, en cards L avec visuel.
+  Cas: Une étude de cas, du résumé aux décisions et à leurs règles.
+  ListeEcrits: Liste des écrits, en cards M.
+  Ecrit: Un écrit, sa thèse, ses cas cités et ses écrits liés.
+  Parcours: Expériences et formation.
+  Contact: Le message et l’adresse copiable, sur une planche sombre.
+  Systeme: Cette page.

@@ -1,0 +1,50 @@
+---
+/**
+ * Molécule · Figure (Figma 119:8515) : illustration sur fond background/subtle, et sa légende.
+ * Le cadre a des proportions fixes (`ratio`) : des figures de même rang se remplacent sans que la mise en page bouge.
+ * Par défaut l'illustration est décorative (alt vide) : la légende la décrit.
+ * Usage : figures de la méthode (Fig. 04, 05, 06), images placées dans public/.
+ */
+interface Props {
+  src: string;
+  legende: string;
+  alt?: string;
+  /** Proportions du cadre, par exemple « 676 / 578 » */
+  ratio?: string;
+}
+
+const { src, legende, alt = '', ratio = '676 / 578' } = Astro.props;
+---
+
+<figure class="figure">
+  <div class="figure__cadre" style={`--figure-ratio: ${ratio}`}>
+    <img src={src} alt={alt} loading="lazy" decoding="async" />
+  </div>
+  <figcaption class="text-caption figure__legende">{legende}</figcaption>
+</figure>
+
+<style>
+  .figure {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .figure__cadre {
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--figure-ratio);
+    padding: var(--space-32);
+    background: var(--color-background-subtle);
+  }
+
+  .figure__cadre img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .figure__legende {
+    color: var(--color-text-muted);
+  }
+</style>

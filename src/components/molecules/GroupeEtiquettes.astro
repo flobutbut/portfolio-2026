@@ -1,0 +1,83 @@
+---
+/**
+ * Molécule · Groupe d'étiquettes : une liste d'Étiquettes (taille S), chacune On ou Off.
+ * Usages : strates touchées d'un cas ou d'un écrit, pratiques d'un pilier, compétences d'une expérience.
+ * - Verticale : colonne de 260 px (--layout-strates-width). Horizontale : bandeaux de 140 px.
+ * - `replier` : sous ce point de rupture, le groupe passe en ligne et à la ligne.
+ *   « mobile » (< 40rem) : les étiquettes s'étirent pour remplir la ligne ; « tablette » (< 64rem) : largeur naturelle.
+ */
+import Etiquette from '../atomes/Etiquette.astro';
+
+export interface ItemEtiquette {
+  libelle: string;
+  etat?: boolean;
+  /** Texte lu après le libellé (« touchée », « non touchée ») */
+  etatTexte?: string;
+}
+
+interface Props {
+  etiquettes: ItemEtiquette[];
+  /** Nom de la liste pour les technologies d'assistance */
+  libelle?: string;
+  orientation?: 'verticale' | 'horizontale';
+  replier?: 'mobile' | 'tablette';
+}
+
+const { etiquettes, libelle, orientation = 'verticale', replier } = Astro.props;
+---
+
+<ul
+  class:list={['groupe-etiquettes', `groupe-etiquettes--${orientation}`, replier && `groupe-etiquettes--replier-${replier}`]}
+  role="list"
+  aria-label={libelle}
+>
+  {
+    etiquettes.map((e) => (
+      <li>
+        <Etiquette etat={e.etat ?? true} etatTexte={e.etatTexte}>
+          {e.libelle}
+        </Etiquette>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .groupe-etiquettes {
+    display: flex;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .groupe-etiquettes--verticale {
+    flex-direction: column;
+    width: var(--layout-strates-width);
+    max-width: 100%;
+  }
+
+  .groupe-etiquettes--horizontale li {
+    width: 8.75rem;
+  }
+
+  @media (max-width: 63.99rem) {
+    .groupe-etiquettes--replier-tablette {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: auto;
+    }
+  }
+
+  @media (max-width: 39.99rem) {
+    .groupe-etiquettes--replier-mobile {
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: auto;
+    }
+
+    .groupe-etiquettes--replier-mobile li {
+      width: auto;
+      flex: 1 0 auto;
+    }
+  }
+</style>

@@ -1,0 +1,41 @@
+---
+/**
+ * Organisme · Pilier de méthode (Figma 2:490)
+ * Un titre, une phrase et les pratiques associées, en Groupe d'étiquettes vertical (toutes On).
+ */
+import GroupeEtiquettes from '../molecules/GroupeEtiquettes.astro';
+
+interface Props {
+  titre: string;
+  description: string;
+  pratiques: string[];
+  /** Niveau du titre dans la page. */
+  niveau?: 2 | 3 | 4;
+}
+
+const { titre, description, pratiques, niveau = 3 } = Astro.props;
+const Titre = `h${niveau}` as 'h2' | 'h3' | 'h4';
+---
+
+<div class="pilier">
+  <div class="pilier__texte">
+    <Titre class="text-heading-40">{titre}</Titre>
+    <p class="pilier__description text-body">{description}</p>
+  </div>
+  {pratiques.length > 0 && <GroupeEtiquettes etiquettes={pratiques.map((libelle) => ({ libelle }))} />}
+</div>
+
+<style>
+  .pilier {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-16);
+    padding-block: var(--space-24);
+    border-bottom: 1px solid var(--color-border-default);
+  }
+
+  .pilier__description {
+    color: var(--color-text-secondary);
+  }
+</style>

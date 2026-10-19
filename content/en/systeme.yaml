@@ -1,0 +1,480 @@
+# Documentation of the "Strates" design system, English version.
+# Published at /en/system, and for agents at /en/system.md and /en/system.json.
+# Token values and component properties (types, defaults, slots) are read from the code at build time:
+# this file only gives their meaning. Same keys as content/fr/systeme.yaml.
+
+titre: Design system
+surtitre: The "Strates" system
+
+introduction:
+  - "The system behind this site, from token to page template. Three colours carry the page: white to read, blue to assert, black to identify. Two typefaces: Archivo for headings, Schibsted Grotesk for everything else."
+  - "It is organised in five levels, each built from the previous one. Components are generic: a card, a button, a tag, with their variants. How the site uses them is described at the level of organisms and templates."
+
+agents:
+  titre: For agents
+  texte:
+    - "Every token and every component on this page also exists in Markdown and in JSON. Tokens follow the W3C Design Tokens Community Group format; each component carries its level, its file, its properties, its usage rules and a code example."
+    - "Values and properties are read from the code at publication time. The documentation therefore cannot describe a component that no longer exists, nor omit a property."
+  markdown: Markdown version
+  json: Tokens and components in JSON
+  ecritsLies: Related writing
+
+niveaux:
+  jetons:
+    titre: Tokens
+    description: "The base decisions, named by role and never by value. No component uses a colour, size or spacing that is not a token."
+  atomes:
+    titre: Atoms
+    description: "The smallest interface elements, with no domain content. They only use tokens."
+  molecules:
+    titre: Molecules
+    description: "Atoms assembled into an element with a function: a card, a header, a tooltip."
+  organismes:
+    titre: Organisms
+    description: "Molecules and atoms assembled for a task of the site: copying a link, presenting a method pillar, navigating."
+  gabarits:
+    titre: Templates
+    description: "Page structures. Each template serves both languages; pages only pass it the language."
+
+libelles:
+  sommaire: Design system contents
+  jeton: Token
+  valeur: Value
+  usage: Usage
+  style: Style
+  classe: Class
+  taille: Size and line height
+  role: Role
+  propriete: Property
+  type: Type
+  defaut: Default
+  description: Description
+  obligatoire: required
+  slots: Content (slots)
+  slotDefaut: main
+  variantes: Variants
+  faire: Do
+  eviter: Avoid
+  accessibilite: Accessibility
+  exemple: Example
+  composeDe: Built from
+  utilisePar: Used by
+  fichier: File
+  figma: Figma
+  regles: Rules
+  apercu: Preview
+  page: Page
+  exempleTexte: Making complex systems legible
+  indisponible: Unavailable
+  slotExemple: "Content passed as a slot (on the Contact page: the copyable address)"
+  enPlace: "Shown in place, at the top and bottom of this page."
+
+jetons:
+  couleurs:
+    titre: Colours
+    description: "A single mode, with no dark mode: the black sections play that role in the page. Contrast ratios are computed according to WCAG 2.1."
+    regles:
+      - "A single accent, blue, always as a flat fill."
+      - "On blue, text uses text/inverse, text/on-brand-secondary or text/on-brand-muted, never text/muted."
+      - "Black frames the identity (bar under the hero, footer). No third background."
+      - "text/muted (4.7:1) is for metadata and captions, from 12 px, never for a sentence that must be read. It stays on canvas: on background/subtle it drops to 4.3:1, below the AA threshold."
+      - "A component only uses these roles (`--color-<group>-<name>`), never a hard-coded value."
+    usages:
+      --color-background-canvas: Page background.
+      --color-background-brand: "Hero column, Position block, On tags, hover fill."
+      --color-background-inverse: "Identity bar, dark board, footer."
+      --color-background-subtle: "Inset, figure frame, floating box, card hover."
+      --color-background-overlay: Veil behind an open dialog.
+      --color-surface-inactive: Off tag.
+      --color-surface-placeholder: "Placeholder for a visual not yet delivered (preview only)."
+      --color-text-primary: Headings and body text. 19.4:1 on canvas.
+      --color-text-secondary: Secondary text. 14.4:1 on canvas.
+      --color-text-muted: "Metadata, captions, labels. 4.7:1 on canvas."
+      --color-text-supporting: Text of an Off tag. 5.4:1 on surface/inactive.
+      --color-text-inverse: "Text on blue or black. 8.5:1 on brand, 19.4:1 on inverse."
+      --color-text-on-brand-secondary: Secondary text on blue. 6.4:1 on brand.
+      --color-text-on-brand-muted: Text of an On tag. 5.9:1 on brand.
+      --color-text-on-dark-muted: Secondary text on black. 6.9:1 on inverse.
+      --color-border-default: Subtle separators between rows and cards. Decorative.
+      --color-border-ink: "Rule under headings, outline of the rule button, floating box."
+      --color-border-white: Button outline on dark backgrounds.
+      --color-border-on-dark: Separators on black.
+  typographie:
+    titre: Text styles
+    description: "Nine styles, same names as in Figma. Sizes are fluid between 375 and 1,440 px wide; Body, UI, Caption and Label never go below their size."
+    regles:
+      - "Archivo is only for headings, never for a sentence longer than three lines."
+      - "Capitals come from Label, never from the typed text."
+      - "An emphasised sentence start uses Body Strong or `strong`, never a weight applied by hand."
+      - "Each style sets its own weight, whatever element carries it (an h3 heading in Label stays Regular)."
+    roles:
+      text-display: "Page title, hero line, Position statement, email address."
+      text-heading-40: "Section and L card headings, pillar titles."
+      text-heading-24: "M card headings, subheadings, L tag."
+      text-lead: "Standfirst, insets, blue column sentence."
+      text-body: Body text.
+      text-body-strong: Emphasised sentence start.
+      text-ui: "Navigation, follow-up links, contents."
+      text-caption: "Metadata, captions, S tags."
+      text-label: "Eyebrows and section labels, in capitals."
+  graisses:
+    titre: Font weights
+    description: "Four weights only. Bold at 700 does not exist in the system."
+    regles:
+      - "A weight always comes from a token or a text style."
+      - "`strong` is Medium everywhere, through a global rule."
+    usages:
+      --font-weight-regular: "Body, Lead, Caption, Label."
+      --font-weight-medium: "UI, Body Strong, emphasis (`strong`), floating box titles."
+      --font-weight-extrabold: Heading/40 and Heading/24.
+      --font-weight-black: Display.
+  espacements:
+    titre: Spacing
+    description: "A single scale, named in pixels, on a 4 px base. The 2 and 6 px steps are for fine adjustments, such as the tag band."
+    regles:
+      - "Margins, indents, gaps and offsets only use the `--space-<px>` scale."
+      - "Every pixel dimension is even."
+      - "Large layout measures use the `--layout-*` tokens."
+  miseEnPage:
+    titre: Layout
+    description: The measures that structure the pages.
+    regles:
+      - "A single side margin, `--layout-gutter`, 56 px on desktop, 20 px on mobile."
+      - "Breakpoints: mobile below 40rem, tablet from 40 to 64rem, desktop beyond."
+    usages:
+      --layout-max: "Maximum content width (1,440 px)."
+      --layout-gutter: "Single side margin, from 20 to 56 px."
+      --layout-nav-height: Navigation height (86 px).
+      --layout-offset: Indent of cards in lists (304 px).
+      --layout-strates-width: Column of vertical tag groups (260 px).
+      --layout-section: "Top of home sections and hero, 404 page (140 px)."
+      --layout-ecrit-tete: Top of writing pages (264 px).
+      --layout-page-tete: "Top of inner pages, from 80 to 280 px."
+  mouvement:
+    titre: Motion
+    description: "Motion only exists when it reveals a structure. With prefers-reduced-motion, durations drop to zero and everything is shown in its final state."
+    regles:
+      - Tags are never animated.
+      - "Reveals happen once, when entering the screen."
+    usages:
+      --motion-duration: "Hovers, button and navigation fills (200 ms)."
+      --motion-duration-long: "Card sweep, reveals, method figures (400 ms)."
+      --motion-ease: Curve shared by all motion.
+
+composants:
+  Bouton:
+    nom: Button
+    role: "Triggers an action or leads to a page. Rendered as a link when it has an address, as a button otherwise."
+    variantes:
+      - "plein (filled): light background; on hover, a blue fill sweeps the button from its left edge."
+      - "contour (outline): white outline, for dark surfaces; on hover, a white fill."
+      - "accent: blue fill, white text. Primary action on a light background."
+      - "filet (rule): ink outline on white. Secondary action on a light background."
+      - "Sizes M (16 × 24 px) and S (12 × 20 px)."
+      - "Unavailable: if the address is still \"À compléter\", the button becomes neutral text (preview only)."
+    faire:
+      - A short label that states the action or the destination.
+      - "On a dark background, plein or contour; on a light background, accent or filet."
+    eviter:
+      - "A button for a link in running text: use Link."
+      - Two accent buttons side by side.
+    accessibilite:
+      - "Visible focus: 2 px outline in the text colour."
+      - "Outside a form, `type` is \"button\"; it can be replaced (\"submit\" in a dialog)."
+    props:
+      variante: Appearance of the button.
+      taille: "M by default, S in floating boxes."
+      href: "Address; without it, the button is a button element."
+    slots:
+      defaut: Label.
+  Encart:
+    nom: Inset
+    role: Sets an introductory text apart on a light grey background.
+    variantes:
+      - "A single appearance. Padding goes from 24 × 32 to 20 px on mobile."
+    faire:
+      - "One paragraph in Lead, right under a header."
+    eviter:
+      - Several insets in a row.
+      - An inset for an alert or a status message.
+    accessibilite:
+      - "The background is decorative; the text keeps its contrast (17.8:1 in text/primary)."
+    props: {}
+    slots:
+      defaut: Text of the inset.
+  Etiquette:
+    nom: Tag
+    role: "A text band that qualifies a content, such as a layer touched or a practice."
+    variantes:
+      - "Size S: Caption on a 28 px band. On in blue, Off in grey."
+      - "Size L: Heading/24 on a blue fill, white text. Used as a heading."
+    faire:
+      - Give the state as text with `etatTexte` when On and Off carry meaning.
+      - Group the tags of one content in a Tag group.
+    eviter:
+      - Animating a tag or making it clickable.
+      - A tag for an action.
+    accessibilite:
+      - "The state is never carried by colour alone: `etatTexte` is read after the label."
+      - "Off: text/supporting on surface/inactive, 5.4:1."
+    props:
+      taille: S (band) or L (heading).
+      etat: On (true) or Off (false).
+      etatTexte: "Text read after the label, for example \"touched\"."
+      balise: "Rendered element; a heading level when the tag names a block."
+    slots:
+      defaut: Label.
+  Lien:
+    nom: Link
+    role: "A link outside running text, not underlined at rest, underlined on hover."
+    variantes:
+      - "Any text style (UI, Heading/24…)."
+    faire:
+      - "A label that states the destination, with an arrow when it leads onward."
+    eviter:
+      - "A link inside a paragraph: running text underlines its links."
+    accessibilite:
+      - "Outside running text, its position and style are enough to recognise it; focus stays visible."
+    props:
+      href: Address.
+      texte: "Text style class, for example \"text-ui\"."
+    slots:
+      defaut: Label.
+  Carte:
+    nom: Card
+    role: "Presents a content in summary, with or without a visual, and leads to it."
+    variantes:
+      - "Row appearance, size L: Heading/40 title, text and metadata. Without a visual, tags in a column on the right; with a visual (400 × 300, on the left), tags under the text."
+      - "Row appearance, size M: Heading/24 title, tags in a row under the text."
+      - "Frame appearance: border, visual on top, no link; the title can be an L tag."
+      - "304 px indent on desktop: by default in size M and in size L without a visual."
+    faire:
+      - "Stack row cards in a list, separated by their rule."
+      - "Keep one size per list: L for case studies, M for writing."
+    eviter:
+      - "A second link inside a row card: the whole card is already clickable."
+      - A frame card for content to open.
+    accessibilite:
+      - "The link sits on the title and stretches over the whole card; there is a single tab stop."
+      - "On keyboard focus, the background sweeps the card as on hover."
+      - "The heading level follows the page hierarchy (`niveau`)."
+    props:
+      taille: L or M.
+      apparence: "ligne (clickable list row) or cadre (framed block)."
+      titre: Card title.
+      texte: Description or thesis.
+      meta: "Metadata line in Caption, for example \"company · domain\"."
+      href: "Address of the content (row appearance)."
+      visuel: "Image and its alternative text; without an image, a fill holds the space in preview."
+      etiquettes: Tags of the Tag group.
+      etiquettesLibelle: Name of the tag list for assistive technologies.
+      retrait: 304 px indent on desktop.
+      titreEtiquette: "Title rendered as an L tag (frame appearance)."
+      niveau: Heading level.
+      lang: "Language of the content, if it differs from the page."
+  EnTete:
+    nom: Header
+    role: Opens a page or a section with a Display heading.
+    variantes:
+      - "Section: 20 px under the heading, set on a 3 px ink rule."
+      - "Page: 72 px under the heading (40 px on mobile), with or without a rule."
+    faire:
+      - A single level 1 header per page.
+    eviter:
+      - "A header for a card or block title: use the Heading styles."
+    accessibilite:
+      - "`niveau` sets h1 or h2; `id` lets the enclosing section be named."
+    props:
+      titre: Heading text.
+      niveau: "1 at the top of a page, 2 in a section."
+      id: "Heading identifier, for aria-labelledby and anchors."
+      espace: section or page.
+      filet: Ink rule under the heading.
+  Figure:
+    nom: Figure
+    role: "An illustration on a grey background and its caption, in a frame with fixed proportions."
+    variantes:
+      - "The frame keeps its proportions (`ratio`); figures of the same rank replace each other without the page moving."
+    faire:
+      - A caption that describes what the figure shows.
+    eviter:
+      - A caption that repeats the nearby heading.
+    accessibilite:
+      - "By default the illustration is decorative (empty alt) and the caption describes it; an alternative text can be passed."
+    props:
+      src: "Image address, in public/."
+      legende: Caption in Caption.
+      alt: "Alternative text; empty when the caption is enough."
+      ratio: Frame proportions.
+  GroupeEtiquettes:
+    nom: Tag group
+    role: "A list of S tags, each On or Off."
+    variantes:
+      - "Vertical: 260 px column. Horizontal: 140 px bands."
+      - "Folding below a breakpoint: in a row, with stretched tags (mobile) or at their natural width (tablet)."
+    faire:
+      - "The same tags in the same order for one content type (the three layers, always in the order surfaces, design system, model)."
+    eviter:
+      - Mixing tags of different kinds in one group.
+    accessibilite:
+      - "A list named by `libelle`; each state is read as text."
+    props:
+      etiquettes: "Label, state and state text of each tag."
+      libelle: Name of the list for assistive technologies.
+      orientation: verticale or horizontale.
+      replier: Breakpoint below which the group goes into a row.
+  Infobulle:
+    nom: Tooltip
+    role: "Shows a text before an action, on hover and keyboard focus of its host."
+    variantes:
+      - "Below the host, or above when space is lacking; aligned to the start or the end of the host."
+    faire:
+      - "Show what is about to happen (the text that will be copied), not the label again."
+    eviter:
+      - Essential information that cannot be found elsewhere on a touch screen.
+    accessibilite:
+      - "WCAG 1.4.13: it stays open under the pointer, closes with Escape and hides nothing permanently."
+      - "Linked to its trigger by aria-describedby (`id`)."
+    props:
+      id: "Identifier, for aria-describedby."
+      titre: Box title.
+      alignement: "Edge of the host it aligns to (desktop)."
+    slots:
+      defaut: Text shown.
+  Modale:
+    nom: Dialog
+    role: A dialog box that asks for confirmation.
+    variantes:
+      - "Same box as the tooltip; actions as S buttons, accent then filet."
+    faire:
+      - "Two actions at most, the primary action first."
+    eviter:
+      - A dialog opened without an action from the person.
+    accessibilite:
+      - "Native dialog element opened with showModal(); focus is trapped inside and Escape closes it."
+      - A click outside the box closes it.
+    props:
+      id: "Identifier; the title receives `<id>-titre`."
+      titre: Box title.
+    slots:
+      defaut: Text shown.
+      actions: "Buttons, whose value becomes the return value of the dialog."
+  CopieLienIA:
+    nom: Copy the AI link
+    role: "Copies a prompt ready to paste into an AI assistant, with the address of the site's agent version."
+    variantes:
+      - "With hover: the tooltip shows the text, the click copies."
+      - "Touch screen: the dialog shows the text and asks for confirmation."
+      - "If the browser refuses the copy, the dialog opens with the text to copy by hand."
+    faire:
+      - Always show the text before copying it.
+    eviter:
+      - Copying without confirmation on a touch screen.
+    accessibilite:
+      - "Absent without JavaScript or clipboard; the link to the agent version is then enough."
+      - "The result is announced in a role=\"status\" region."
+    props:
+      libelle: Button label.
+      confirmation: Message after copying.
+      echec: Message if the copy fails.
+      apercu: Title of the tooltip and the dialog.
+      prompt: "Copied text; {lien} becomes the address of the agent version."
+      confirmer: Primary action of the dialog.
+      annuler: Secondary action of the dialog.
+      variante: Button variant.
+      alignement: Tooltip alignment.
+      emplacement: "Placement, sent to audience measurement."
+  EmailCopiable:
+    nom: Copyable email
+    role: "The email address, large, copied in one click."
+    variantes:
+      - "On hover and focus, the text turns blue from left to right."
+    faire:
+      - A single large address per page.
+    eviter:
+      - "Using it on a light background: the text is white at rest."
+    accessibilite:
+      - "Without JavaScript or clipboard, the address remains a mailto link."
+      - "The button announces the address and the action; the result is announced in a role=\"status\" region."
+      - "In forced colours mode, the text returns to a solid colour."
+    props:
+      locale: Language of the texts.
+  Navigation:
+    nom: Navigation
+    role: "The logo, the sections of the site and the link to the other language."
+    variantes:
+      - "Link states: rest, hover (blue fill), active page (8 px bar)."
+      - "Mobile: full-screen menu on the native Popover API."
+      - "Stuck at the top, hidden when scrolling down, back when scrolling up."
+    faire:
+      - Only show a section once content is published.
+    eviter:
+      - A link to the other language without an equivalent page.
+    accessibilite:
+      - "aria-current is \"page\" on the exact page, \"true\" on a sub-page."
+      - "The mobile menu opens and closes without JavaScript, and with Escape."
+      - Keyboard focus always brings the navigation back.
+    props:
+      locale: Language of the page.
+      alternate: Address of the equivalent page in the other language.
+  PiedDePage:
+    nom: Footer
+    role: "The large email address, the signature, useful links and the location."
+    variantes:
+      - "Without the large address on the Contact page, which already carries it."
+    faire:
+      - "Short links, separated by middle dots."
+    eviter:
+      - Repeating the main navigation there.
+    accessibilite:
+      - "contentinfo region, named by a hidden heading."
+    props:
+      locale: Language of the texts.
+      avecEmail: Shows the large address.
+  PilierDeMethode:
+    nom: Method pillar
+    role: "A stage of the method, its sentence and its practices."
+    variantes:
+      - "On the home page (desktop, with JavaScript), the active pillar is complete and the others shrink to their title."
+    faire:
+      - "Short practices, as On tags."
+    eviter:
+      - "Practices as Off tags: they describe what is done, all are On."
+    accessibilite:
+      - "When shrunk, inactive pillars keep their text for screen readers."
+    props:
+      titre: Pillar name.
+      description: Pillar sentence.
+      pratiques: "Practices, as tags."
+      niveau: Heading level.
+  Planche:
+    nom: Board
+    role: "A closing message, a heading over several lines and paragraphs."
+    variantes:
+      - "Light, before the footer."
+      - "Dark, followed by content passed as a slot; it joins the footer (Contact page)."
+    faire:
+      - "A short heading, one line per idea."
+    eviter:
+      - Two boards on one page.
+    accessibilite:
+      - "Region named by its heading, or by `nom` if the page shows several."
+    props:
+      libelle: Eyebrow in Label.
+      titre: "Heading, one line per entry."
+      texte: Paragraphs in Lead.
+      sombre: Dark variant.
+      nom: Region name.
+      niveau: Heading level.
+    slots:
+      defaut: "Content under the text (dark variant)."
+
+gabarits:
+  Accueil: "Hero, layers, work, position, method and writing."
+  ListeTravaux: "List of case studies, as L cards with a visual."
+  Cas: "A case study, from summary to decisions and their rules."
+  ListeEcrits: "List of writing, as M cards."
+  Ecrit: "A piece of writing, its thesis, cited cases and related writing."
+  Parcours: Experience and education.
+  Contact: "The message and the copyable address, on a dark board."
+  Systeme: This page.

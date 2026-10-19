@@ -69,15 +69,21 @@ a {
   color: inherit;
 }
 
+/* Mise en valeur dans le texte : Medium, la seule graisse forte du texte courant (le gras 700 n'existe pas) */
+strong,
+b {
+  font-weight: var(--font-weight-medium);
+}
+
 :focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
 }
 
-/* Styles de texte : un par style Figma, mêmes noms */
+/* Styles de texte : un par style Figma, mêmes noms. Chacun fixe sa graisse, quel que soit l'élément qui le porte. */
 .text-display {
   font-family: var(--font-heading);
-  font-weight: 900;
+  font-weight: var(--font-weight-black);
   font-size: var(--text-display-size);
   line-height: var(--text-display-leading);
   letter-spacing: var(--text-display-tracking);
@@ -86,7 +92,7 @@ a {
 .text-heading-40,
 .text-heading-24 {
   font-family: var(--font-heading);
-  font-weight: 800;
+  font-weight: var(--font-weight-extrabold);
   line-height: var(--text-heading-leading);
   letter-spacing: var(--text-heading-tracking);
 }
@@ -102,28 +108,31 @@ a {
 .text-lead {
   font-size: var(--text-lead-size);
   line-height: var(--text-lead-leading);
+  font-weight: var(--font-weight-regular);
 }
 
 .text-body {
   font-size: var(--text-body-size);
   line-height: var(--text-body-leading);
+  font-weight: var(--font-weight-regular);
 }
 
 .text-body-strong {
   font-size: var(--text-body-size);
   line-height: var(--text-body-leading);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .text-ui {
   font-size: var(--text-ui-size);
   line-height: var(--text-ui-leading);
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
 }
 
 .text-caption {
   font-size: var(--text-caption-size);
   line-height: var(--text-caption-leading);
+  font-weight: var(--font-weight-regular);
 }
 
 /* Les capitales sont portées par le style, jamais tapées */
@@ -131,6 +140,31 @@ a {
   font-size: var(--text-label-size);
   line-height: var(--text-label-leading);
   text-transform: uppercase;
+  font-weight: var(--font-weight-regular);
+}
+
+/*
+ * Boîte flottante : infobulle et modale (Figma 111:5507). Fond gris, filet et ombre portée nets.
+ */
+.boite-flottante {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 30rem;
+  max-width: calc(100vw - 2 * var(--layout-gutter));
+  padding: var(--space-24);
+  border: 1px solid var(--color-border-ink);
+  background: var(--color-background-subtle);
+  box-shadow: 4px 4px 0 var(--color-border-ink);
+  color: var(--color-text-secondary);
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.boite-flottante__titre {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Conteneur de page */
@@ -139,36 +173,6 @@ a {
   max-width: var(--layout-max);
   margin-inline: auto;
   padding-inline: var(--layout-gutter);
-}
-
-/*
- * Entrées de liste (projets, écrits) : au survol et au focus clavier, un fond gris léger
- * balaie la ligne de gauche à droite, comme l'aplat des boutons et de la navigation.
- * Les étiquettes de strate restent immobiles : elles ne sont pas interactives.
- */
-.entree {
-  isolation: isolate;
-}
-
-.entree::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: var(--color-background-subtle);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--motion-duration-long) var(--motion-ease);
-}
-
-.entree:focus-within::before {
-  transform: scaleX(1);
-}
-
-@media (hover: hover) {
-  .entree:hover::before {
-    transform: scaleX(1);
-  }
 }
 
 /* Conteneur étroit des pages intérieures : contenu de 1 120 px */

@@ -54,21 +54,21 @@ Une constante des cas : penser l'écosystème plutôt que l'écran. Desoutter r�
 
 Ce que Florian met en avant, comme il le ferait en entretien. Chaque qualité est déclarée ; la situation qui l'illustre est tirée d'un cas et peut être vérifiée.
 
-**Remettre en question le point de départ.** Chez Desoutter, la plateforme pouvait s'organiser par fonctions : configurer, analyser, diagnostiquer. Florian a proposé de calquer la navigation sur l'installation physique (contrôleurs, outils, programmes), pour que chaque métier parcoure le même arbre. Chez Qlik, plutôt que de partir d'un onglet qualité et de quelques champs, il a d'abord défini ce qu'est un contrat de données. Sources : cas Desoutter, Data contracts.
+**Remettre en question le point de départ.** Chez Desoutter, la plateforme pouvait s'organiser par fonctions : configurer, analyser, diagnostiquer. Florian a proposé de calquer la navigation sur l'installation physique (controllers, outils, psets), pour que chaque métier parcoure le même arbre. Chez Qlik, plutôt que de partir d'un onglet qualité et de quelques champs, il a d'abord défini ce qu'est un data contract. Sources : cas Desoutter, Data contracts.
 
-**Comprendre les métiers avant de trancher.** Chez Desoutter, les personas construits en ateliers montraient des attentes opposées : réglages avancés pour les uns, configuration guidée pour les autres. Plutôt que de choisir, le programme de vissage se parcourt par paliers, avec un mode avancé et un mode pas à pas. Source : cas Desoutter.
+**Comprendre les métiers avant de trancher.** Chez Desoutter, les personas construits en ateliers montraient des attentes opposées : réglages avancés pour les uns, configuration guidée pour les autres. Plutôt que de choisir, le pset se parcourt par paliers, avec un mode avancé et un mode pas à pas. Source : cas Desoutter.
 
 **Travailler avec l'ingénierie.** Chez Desoutter, il accompagnait les développeurs front-end jusqu'à l'implémentation et spécifiait chaque page comme un objet avant de la dessiner. Chez SharingCloud, le design system s'est construit avec le soutien des développeurs front-end. Chez Qlik, il prototype en code pour discuter avec l'ingénierie d'un comportement qu'on manipule plutôt que d'une maquette à interpréter. Sources : cas Desoutter, WorkplaceToBe, Data contracts.
 
-**Rendre un changement abordable.** Chez Qlik, la règle « un rôle par vue » impose de reprendre tous les types d'assets, un chantier lourd. Florian propose de l'appliquer progressivement, un type à la fois, et de passer par les templates pour éviter de tout reconcevoir. Source : cas Templates.
+**Rendre un changement abordable.** Chez Qlik, la règle « un rôle par vue » impose de reprendre tous les asset types, un chantier lourd. Florian propose de l'appliquer progressivement, un type à la fois, et de passer par les templates pour éviter de tout reconcevoir. Source : cas Templates.
 
-**Réutiliser plutôt que dupliquer.** Chez Qlik, le contrat de données réutilise les mesures de qualité que le jeu de données possède déjà, plutôt que d'en créer de nouvelles : un seul vocabulaire, une seule vérité. Chez SharingCloud, une fonctionnalité n'apparaît que sur les surfaces où elle a un sens, au lieu d'être copiée partout. Sources : cas Data contracts, WorkplaceToBe.
+**Réutiliser plutôt que dupliquer.** Chez Qlik, le data contract réutilise les mesures de qualité que le dataset possède déjà, plutôt que d'en créer de nouvelles : un seul vocabulaire, une seule vérité. Chez SharingCloud, une fonctionnalité n'apparaît que sur les surfaces où elle a un sens, au lieu d'être copiée partout. Sources : cas Data contracts, WorkplaceToBe.
 
-**Prendre l'initiative.** Chez SharingCloud, face à un produit fragmenté, il a proposé de commencer la refonte par un design system partagé. Chez Qlik, il a proposé une architecture commune pour les vues des types d'assets. Sources : cas WorkplaceToBe, Templates.
+**Prendre l'initiative.** Chez SharingCloud, face à un produit fragmenté, il a proposé de commencer la refonte par un design system partagé. Chez Qlik, il a proposé une architecture commune pour les vues des asset types. Sources : cas WorkplaceToBe, Templates.
 
 **Mesurer pour ajuster.** Sur WorkplaceToBe, l'équipe a instrumenté le produit avec PostHog. Elle mesurait, pour la réservation d'une salle de réunion et pour la déclaration de présence au bureau, le temps, le nombre d'étapes et le taux d'abandon, en comparant le desktop et le mobile. Elle mesurait aussi l'exploration : les utilisateurs naviguaient-ils dans la plateforme pour découvrir d'autres fonctionnalités ? Ces mesures ont conduit à quelques ajustements, surtout sur desktop. Le produit a été arrêté en 2024, et les chiffres n'ont pas été conservés. Source : déclaration de Florian, absente du cas publié.
 
-**Transmettre.** Chez SharingCloud, Florian a accompagné un designer en alternance pendant deux ans sur WorkplaceToBe, avec une progression délibérée : observer une fonctionnalité existante, comprendre de quoi elle est constituée et comment elle fonctionne dans son principe ; en parallèle, apprendre les bases de la mise en page et de l'architecture des interfaces ; puis traiter des cas de plus en plus complexes, jusqu'à une autonomie complète sur certains sujets. Il était aussi référent design de l'organisation, et il est intervenu en écoles de design de 2016 à 2022. Sources : cas WorkplaceToBe, parcours ; le détail de l'accompagnement est une déclaration de Florian.
+**Transmettre.** Chez SharingCloud, Florian a accompagné un designer en alternance pendant deux ans sur WorkplaceToBe, avec une progression délibérée : observer une fonctionnalité existante, comprendre de quoi elle est constituée et comment elle fonctionne dans son principe ; en parallèle, apprendre les bases du layout et de l'architecture des interfaces ; puis traiter des cas de plus en plus complexes, jusqu'à une autonomie complète sur certains sujets. Il était aussi référent design de l'organisation, et il est intervenu en écoles de design de 2016 à 2022. Sources : cas WorkplaceToBe, parcours ; le détail de l'accompagnement est une déclaration de Florian.
 
 Son leadership, tel que le portfolio le décrit, passe par la conduite du design et la transmission : lead sur le design et la refonte des produits de SharingCloud, référent design de l'organisation, accompagnement d'un alternant pendant deux ans, enseignement.
 
@@ -112,14 +112,14 @@ Contexte des travaux, par secteur : logiciel industriel (Desoutter), smart offic
 - **Rôle** : Product Designer.
 - **Équipe** : deux Product Owners, trois développeurs front-end.
 
-**Le problème.** Chez Desoutter, chaque tâche avait son logiciel : configurer un contrôleur, analyser des courbes de vissage, collecter les résultats, gérer les droits. WebUI devait réunir ces usages dans une plateforme SaaS accessible depuis un navigateur, pour quatre métiers aux attentes différentes : opérateur, maintenance, ingénieur process, ingénieur qualité.
+**Le problème.** Chez Desoutter, chaque tâche avait son logiciel : configurer un controller, analyser des courbes de vissage, collecter les résultats, gérer les droits. WebUI devait réunir ces usages dans une plateforme SaaS accessible depuis un navigateur, pour quatre métiers aux attentes différentes : opérateur, maintenance, ingénieur process, ingénieur qualité.
 
-**La démarche.** Plutôt que d'organiser le produit par fonctions, la navigation reproduit l'installation physique : les contrôleurs, puis leurs outils de vissage, puis les programmes de chaque outil. Chaque niveau suit le même gabarit de page, et l'état d'un élément remonte dans l'arbre. Les quatre métiers parcourent le même arbre et y cherchent autre chose.
+**La démarche.** Plutôt que d'organiser le produit par fonctions, la navigation reproduit l'installation physique : les controllers, puis leurs tightening tools, puis les psets de chaque outil. Chaque niveau suit le même template de page, et l'état d'un élément remonte dans l'arbre. Les quatre métiers parcourent le même arbre et y cherchent autre chose.
 
 **Contribution de Florian**
 - Navigation conçue comme une arborescence calquée sur l'installation.
-- Gabarit de page commun à tous les niveaux ; chaque page spécifiée comme un objet (objectif, navigation, statuts, actions, contenu) avant d'être dessinée.
-- Parcours du programme de vissage par paliers : trouver, consulter, éditer en mode avancé ou guidé.
+- Template de page commun à tous les niveaux ; chaque page spécifiée comme un objet (objectif, navigation, statuts, actions, contenu) avant d'être dessinée.
+- Parcours du pset par paliers : trouver, consulter, éditer en mode avancé ou guidé.
 - Création du design system de WebUI.
 - Accompagnement des développeurs front-end jusqu'à l'implémentation.
 
@@ -127,7 +127,7 @@ Contexte des travaux, par secteur : logiciel industriel (Desoutter), smart offic
 - Personas définis en ateliers avec les équipes Desoutter.
 - Le produit lui-même, construit par l'équipe produit et de développement.
 
-**Résultat.** À la fin de la mission, l'arborescence, le gabarit de page et le design system étaient posés ; l'équipe front-end construisait les nouvelles pages à partir d'eux.
+**Résultat.** À la fin de la mission, l'arborescence, le template de page et le design system étaient posés ; l'équipe front-end construisait les nouvelles pages à partir d'eux.
 
 **À noter.** Le cas couvre la conception jusqu'à la fin de la mission ; il ne publie pas de données d'usage.
 
@@ -172,11 +172,11 @@ Version complète : https://florianbutour.com/travaux/workplacetobe.md
 
 **Le problème.** Dans une plateforme data, ce que signifie une colonne, qui en répond, quelle fraîcheur ou quelle qualité on peut en attendre : ces engagements existent sans être écrits. L'outil de data contracts doit les rendre explicites et vérifiables par le système.
 
-**La démarche.** Définir ce qu'est un contrat avant de dessiner l'écran : qui le propose, qui l'accepte, ce qu'il garantit, par quels états il passe, ce qui se passe quand il n'est plus tenu. Le contrat s'appuie sur un jeu de données qui a déjà ses mesures de qualité ; les réutiliser évite deux vocabulaires et deux vérités. Des types de garanties sont nés des règles, puis des modèles et des patterns d'usage.
+**La démarche.** Définir ce qu'est un contrat avant de dessiner l'écran : qui le propose, qui l'accepte, ce qu'il garantit, par quels états il passe, ce qui se passe quand il n'est plus tenu. Le contrat s'appuie sur un dataset qui a déjà ses mesures de qualité ; les réutiliser évite deux vocabulaires et deux vérités. Des types de garanties sont nés des règles, puis des modèles et des patterns d'usage.
 
 **Contribution de Florian**
 - Conception de l'outil de data contracts.
-- Définition du contrat comme objet du produit et de sa relation au jeu de données.
+- Définition du contrat comme objet du produit et de sa relation au dataset.
 - Prototypes en code, avec Claude et Figma Make, pour discuter avec l'ingénierie.
 
 **Collectif**
@@ -188,7 +188,7 @@ Version complète : https://florianbutour.com/travaux/workplacetobe.md
 
 Version complète : https://florianbutour.com/travaux/data-contracts.md
 
-### 04 · Templates des types d'assets (Qlik) : donner un rôle à chaque vue
+### 04 · Templates des asset types (Qlik) : donner un rôle à chaque vue
 
 - **Nature** : étude de cas, travail en cours ; démarche seulement, sans écrans ni détails produit.
 - **Entreprise** : Qlik, expérience unifiée entre les produits Talend et Qlik.
@@ -196,13 +196,13 @@ Version complète : https://florianbutour.com/travaux/data-contracts.md
 - **Rôle** : Senior Product Designer.
 - **Équipe** : l'équipe design system et le Head of Design de Qlik.
 
-**Le problème.** Chaque type d'asset (data product, dataset, projet de pipeline) avait sa propre vue d'ensemble, sans règle commune. Celle d'un data product affichait la liste complète de ses datasets ; celle d'un dataset, son schéma entier, parfois cinq cents colonnes.
+**Le problème.** Chaque asset type (data product, dataset, pipeline project) avait son propre overview, sans règle commune. Celui d'un data product affichait la liste complète de ses datasets ; celui d'un dataset, son schéma entier, parfois cinq cents colonnes.
 
-**La démarche.** Une règle : chaque vue a un rôle. La vue d'ensemble résume, montre la valeur et invite à agir ; le brut et l'exhaustif vivent dans des vues dédiées. La règle devient un modèle de page commun à tous les types d'assets, intégré au design system de l'expérience unifiée.
+**La démarche.** Une règle : chaque vue a un rôle. L'overview résume, montre la valeur et invite à agir ; le brut et l'exhaustif vivent dans des vues dédiées. La règle devient un modèle de page commun à tous les asset types, intégré au design system de l'expérience unifiée.
 
 **Contribution de Florian**
 - Proposition d'architecture des assets à partir de la règle « un rôle par vue ».
-- Deux leviers d'adoption : appliquer le modèle progressivement, un type d'asset à la fois ; passer par les templates.
+- Deux leviers d'adoption : appliquer le modèle progressivement, un asset type à la fois ; passer par les templates.
 
 **Collectif**
 - Le modèle de page s'intègre au design system porté par l'équipe design system.

@@ -1,15 +1,15 @@
 ---
 /**
- * Strates/Navigation (Figma 2:487)
+ * Organisme · Navigation (Figma 2:487)
  * Logo, liens de section (dont la page Contact) et lien vers l'autre langue.
  * États d'un lien (Figma 7:373, 8:443, 7:406) : repos, survol (aplat bleu), actif (barre de 8 px).
  *
  * Mobile : menu burger construit sur l'API Popover native.
  * Ouverture, fermeture, Échap et clic extérieur fonctionnent sans JavaScript.
  */
-import { otherLocale, path, type Locale } from '../i18n/routes';
-import { getInterface } from '../i18n/ui';
-import { contenusVisibles } from '../lib/contenu';
+import { otherLocale, path, type Locale } from '../../i18n/routes';
+import { getInterface } from '../../i18n/ui';
+import { contenusVisibles } from '../../lib/contenu';
 
 interface Props {
   locale: Locale;
@@ -248,7 +248,7 @@ const target = otherLocale(locale);
     width: 3rem;
     height: 3rem;
     margin-left: auto;
-    margin-right: -0.75rem;
+    margin-right: calc(-1 * var(--space-12));
     padding: 0;
     border: 0;
     background: none;
@@ -284,14 +284,14 @@ const target = otherLocale(locale);
 
     .navigation__list {
       height: 100%;
-      gap: 2.5rem;
+      gap: var(--space-40);
     }
 
     .navigation__link {
-      padding-block: 1.5rem;
+      padding-block: var(--space-24);
       font-size: var(--text-ui-size);
       line-height: var(--text-ui-leading);
-      font-weight: 500;
+      font-weight: var(--font-weight-medium);
     }
 
     @media (hover: hover) {
@@ -338,7 +338,7 @@ const target = otherLocale(locale);
     .navigation__list {
       flex-direction: column;
       padding-inline: var(--layout-gutter);
-      padding-bottom: 2rem;
+      padding-bottom: var(--space-32);
     }
 
     .navigation__list li {
@@ -347,9 +347,9 @@ const target = otherLocale(locale);
 
     .navigation__link {
       flex: 1;
-      padding-block: 1.25rem;
+      padding-block: var(--space-20);
       font-family: var(--font-heading);
-      font-weight: 800;
+      font-weight: var(--font-weight-extrabold);
       font-size: var(--text-heading-40-size);
       line-height: var(--text-heading-leading);
       letter-spacing: var(--text-heading-tracking);
@@ -357,7 +357,7 @@ const target = otherLocale(locale);
 
     .navigation__langue .navigation__link {
       font-family: var(--font-body);
-      font-weight: 500;
+      font-weight: var(--font-weight-medium);
       font-size: var(--text-ui-size);
       line-height: var(--text-ui-leading);
       letter-spacing: 0;

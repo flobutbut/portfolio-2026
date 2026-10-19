@@ -1,0 +1,186 @@
+---
+/**
+ * Organisme · Copier le lien IA : un Bouton, une Infobulle et une Modale.
+ * Copie un prompt prêt à coller dans un assistant IA, qui contient l'adresse de la version agent du site
+ * (suivie de ?src=prompt pour distinguer ces visites).
+ * Rien n'est copié sans que le texte ait été montré :
+ * - avec survol : l'infobulle montre le texte au survol et au focus clavier, au-dessus du bouton
+ *   si la place manque en dessous ; le clic copie ;
+ * - sans survol (écran tactile) : le toucher ouvre la modale, qui demande confirmation.
+ * Après la copie, un message confirme et dit quoi en faire. Si le navigateur refuse la copie,
+ * la modale s'ouvre avec le texte, à copier à la main.
+ * Sans JavaScript ou sans presse-papiers, l'organisme n'existe pas : le lien « Lire la version agent » suffit.
+ * La rangée de boutons qui le contient doit être positionnée (position: relative) : sous 64rem,
+ * les boutons peuvent passer à la ligne et le message se place sous toute la rangée.
+ */
+import Bouton from '../atomes/Bouton.astro';
+import Infobulle from '../molecules/Infobulle.astro';
+import Modale from '../molecules/Modale.astro';
+import { fichiersAgents } from '../../i18n/routes';
+
+interface Props {
+  libelle: string;
+  /** Message affiché après la copie */
+  confirmation: string;
+  /** Message affiché si la copie échoue */
+  echec: string;
+  /** Titre de l'aperçu (infobulle et modale) */
+  apercu: string;
+  /** Texte copié ; {lien} y est remplacé par l'adresse de la version agent */
+  prompt: string;
+  /** Actions de la modale */
+  confirmer: string;
+  annuler: string;
+  variante?: 'plein' | 'contour';
+  /** Bord du bouton auquel l'infobulle s'aligne (desktop) */
+  alignement?: 'debut' | 'fin';
+  /** Emplacement du bouton, transmis à la mesure d'audience */
+  emplacement: string;
+}
+
+const { libelle, confirmation, echec, apercu, prompt, confirmer, annuler, variante = 'plein', alignement = 'debut', emplacement } =
+  Astro.props;
+const chemin = `${fichiersAgents.agentTexte}?src=prompt`;
+// Rendu initial avec le domaine de production ; le script le remplace par le domaine consulté
+const lien = new URL(chemin, Astro.site ?? 'https://florianbutour.com').href;
+const id = `apercu-${emplacement}`;
+---
+
+<div
+  class="copie-ia"
+  data-infobulle-hote
+  data-copie-ia={chemin}
+  data-prompt={prompt}
+  data-confirmation={confirmation}
+  data-echec={echec}
+  data-emplacement={emplacement}
+>
+  <Bouton variante={variante} aria-describedby={id}>{libelle}</Bouton>
+  <Infobulle id={id} titre={apercu} alignement={alignement}>
+    {
+      prompt.split('\n').map((ligne) => {
+        const [avant, apres] = ligne.split('{lien}');
+        return (
+          <span class="copie-ia__ligne">
+            {avant}
+            {apres !== undefined && (
+              <>
+                <span data-lien>{lien}</span>
+                {apres}
+              </>
+            )}
+          </span>
+        );
+      })
+    }
+  </Infobulle>
+  <Modale id={`${id}-modale`} titre={apercu}>
+    <Fragment slot="actions">
+      <Bouton variante="accent" taille="S" type="submit" value="copier">{confirmer}</Bouton>
+      <Bouton variante="filet" taille="S" type="submit" value="annuler">{annuler}</Bouton>
+    </Fragment>
+  </Modale>
+  <span class="copie-ia__statut text-caption" role="status" aria-live="polite"></span>
+</div>
+
+<script>
+  const survol = matchMedia('(hover: hover)');
+
+  document.querySelectorAll<HTMLElement>('[data-copie-ia]').forEach((copie) => {
+    const bouton = copie.querySelector<HTMLButtonElement>(':scope > button');
+    const apercu = copie.querySelector<HTMLElement>('.infobulle');
+    const modale = copie.querySelector('dialog');
+    const statut = copie.querySelector<HTMLElement>('.copie-ia__statut');
+    if (!bouton || !apercu || !modale || !statut || !navigator.clipboard) return copie.remove();
+    const { copieIa = '', prompt = '', confirmation = '', echec = '', emplacement } = copie.dataset;
+
+    // Adresse complète sur le domaine consulté (le domaine définitif n'est pas encore basculé)
+    const lien = new URL(copieIa, location.origin).href;
+    apercu.querySelectorAll('[data-lien]').forEach((l) => (l.textContent = lien));
+    modale.querySelector('.modale__texte')?.replaceChildren(...apercu.querySelector('.infobulle__texte')!.cloneNode(true).childNodes);
+    const texte = prompt.replaceAll('{lien}', lien);
+
+    let minuterie: number | undefined;
+    const annoncer = (message: string) => {
+      statut.textContent = message;
+      window.clearTimeout(minuterie);
+      minuterie = window.setTimeout(() => (statut.textContent = ''), 4000);
+    };
+    const copier = async () => {
+      copie.classList.add('infobulle-masquee');
+      try {
+        await navigator.clipboard.writeText(texte);
+        window.posthog?.capture('agent_copie', { fichier: copieIa, format: 'prompt', emplacement });
+        annoncer(confirmation);
+      } catch {
+        // Copie refusée (permission, document sans focus) : le texte reste lisible et sélectionnable
+        annoncer(echec);
+        modale.showModal();
+      }
+    };
+
+    // Infobulle : au-dessus du bouton si elle ne tient pas en dessous (et qu'il y a plus de place au-dessus)
+    const placer = () => {
+      const r = bouton.getBoundingClientRect();
+      const entete = Math.max(0, document.querySelector('.navigation')?.getBoundingClientRect().bottom ?? 0);
+      const dessous = innerHeight - r.bottom;
+      const dessus = r.top - entete;
+      const besoin = apercu.offsetHeight + 16;
+      copie.classList.toggle('infobulle-haut', dessous < besoin && dessus > dessous);
+    };
+
+    // Ouverte au survol et au focus clavier, refermée par Échap (WCAG 1.4.13)
+    const reafficher = () => copie.classList.remove('infobulle-masquee');
+    copie.addEventListener('pointerenter', placer);
+    copie.addEventListener('pointerleave', reafficher);
+    bouton.addEventListener('focus', () => (placer(), reafficher()));
+    bouton.addEventListener('blur', reafficher);
+    bouton.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') copie.classList.add('infobulle-masquee');
+    });
+
+    bouton.addEventListener('click', () => {
+      // Sans survol, rien n'a encore été montré : la modale montre le texte et demande confirmation
+      if (!survol.matches) return modale.showModal();
+      copier();
+    });
+
+    // Fermée par une action (form method="dialog"), par Échap ou par un clic hors de la boîte (voir Modale)
+    modale.addEventListener('close', () => {
+      if (modale.returnValue === 'copier') copier();
+      modale.returnValue = '';
+    });
+  });
+</script>
+
+<style>
+  .copie-ia {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* Sans JavaScript, rien à copier */
+  :global(html:not(.js)) .copie-ia {
+    display: none;
+  }
+
+  .copie-ia__ligne {
+    display: block;
+  }
+
+  /* Sous le bouton, hors du flux : la rangée de boutons ne bouge pas */
+  .copie-ia__statut {
+    position: absolute;
+    top: calc(100% + var(--space-8));
+    left: 0;
+    width: max-content;
+    max-width: calc(100vw - 2 * var(--layout-gutter));
+  }
+
+  /* Boutons susceptibles de passer à la ligne : infobulle et message se placent sous toute la rangée */
+  @media (max-width: 63.99rem) {
+    .copie-ia {
+      position: static;
+    }
+  }
+</style>

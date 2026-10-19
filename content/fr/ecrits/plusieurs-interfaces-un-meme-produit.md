@@ -38,11 +38,11 @@ Un agent est un acteur qui utilise ces accès, pas une interface du même ordre 
 
 Ces décisions demandent un travail commun entre design, produit et ingénierie. Déterminer qui peut modifier quoi et comment une personne comprend un refus engage à la fois le fonctionnement du logiciel et son usage.
 
-## Un exemple : le contrat de données
+## Un exemple : le data contract
 
-Chez Qlik, je travaille sur un outil de contrats de données. Un contrat formalise des engagements entre les équipes qui produisent un jeu de données et celles qui l'utilisent : le sens des champs, les responsabilités ou les attentes de qualité et de fraîcheur.
+Chez Qlik, je travaille sur un outil de data contracts. Un contrat formalise des engagements entre les équipes qui produisent un dataset et celles qui l'utilisent : le sens des champs, les responsabilités ou les attentes de qualité et de fraîcheur.
 
-Dans ce projet en cours, une difficulté structurante consiste à définir la relation entre le contrat et les mesures déjà présentes sur le jeu de données. Il faut distinguer les engagements déclarés, les contrôles possibles et ce que leurs résultats permettent d'affirmer.
+Dans ce projet en cours, une difficulté structurante consiste à définir la relation entre le contrat et les mesures déjà présentes sur le dataset. Il faut distinguer les engagements déclarés, les contrôles possibles et ce que leurs résultats permettent d'affirmer.
 
 On peut envisager de présenter ces informations dans une interface ou de les rendre accessibles par API. Dans les deux cas, les mots, les états et les règles doivent rester compatibles. Une représentation différente ne devrait pas transformer un engagement non vérifié en garantie tenue.
 

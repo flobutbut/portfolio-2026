@@ -147,6 +147,8 @@ const accueil = defineCollection({
         texte: z.string(),
         copier: z.string(),
         copie: z.string(),
+        /** Message si le presse-papiers refuse la copie : la modale montre alors le texte à copier à la main */
+        echec: z.string(),
         apercu: z.string(),
         confirmer: z.string(),
         annuler: z.string(),
@@ -274,6 +276,7 @@ const interfaceTextes = defineCollection({
       cv: z.object({ libelle: z.string(), url: z.string() }),
       ecrits: z.string(),
       versionAgent: z.string(),
+      designSystem: z.string(),
       localisation: z.string(),
     }),
     agents: z.object({
@@ -289,6 +292,8 @@ const interfaceTextes = defineCollection({
       contenusLies: z.string(),
       pageWeb: z.string(),
     }),
+    /** Page Design system (/systeme) : le reste de ses textes est dans systeme.yaml */
+    systeme: z.object({ titre: z.string() }),
     pageIntrouvable: z.object({
       titre: z.string(),
       texte: z.string(),
@@ -300,8 +305,59 @@ const interfaceTextes = defineCollection({
       travaux: z.string(),
       ecrits: z.string(),
       contact: z.string(),
+      systeme: z.string(),
     }),
   }),
 });
 
-export const collections = { cas, ecrits, accueil, parcours, interfaceTextes };
+/* ---------- Documentation du design system : content/<langue>/systeme.yaml ---------- */
+const liste = z.array(z.string());
+const titreDescription = z.object({ titre: z.string(), description: z.string() });
+const groupeJetons = z.object({ titre: z.string(), description: z.string(), regles: liste });
+const LIBELLES_SYSTEME = [
+  'sommaire', 'jeton', 'valeur', 'usage', 'style', 'classe', 'taille', 'role', 'propriete', 'type', 'defaut',
+  'description', 'obligatoire', 'slots', 'slotDefaut', 'variantes', 'faire', 'eviter', 'accessibilite', 'exemple',
+  'composeDe', 'utilisePar', 'fichier', 'figma', 'regles', 'apercu', 'page', 'exempleTexte', 'indisponible',
+  'slotExemple', 'enPlace',
+] as const;
+const systeme = defineCollection({
+  loader: glob({ pattern: '*/systeme.yaml', base: './content' }),
+  schema: z.object({
+    titre: z.string(),
+    surtitre: z.string(),
+    introduction: liste,
+    agents: z.object({ titre: z.string(), texte: liste, markdown: z.string(), json: z.string(), ecritsLies: z.string() }),
+    niveaux: z.object({
+      jetons: titreDescription,
+      atomes: titreDescription,
+      molecules: titreDescription,
+      organismes: titreDescription,
+      gabarits: titreDescription,
+    }),
+    libelles: z.object(Object.fromEntries(LIBELLES_SYSTEME.map((k) => [k, z.string()])) as Record<(typeof LIBELLES_SYSTEME)[number], z.ZodString>),
+    jetons: z.object({
+      couleurs: groupeJetons.extend({ usages: z.record(z.string(), z.string()) }),
+      typographie: groupeJetons.extend({ roles: z.record(z.string(), z.string()) }),
+      graisses: groupeJetons.extend({ usages: z.record(z.string(), z.string()) }),
+      espacements: groupeJetons,
+      miseEnPage: groupeJetons.extend({ usages: z.record(z.string(), z.string()) }),
+      mouvement: groupeJetons.extend({ usages: z.record(z.string(), z.string()) }),
+    }),
+    composants: z.record(
+      z.string(),
+      z.object({
+        nom: z.string(),
+        role: z.string(),
+        variantes: liste,
+        faire: liste,
+        eviter: liste,
+        accessibilite: liste,
+        props: z.record(z.string(), z.string()),
+        slots: z.record(z.string(), z.string()).default({}),
+      }),
+    ),
+    gabarits: z.record(z.string(), z.string()),
+  }),
+});
+
+export const collections = { cas, ecrits, accueil, parcours, interfaceTextes, systeme };

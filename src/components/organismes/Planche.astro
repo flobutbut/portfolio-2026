@@ -1,0 +1,95 @@
+---
+/**
+ * Organisme · Planche (Figma 27:412, « Planche/Contact ») : un libellé, un titre sur plusieurs lignes, des paragraphes.
+ * Sur le site : « Ce que je cherche », juste avant le pied de page (textes : interface.yaml, `planche`).
+ * Le libellé n'apparaît que sur les pages de cas, d'écrit et de parcours (comme dans les maquettes).
+ * Variante sombre (page Contact, Figma 54:671) : sur fond background/inverse, suivie du contenu
+ * passé en slot (l'adresse copiable), et rejoint le pied de page.
+ */
+interface Props {
+  /** Surtitre en Label ; absent si non fourni */
+  libelle?: string;
+  /** Titre, une ligne par entrée */
+  titre: string[];
+  /** Paragraphes en Lead */
+  texte: string[];
+  sombre?: boolean;
+  /** Nom de la région, si la page en montre plusieurs (page Design system) */
+  nom?: string;
+  /** Niveau du titre : h2 en fin de page, plus bas quand la planche est montrée en exemple */
+  niveau?: 2 | 3 | 4;
+}
+
+const { libelle, titre, texte, sombre = false, nom, niveau = 2 } = Astro.props;
+const Titre = `h${niveau}` as 'h2' | 'h3' | 'h4';
+const idTitre = sombre ? 'planche-titre-sombre' : 'planche-titre';
+---
+
+<section class:list={['planche', { 'planche--sombre': sombre }]} aria-labelledby={nom ? undefined : idTitre} aria-label={nom}>
+  <div class="container container--etroit planche__inner">
+    <div class="planche__message">
+      {libelle && <p class="text-label libelle planche__libelle">{libelle}</p>}
+      <Titre id={idTitre} class="text-heading-40 planche__titre">
+        {titre.map((ligne) => <span>{ligne}</span>)}
+      </Titre>
+      <div class="planche__texte">
+        {texte.map((p) => <p class="text-lead">{p}</p>)}
+      </div>
+    </div>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .planche__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-48);
+    padding-block: var(--space-128);
+  }
+
+  .planche__message {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+
+  .planche__libelle {
+    padding-bottom: var(--space-8);
+  }
+
+  .planche__titre,
+  .planche__texte {
+    max-width: 45rem;
+  }
+
+  .planche__titre span {
+    display: block;
+  }
+
+  .planche__texte {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-32);
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 39.99rem) {
+    .planche__inner {
+      padding-block: var(--space-64);
+    }
+  }
+
+  .planche--sombre {
+    background: var(--color-background-inverse);
+    color: var(--color-text-inverse);
+  }
+
+  .planche--sombre .planche__inner {
+    padding-block: var(--space-56) 0;
+  }
+
+  .planche--sombre .planche__texte {
+    color: inherit;
+  }
+</style>

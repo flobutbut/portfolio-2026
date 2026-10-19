@@ -29,7 +29,7 @@ strates:
   touchee: touchée
   nonTouchee: non touchée
 
-# Gabarit de cas
+# Template de cas
 cas:
   surtitre: Cas
   role: Rôle
@@ -52,7 +52,7 @@ cas:
   casSuivant: Cas suivant
   tousLesTravaux: ← Tous les travaux
 
-# Gabarit d'écrit
+# Template d'écrit
 ecrit:
   surtitre: Écrit
   lecture: min de lecture
@@ -61,7 +61,7 @@ ecrit:
   ecritsLies: Écrits liés
   tousLesEcrits: ← Tous les écrits
 
-# Planche « Ce que je cherche », avant le pied de page
+# Planche « Ce que je cherche », avant le footer
 planche:
   libelle: Ce que je cherche
   titre:
@@ -85,6 +85,7 @@ contact:
     url: /cv/florian-butour-cv-fr.pdf
   ecrits: Écrits
   versionAgent: Version agent
+  designSystem: Design system
   localisation: Nantes · full remote
 
 # Versions Markdown des cas et des écrits (/travaux/<slug>.md…), pour les agents
@@ -101,6 +102,10 @@ agents:
   contenusLies: Contenus liés
   pageWeb: Page web
 
+# Page Design system : tokens et composants du site
+systeme:
+  titre: Design system
+
 pageIntrouvable:
   titre: Page introuvable
   texte: Cette adresse ne mène à aucune page.
@@ -112,3 +117,4 @@ metadonnees:
   travaux: Cas d’étude de Florian Butour, Senior Product Designer.
   ecrits: Écrits de Florian Butour sur la conception de systèmes, de modèles et de design systems.
   contact: "Contacter Florian Butour, Senior Product Designer : un poste, un produit, une question."
+  systeme: "Le design system de ce site : tokens de couleur, de typographie, de font weight et de spacing, et les composants qui les utilisent."

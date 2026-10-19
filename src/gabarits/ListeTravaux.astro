@@ -1,12 +1,13 @@
 ---
 /** Liste des travaux (Figma 9:1314) : entrées avec visuel, conteneur de 1 120 px. */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import EnTeteDeSection from '../components/EnTeteDeSection.astro';
-import EntreeDeProjet from '../components/EntreeDeProjet.astro';
-import PlancheContact from '../components/PlancheContact.astro';
+import Carte from '../components/molecules/Carte.astro';
+import EnTete from '../components/molecules/EnTete.astro';
+import Planche from '../components/organismes/Planche.astro';
 import { otherLocale, path, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
 import { modeApercu } from '../lib/mode';
+import { carteDeCas } from '../lib/cartes';
 import { lister } from '../lib/contenu';
 
 interface Props {
@@ -20,30 +21,20 @@ const cas = await lister('cas', locale);
 
 <BaseLayout title={ui.navigation.travaux} description={ui.metadonnees.travaux} locale={locale} noindex={cas.length === 0} alternate={path('travaux', otherLocale(locale))}>
   <div class="container container--etroit page-tete">
-    <EnTeteDeSection titre={ui.navigation.travaux} niveau={1} espace="page" />
+    <EnTete titre={ui.navigation.travaux} niveau={1} espace="page" />
   </div>
   <div class="container container--etroit liste" data-apparition>
     {
       cas.map((c) => (
-        <EntreeDeProjet
-          locale={locale}
-          lang={c.langue !== locale ? c.langue : undefined}
-          niveau={2}
-          titre={c.data.entree?.titre ?? c.data.titre}
-          description={c.data.entree?.description ?? c.data.chapo}
-          meta={c.data.meta}
-          strates={c.data.strates}
-          href={c.href}
-          visuel={c.data.visuel ?? (modeApercu ? { alt: '' } : undefined)}
-        />
+        <Carte {...carteDeCas(c, locale, ui, c.data.visuel ?? (modeApercu ? { alt: '' } : undefined))} niveau={2} />
       ))
     }
   </div>
-  <PlancheContact locale={locale} libelle={false} />
+  <Planche titre={ui.planche.titre} texte={ui.planche.texte} />
 </BaseLayout>
 
 <style>
   .liste {
-    padding-top: 0.5rem;
+    padding-top: var(--space-8);
   }
 </style>

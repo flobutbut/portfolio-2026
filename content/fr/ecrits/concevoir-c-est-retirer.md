@@ -24,7 +24,7 @@ Il est tentant de mesurer un travail de design à ce qu'il ajoute : une animatio
 
 Dans les produits construits par ajouts successifs, certains éléments restent présents parce qu'ils étaient là avant ou qu'une donnée était disponible. Leur utilité n'est plus interrogée. Le travail le plus utile consiste souvent à poser cette question, élément par élément.
 
-Chez Qlik, la vue d'ensemble d'un jeu de données affichait son schéma complet, parfois des centaines de colonnes. J'ai proposé de réserver le schéma exhaustif à une vue dédiée. La vue d'ensemble pourrait alors aider à identifier le jeu de données, comprendre son utilité et accéder aux actions pertinentes. C'est une proposition de répartition de l'information, dont l'adoption est en cours de travail.
+Chez Qlik, l'overview d'un dataset affichait son schéma complet, parfois des centaines de colonnes. J'ai proposé de réserver le schéma exhaustif à une vue dédiée. L'overview pourrait alors aider à identifier le dataset, comprendre son utilité et accéder aux actions pertinentes. C'est une proposition de répartition de l'information, dont l'adoption est en cours de travail.
 
 ## Absorber l'écart
 
@@ -36,7 +36,7 @@ Dans cet exemple, retirer consiste à réduire le travail de comparaison, pas se
 
 ## S'effacer, puis reparaître au bon moment
 
-Retirer ne veut pas dire supprimer. Le schéma d'un jeu de données reste indispensable : la proposition consiste à le déplacer dans une vue dédiée, accessible depuis la vue d'ensemble. Le déplacement n'est utile que si le lecteur sait où retrouver le détail.
+Retirer ne veut pas dire supprimer. Le schéma d'un dataset reste indispensable : la proposition consiste à le déplacer dans une vue dédiée, accessible depuis l'overview. Le déplacement n'est utile que si le lecteur sait où retrouver le détail.
 
 C'est la même logique pour les états, les erreurs, les confirmations. Un système bien conçu ne commente pas tout ce qu'il fait. Il rend son état accessible sans réclamer inutilement l'attention, et signale ce qui demande une décision ou une confirmation. Dans une activité de surveillance, un état normal peut lui-même être une information essentielle.
 

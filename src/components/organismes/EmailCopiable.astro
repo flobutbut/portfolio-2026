@@ -1,12 +1,12 @@
 ---
 /**
- * Adresse e-mail en grand (Display/64), copiable en un clic.
+ * Organisme · E-mail copiable : adresse e-mail en grand (Display/64), copiable en un clic.
  * Sans JavaScript ou sans presse-papiers, elle reste un lien mailto.
  * Survol et focus : le texte passe en bleu de gauche à droite.
  * Utilisée dans le pied de page (Strates/Contact) et sur la page Contact.
  */
-import type { Locale } from '../i18n/routes';
-import { getInterface } from '../i18n/ui';
+import type { Locale } from '../../i18n/routes';
+import { getInterface } from '../../i18n/ui';
 
 interface Props {
   locale: Locale;
@@ -102,7 +102,7 @@ const { contact } = await getInterface(locale);
 
   .email__statut {
     position: absolute;
-    top: calc(100% + 0.75rem);
+    top: calc(100% + var(--space-12));
     left: 0;
     color: var(--color-text-on-dark-muted);
   }
