@@ -43,21 +43,21 @@ Le web et le mobile constituaient le socle du produit. Les autres surfaces ne re
 
 | Cas d’usage | Web | Mobile | Outlook | RoomPad | BoxPad | DeskTag |
 | --- | --- | --- | --- | --- | --- | --- |
-| Réserver une salle | ● | ● | ● depuis l’invitation | ● devant la salle | ● | — |
-| Réserver un poste | ● | ● | ● | — | — | ◐ occupation |
-| Parking, vélo, casier | ● | ● | — | — | — | — |
-| Déclarer sa présence | ● | ● | ● | — | — | — |
-| Voir son équipe | ● | ● | ● | — | — | — |
-| Actualités | ● | ● | — | — | — | — |
-| Événements | ● | ● | — | — | — | — |
+| Réserver une salle | ● | ● | ● depuis l’invitation | ● devant la salle | ● |  |
+| Réserver un poste | ● | ● | ● |  |  | ◐ occupation |
+| Parking, vélo, casier | ● | ● |  |  |  |  |
+| Déclarer sa présence | ● | ● | ● |  |  |  |
+| Voir son équipe | ● | ● | ● |  |  |  |
+| Actualités | ● | ● |  |  |  |  |
+| Événements | ● | ● |  |  |  |  |
 
-● usage complet · ◐ information seule · — absent
+● usage complet · ◐ information seule · case vide : absent
 
 Une fonctionnalité n’était donc pas dupliquée partout par principe. Elle n’apparaissait que là où elle avait du sens : réserver depuis Outlook, agir directement devant une salle ou afficher l’occupant d’un poste.
 
 ### Ce qui reste commun, ce qui change
 
-Le design system partageait des **tokens** — les valeurs nommées de couleur, d’espacement ou de typographie —, des composants et des patterns d’interaction. Ce socle se déclinait dans des bibliothèques propres à chaque surface.
+Le design system partageait des **tokens** (les valeurs nommées de couleur, d’espacement ou de typographie), des composants et des patterns d’interaction. Ce socle se déclinait dans des bibliothèques propres à chaque surface.
 
 Trois règles guidaient les déclinaisons :
 

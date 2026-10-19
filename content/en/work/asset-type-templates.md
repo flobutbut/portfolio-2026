@@ -5,7 +5,7 @@ slug: asset-type-templates
 statut: publie
 nature: note
 titre: "Giving each view a role"
-chapo: "At Qlik, each type of resource — dataset, data product or pipeline project — had its own overview, built as needs arose. I am working to base them on shared page templates, giving each view a precise role."
+chapo: "At Qlik, each type of resource (dataset, data product or pipeline project) had its own overview, built as needs arose. I am working to base them on shared page templates, giving each view a precise role."
 meta: "Qlik · Unified Talend and Qlik experience"
 strates:
   surfaces: true

@@ -35,7 +35,7 @@ Bringing this software together into a single product meant having four professi
 
 ## Going down into the installation
 
-I chose the installation as the main navigation structure rather than an entry by function — configure, analyse, diagnose. The tree mirrors the relations between pieces of equipment. You enter through the controllers; each controller gives access to its tightening tools; each tool to its programs.
+I chose the installation as the main navigation structure rather than an entry by function: configure, analyse, diagnose. The tree mirrors the relations between pieces of equipment. You enter through the controllers; each controller gives access to its tightening tools; each tool to its programs.
 
 ```figure
 type: arborescence

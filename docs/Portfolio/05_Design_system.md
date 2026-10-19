@@ -1,6 +1,6 @@
 # Design system
 
-Le système « Strates » de la nouvelle page d'accueil (fichier Figma « Untitled », cadre « C · Accueil — Les strates »), relevé le 15 octobre : 16 jetons couleur en un seul mode, 9 styles de texte construits sur des variables primitives. Il remplace le système « plan coté » de Portfolio-CDI, résumé en archive en bas de l'onglet. Cet onglet reste la référence pour le code.
+Le système « Strates » de la nouvelle page d'accueil (fichier Figma « Untitled », cadre « C · Accueil · Les strates »), relevé le 15 octobre : 16 jetons couleur en un seul mode, 9 styles de texte construits sur des variables primitives. Il remplace le système « plan coté » de Portfolio-CDI, résumé en archive en bas de l'onglet. Cet onglet reste la référence pour le code.
 
 Principe : trois couleurs portent la page. Le blanc pour lire, le bleu pour affirmer, le noir pour identifier. Deux familles de caractères : Archivo pour les titres, Schibsted Grotesk pour tout le reste.
 
@@ -20,11 +20,11 @@ Un seul mode. Il n'y a pas de mode sombre : les sections noires (barre d'identit
 
 | Jeton | Valeur | Usage | Contraste |
 | --- | --- | --- | --- |
-| background/canvas | #FFFFFF | Fond de page | — |
-| background/brand | #1F2BE0 | Colonne du hero, bloc Position, étiquettes de strate actives | — |
-| background/inverse | #0D0D0D | Barre d'identité, contact | — |
-| surface/inactive | #E7E7E7 | Étiquette de strate inactive | — |
-| surface/placeholder | #D4D4D4 | Emplacement de figure pas encore livré | — |
+| background/canvas | #FFFFFF | Fond de page |  |
+| background/brand | #1F2BE0 | Colonne du hero, bloc Position, étiquettes de strate actives |  |
+| background/inverse | #0D0D0D | Barre d'identité, contact |  |
+| surface/inactive | #E7E7E7 | Étiquette de strate inactive |  |
+| surface/placeholder | #D4D4D4 | Emplacement de figure pas encore livré |  |
 | text/primary | #0D0D0D | Titres et texte courant | 19,4:1 sur canvas |
 | text/secondary | #2A2A2A | Texte de second plan | 14,3:1 sur canvas |
 | text/muted | #737373 | Méta, légendes | 4,7:1 sur canvas |
@@ -33,9 +33,9 @@ Un seul mode. Il n'y a pas de mode sombre : les sections noires (barre d'identit
 | text/on-brand-muted | #FFFFFF à 80 % | Légendes sur bleu | environ 5,9:1 sur brand |
 | text/on-dark-muted | #9A9A9A | Texte secondaire sur noir | 6,2:1 sur inverse |
 | border/default | #E7E7E7 | Séparateurs discrets entre lignes | décoratif |
-| border/ink | #0D0D0D | Filet sous les titres de section, contour du bouton secondaire | — |
-| border/white | #FFFFFF | Contour sur fond sombre | — |
-| border/on-dark | #333333 | Séparateurs sur noir | — |
+| border/ink | #0D0D0D | Filet sous les titres de section, contour du bouton secondaire |  |
+| border/white | #FFFFFF | Contour sur fond sombre |  |
+| border/on-dark | #333333 | Séparateurs sur noir |  |
 
 Règles :
 
@@ -73,14 +73,14 @@ Nomenclature : `Famille/Nom`, en français, avec des propriétés qui portent un
 
 | Élément | Statut | Variantes | Usage |
 | --- | --- | --- | --- |
-| Strates/Navigation | Composant | — | Monogramme « FB. » et quatre entrées : Travaux, Écrits, Parcours, Contact |
-| Entrée de navigation | Composant (instances « Frame 55 » à « 58 ») | — | Une entrée de l'en-tête |
-| Ligne de cas | Composant (instances « Strates ») | — | Titre, décision, méta (entreprise · domaine), strates touchées |
+| Strates/Navigation | Composant |  | Monogramme « FB. » et quatre entrées : Travaux, Écrits, Parcours, Contact |
+| Entrée de navigation | Composant (instances « Frame 55 » à « 58 ») |  | Une entrée de l'en-tête |
+| Ligne de cas | Composant (instances « Strates ») |  | Titre, décision, méta (entreprise · domaine), strates touchées |
 | Étiquette de strate | Composant | État : On, Off | Une strate ou une pratique ; On en bleu, Off en surface/inactive |
-| Strates/Pilier de méthode | Composant | — | Titre, phrase, pratiques en étiquettes |
-| Entrée d'écrit | Composant (instances « Strates ») | — | Titre, thèse, strates touchées (trois étiquettes On ou Off, comme les cas) |
-| En-tête de section | Cadre | — | Titre en Heading/40 sur filet border/ink |
-| Hero, barre d'identité, Position, Contact | Cadres | — | Sections propres à l'accueil |
+| Strates/Pilier de méthode | Composant |  | Titre, phrase, pratiques en étiquettes |
+| Entrée d'écrit | Composant (instances « Strates ») |  | Titre, thèse, strates touchées (trois étiquettes On ou Off, comme les cas) |
+| En-tête de section | Cadre |  | Titre en Heading/40 sur filet border/ink |
+| Hero, barre d'identité, Position, Contact | Cadres |  | Sections propres à l'accueil |
 
 ## Écarts ouverts
 

@@ -5,7 +5,7 @@ slug: templates-types-assets
 statut: publie
 nature: note
 titre: "Donner un rôle à chaque vue"
-chapo: "Chez Qlik, chaque type de ressource — jeu de données, produit de données ou projet de pipeline — avait sa propre vue d’ensemble, construite au fil des besoins. Je travaille à les faire reposer sur des modèles de page communs, en donnant à chaque vue un rôle précis."
+chapo: "Chez Qlik, chaque type de ressource (jeu de données, produit de données ou projet de pipeline) avait sa propre vue d’ensemble, construite au fil des besoins. Je travaille à les faire reposer sur des modèles de page communs, en donnant à chaque vue un rôle précis."
 meta: "Qlik · Expérience unifiée Talend et Qlik"
 strates:
   surfaces: true

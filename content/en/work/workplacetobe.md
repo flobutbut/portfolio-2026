@@ -164,7 +164,7 @@ So a feature was not duplicated everywhere on principle. It only appeared where 
 
 ## What stays shared, what changes
 
-The design system shared **tokens** — the named values for colour, spacing or typography —, components and interaction patterns. This foundation was adapted into libraries specific to each surface.
+The design system shared **tokens** (the named values for colour, spacing or typography), components and interaction patterns. This foundation was adapted into libraries specific to each surface.
 
 Three rules guided these adaptations:
 

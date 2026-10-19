@@ -1,5 +1,5 @@
 ---
-# Modèle d'écrit — copiez ce fichier dans content/fr/ecrits/<slug>.md
+# Modèle d'écrit : copiez ce fichier dans content/fr/ecrits/<slug>.md
 # (et sa traduction dans content/en/writing/<slug>.md, même numero).
 numero: 8                      # identifiant partagé entre les langues
 slug: mon-ecrit                # adresse : /ecrits/mon-ecrit

@@ -1,5 +1,5 @@
 ---
-# Modèle de cas — copiez ce fichier dans content/fr/travaux/<slug>.md
+# Modèle de cas : copiez ce fichier dans content/fr/travaux/<slug>.md
 # (et sa traduction dans content/en/work/<slug>.md, même numero).
 # Tout texte commençant par « À compléter » s'affiche en gris en développement
 # et fait échouer le build de production.

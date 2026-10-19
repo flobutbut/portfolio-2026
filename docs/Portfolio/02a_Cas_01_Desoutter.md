@@ -14,7 +14,7 @@ Réunir ces logiciels dans un seul produit, c’était faire cohabiter quatre m�
 
 ### Descendre dans l’installation
 
-J’ai choisi l’installation comme structure principale de navigation plutôt qu’une entrée par fonctions — configurer, analyser, diagnostiquer. L’arborescence reproduit les relations entre les équipements. On entre par les contrôleurs ; chaque contrôleur donne accès à ses outils de vissage ; chaque outil à ses programmes.
+J’ai choisi l’installation comme structure principale de navigation plutôt qu’une entrée par fonctions : configurer, analyser, diagnostiquer. L’arborescence reproduit les relations entre les équipements. On entre par les contrôleurs ; chaque contrôleur donne accès à ses outils de vissage ; chaque outil à ses programmes.
 
 *Visuel prévu : l’arborescence de WebUI · quatre niveaux, une même page.*
 

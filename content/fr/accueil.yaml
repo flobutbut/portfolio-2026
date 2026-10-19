@@ -1,10 +1,10 @@
-# Page d'accueil, version française (Figma : « C · Accueil — Les strates », nœud 1:14)
+# Page d'accueil, version française (Figma : « C · Accueil · Les strates », nœud 1:14)
 
 titrePage: Florian Butour, Senior Product Designer
 description: Je rends lisibles des systèmes techniques complexes, pour les humains qui les pilotent et pour les agents qui agissent en leur nom.
 
 hero:
-  surtitre: Surfaces — Design system — Modèle
+  surtitre: Surfaces · Design system · Modèle
   accroche: Je rends lisibles des systèmes techniques complexes.
   complement: Pour les humains qui les pilotent, et pour les agents qui agissent en leur nom.
   nom: Florian Butour
@@ -37,7 +37,7 @@ position:
     libelle: Pour les agents
     texte: "Ce site applique ce principe à lui-même : un seul contenu, une version pour les humains, une pour les agents. Si vous confiez sa lecture à un assistant IA, donnez-lui le lien de cette version : elle dit ce que chaque cas prouve et ce qui revient à l’équipe. Rien n’y est caché."
     copier: Copier le lien IA
-    copie: Prompt copié — collez-le dans votre assistant IA
+    copie: "Prompt copié : collez-le dans votre assistant IA"
     # Aperçu du texte copié : infobulle (survol, focus) ou modale (écran tactile)
     apercu: Ce texte sera copié
     # Modale de confirmation, sur écran tactile

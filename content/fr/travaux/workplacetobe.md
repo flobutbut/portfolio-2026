@@ -164,7 +164,7 @@ Une fonctionnalité n’était donc pas dupliquée partout par principe. Elle n�
 
 ## Ce qui reste commun, ce qui change
 
-Le design system partageait des **tokens** — les valeurs nommées de couleur, d’espacement ou de typographie —, des composants et des patterns d’interaction. Ce socle se déclinait dans des bibliothèques propres à chaque surface.
+Le design system partageait des **tokens** (les valeurs nommées de couleur, d’espacement ou de typographie), des composants et des patterns d’interaction. Ce socle se déclinait dans des bibliothèques propres à chaque surface.
 
 Trois règles guidaient les déclinaisons :
 

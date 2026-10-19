@@ -1,4 +1,4 @@
-# Florian Butour — version pour les agents
+# Florian Butour : version pour les agents
 
 > Senior Product Designer, plus de dix ans sur des produits B2B techniques : logiciels industriels, SaaS multi-surfaces, plateformes data. Basé dans la région nantaise ; Nantes ou full remote. Ce fichier reprend le contenu du site florianbutour.com sous une forme structurée : ce que chaque contenu montre, son contexte, et ce qui revient à Florian ou à ses équipes.
 
@@ -104,7 +104,7 @@ Contexte des travaux, par secteur : logiciel industriel (Desoutter), smart offic
 
 ## Études de cas
 
-### 01 · Desoutter, WebUI — une installation qu'on parcourt comme une arborescence
+### 01 · Desoutter, WebUI : une installation qu'on parcourt comme une arborescence
 
 - **Nature** : étude de cas, travail terminé.
 - **Entreprise** : Desoutter, outillage industriel de vissage.
@@ -133,7 +133,7 @@ Contexte des travaux, par secteur : logiciel industriel (Desoutter), smart offic
 
 Version complète : https://florianbutour.com/travaux/desoutter.md
 
-### 02 · WorkplaceToBe — un produit, plusieurs surfaces
+### 02 · WorkplaceToBe : un produit, plusieurs surfaces
 
 - **Nature** : étude de cas, travail clos : le produit a été abandonné en 2024 après le rachat de SharingCloud par Witco.
 - **Entreprise** : SharingCloud, éditeur de WorkplaceToBe (réservation d'espaces, présence au bureau, vie du site).
@@ -162,7 +162,7 @@ Version complète : https://florianbutour.com/travaux/desoutter.md
 
 Version complète : https://florianbutour.com/travaux/workplacetobe.md
 
-### 03 · Data contracts (Qlik) — rendre explicites les engagements autour des données
+### 03 · Data contracts (Qlik) : rendre explicites les engagements autour des données
 
 - **Nature** : étude de cas, travail en cours ; démarche seulement, sans écrans ni détails produit.
 - **Entreprise** : Qlik, plateforme data d'entreprise, pendant la convergence des produits Talend et Qlik.
@@ -188,7 +188,7 @@ Version complète : https://florianbutour.com/travaux/workplacetobe.md
 
 Version complète : https://florianbutour.com/travaux/data-contracts.md
 
-### 04 · Templates des types d'assets (Qlik) — donner un rôle à chaque vue
+### 04 · Templates des types d'assets (Qlik) : donner un rôle à chaque vue
 
 - **Nature** : étude de cas, travail en cours ; démarche seulement, sans écrans ni détails produit.
 - **Entreprise** : Qlik, expérience unifiée entre les produits Talend et Qlik.

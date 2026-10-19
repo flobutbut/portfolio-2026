@@ -1,4 +1,4 @@
-# Compte rendu — nuit du 16 octobre 2026
+# Compte rendu : nuit du 16 octobre 2026
 
 Les étapes 4 à 7 ont été réalisées en autonomie, avec un commit par étape. Elles sont poussées sur le dépôt privé https://github.com/flobutbut/portfolio-2026.
 

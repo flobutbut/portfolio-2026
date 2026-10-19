@@ -2,7 +2,7 @@
 
 ## Donner un rôle à chaque vue
 
-**Chez Qlik, chaque type de ressource — jeu de données, produit de données ou projet de pipeline — avait sa propre vue d’ensemble, construite au fil des besoins. Je travaille à les faire reposer sur des modèles de page communs, en donnant à chaque vue un rôle précis.**
+**Chez Qlik, chaque type de ressource (jeu de données, produit de données ou projet de pipeline) avait sa propre vue d’ensemble, construite au fil des besoins. Je travaille à les faire reposer sur des modèles de page communs, en donnant à chaque vue un rôle précis.**
 
 J’y travaille avec l’équipe design system et le Head of Design de Qlik, dans le cadre de l’expérience unifiée entre les produits Talend et Qlik.
 
@@ -21,7 +21,7 @@ Plutôt que de corriger chaque page, j’ai proposé de revoir l’architecture 
 
 Je propose d’inscrire cette règle dans le design system de l’expérience unifiée sous forme de modèles de page communs. Leur application doit tenir compte des informations nécessaires pour évaluer chaque type de ressource.
 
-*Figure prévue : une vue d’ensemble existante, puis la structure proposée — identification, informations utiles à l’évaluation, actions et accès aux vues détaillées.*
+*Figure prévue : une vue d’ensemble existante, puis la structure proposée : identification, informations utiles à l’évaluation, actions et accès aux vues détaillées.*
 
 ### Faire adopter une architecture
 

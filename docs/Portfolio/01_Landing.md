@@ -12,7 +12,7 @@ La page doit tenir à chaque profondeur : un lecteur qui part après cinq second
 | 30 secondes | Les trois cas de Travaux | Il l'a fait sur des plateformes réelles, au niveau de la structure |
 | 2 minutes | Position, méthode, écrits, contact | Comment il pense, comment il travaille, comment le joindre |
 
-État au 15 octobre, d'après la nouvelle maquette « C · Accueil — Les strates » (fichier Figma « Untitled »).
+État au 15 octobre, d'après la nouvelle maquette « C · Accueil · Les strates » (fichier Figma « Untitled »).
 
 ## 1. En-tête, hero et barre d'identité
 
@@ -22,7 +22,7 @@ Rôle : poser le positionnement en une phrase et donner deux chemins, la preuve 
 
 **Hero**
 
-- Surtitre : Surfaces — Design system — Modèle
+- Surtitre : Surfaces · Design system · Modèle
 - H1 : Je rends lisibles des systèmes techniques complexes.
 - Colonne bleue : Pour les humains qui les pilotent, et pour les agents qui agissent en leur nom.
 - Interaction étudiée : les trois strates se succèdent dans le hero au défilement, avant les contenus. Conditions dans l'onglet Portfolio, section Direction visuelle.
@@ -91,7 +91,7 @@ Rôle : montrer qu'une réflexion écrite existe et donner envie d'en lire une.
 Rôle : fermer sur un contact direct, sans phrase d'accroche.
 
 - Fond noir, l'adresse en très grand : f.butour@gmail.com
-- Pied de page : Florian Butour — Senior Product Designer · LinkedIn · CV (PDF) · Écrits · Nantes · full remote
+- Pied de page : Florian Butour · Senior Product Designer · LinkedIn · CV (PDF) · Écrits · Nantes · full remote
 
 ## Refonte du 15 octobre : ce qui a été retiré
 

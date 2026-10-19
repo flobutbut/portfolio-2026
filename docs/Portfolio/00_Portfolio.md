@@ -120,8 +120,8 @@ Nouveau dépôt et nouveau projet Vercel, en Vue 3 ; florianbutour.com bascule v
 | Schémas | Composant dédié pour les modèles d'objets et les diagrammes | SVG fait main, Mermaid, ou bibliothèque |
 | Domaine | florianbutour.com vers le nouveau projet ; l'ancien reste sur florianboutour.vercel.app | Sous-domaine freelance plus tard |
 | Langue | Français d'abord | Version anglaise : Cycloid demande un anglais courant et recrute en Europe |
-| Accessibilité | WCAG AA, mouvement réduit respecté (le composable de l'ancien site est réutilisable) | — |
-| Performance | Pas de dépendance lourde par défaut ; vérifier avec Lighthouse avant la mise en ligne | — |
+| Accessibilité | WCAG AA, mouvement réduit respecté (le composable de l'ancien site est réutilisable) |  |
+| Performance | Pas de dépendance lourde par défaut ; vérifier avec Lighthouse avant la mise en ligne |  |
 
 L'ancien site rendait tout en JavaScript côté client : un outil qui lit florianbutour.com n'y voit que le titre. Le prérendu corrige ce défaut.
 

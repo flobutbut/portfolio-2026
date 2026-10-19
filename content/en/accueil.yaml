@@ -4,7 +4,7 @@ titrePage: Florian Butour, Senior Product Designer
 description: I make complex technical systems legible, for the humans who run them and for the agents acting on their behalf.
 
 hero:
-  surtitre: Surfaces — Design system — Model
+  surtitre: Surfaces · Design system · Model
   accroche: I make complex technical systems legible.
   complement: For the humans who run them, and for the agents acting on their behalf.
   nom: Florian Butour
@@ -37,7 +37,7 @@ position:
     libelle: For agents
     texte: "This site applies that principle to itself: one body of content, one version for humans, one for agents. If you hand its reading to an AI assistant, give it the link to that version: it states what each case proves and what belongs to the team. Nothing is hidden there."
     copier: Copy the AI link
-    copie: Prompt copied — paste it into your AI assistant
+    copie: "Prompt copied: paste it into your AI assistant"
     # Preview of the copied text: tooltip (hover, focus) or dialog (touch screens)
     apercu: This text will be copied
     # Confirmation dialog, on touch screens
