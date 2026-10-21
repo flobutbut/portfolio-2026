@@ -16,6 +16,7 @@ import { getInterface } from '../i18n/ui';
 import { carteDeCas, carteDEcrit } from '../lib/cartes';
 import { getAccueil, lister } from '../lib/contenu';
 import { STRATES } from '../lib/strates';
+import { pageDeProfil } from '../lib/donneesStructurees';
 
 interface Props {
   locale: Locale;
@@ -41,7 +42,7 @@ const copieIA = {
 };
 ---
 
-<BaseLayout title={a.titrePage} description={a.description} locale={locale} alternate={path('accueil', otherLocale(locale))}>
+<BaseLayout title={a.titrePage} description={a.description} locale={locale} alternate={path('accueil', otherLocale(locale))} donnees={[pageDeProfil(locale)]}>
   <!-- Hero : trois strates -->
   <section class="hero" aria-labelledby="hero-titre">
     <div class="hero__haut">

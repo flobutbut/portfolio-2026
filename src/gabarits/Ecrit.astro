@@ -15,6 +15,7 @@ import { modeApercu } from '../lib/mode';
 import { carteDeCas, carteDEcrit } from '../lib/cartes';
 import { resoudre, type Element } from '../lib/contenu';
 import { rendreEcrit, rendreTexte } from '../lib/markdown';
+import { article } from '../lib/donneesStructurees';
 
 interface Props {
   locale: Locale;
@@ -34,7 +35,7 @@ const surtitre = [`${t.surtitre} ${String(ecrit.numero).padStart(2, '0')}`, d.ge
   .join(' · ');
 ---
 
-<BaseLayout title={d.titre} description={d.these} locale={locale} alternate={ecrit.alternate} markdown={versionMarkdown(ecrit.href)} type="article">
+<BaseLayout title={d.titre} description={d.these} locale={locale} alternate={ecrit.alternate} markdown={versionMarkdown(ecrit.href)} type="article" donnees={[article({ titre: d.titre, href: ecrit.href, langue: ecrit.langue, date: d.date })]}>
   <article lang={ecrit.langue !== locale ? ecrit.langue : undefined}>
     <header class="container container--etroit page-tete ecrit-tete">
       <p class="text-label libelle">{surtitre}</p>

@@ -5,6 +5,7 @@ import PiedDePage from '../components/organismes/PiedDePage.astro';
 import { fichiersAgents, otherLocale, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
 import { ogPath } from '../lib/og';
+import { grapheGlobal, serialiser, type Noeud } from '../lib/donneesStructurees';
 import Analytics from '@vercel/analytics/astro';
 import PostHog from './PostHog.astro';
 
@@ -22,9 +23,11 @@ interface Props {
   noindex?: boolean;
   /** Le pied de page affiche l'adresse en grand, sauf sur la page Contact qui la porte déjà */
   piedAvecEmail?: boolean;
+  /** Nœuds JSON-LD propres à la page, ajoutés au graphe commun (personne, site) */
+  donnees?: Noeud[];
 }
 
-const { title, description, locale, alternate, markdown, type = 'website', noindex = false, piedAvecEmail = true } = Astro.props;
+const { title, description, locale, alternate, markdown, type = 'website', noindex = false, piedAvecEmail = true, donnees = [] } = Astro.props;
 const ui = await getInterface(locale);
 const desc = description ?? ui.metadonnees.description;
 const titre = title.includes(ui.metadonnees.site) ? title : `${title} · ${ui.metadonnees.site}`;
@@ -36,6 +39,7 @@ const urls = { [locale]: canonical, ...(alternateUrl && { [otherLocale(locale)]:
   Record<Locale, string>
 >;
 const image = new URL(ogPath(Astro.url.pathname), site).href;
+const jsonLd = serialiser([...(await grapheGlobal(locale)), ...donnees]);
 ---
 
 <!doctype html>
@@ -66,6 +70,7 @@ const image = new URL(ogPath(Astro.url.pathname), site).href;
     <meta name="twitter:card" content="summary_large_image" />
     {markdown && <link rel="alternate" type="text/markdown" href={markdown} />}
     <link rel="describedby" href={fichiersAgents.llms} />
+    <script type="application/ld+json" set:html={jsonLd} is:inline />
     <!--
       Langue : à la première visite, la langue du navigateur choisit la version (français si
       navigator.language commence par « fr », anglais sinon). Le choix fait dans la navigation est
