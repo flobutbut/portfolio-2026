@@ -17,6 +17,7 @@ import Bouton from '../atomes/Bouton.astro';
 import Infobulle from '../molecules/Infobulle.astro';
 import Modale from '../molecules/Modale.astro';
 import { fichiersAgents } from '../../i18n/routes';
+import { SITE_URL } from '../../lib/site';
 
 interface Props {
   libelle: string;
@@ -42,7 +43,7 @@ const { libelle, confirmation, echec, apercu, prompt, confirmer, annuler, varian
   Astro.props;
 const chemin = `${fichiersAgents.agentTexte}?src=prompt`;
 // Rendu initial avec le domaine de production ; le script le remplace par le domaine consulté
-const lien = new URL(chemin, Astro.site ?? 'https://florianbutour.com').href;
+const lien = new URL(chemin, Astro.site ?? SITE_URL).href;
 const id = `apercu-${emplacement}`;
 ---
 

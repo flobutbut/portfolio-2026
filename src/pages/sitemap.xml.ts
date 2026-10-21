@@ -1,9 +1,10 @@
 import type { APIRoute } from 'astro';
 import { toutesLesPages } from '../lib/pages';
+import { SITE_URL } from '../lib/site';
 
 /** Sitemap avec les équivalents de langue (hreflang) */
 export const GET: APIRoute = async ({ site }) => {
-  const base = site ?? new URL('https://florianbutour.com');
+  const base = site ?? new URL(SITE_URL);
   const url = (p: string) => new URL(p, base).href;
   const pages = await toutesLesPages();
   const entrees = pages.flatMap((paire) =>

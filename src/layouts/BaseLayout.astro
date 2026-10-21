@@ -8,6 +8,7 @@ import { ogPath } from '../lib/og';
 import { grapheGlobal, serialiser, type Noeud } from '../lib/donneesStructurees';
 import Analytics from '@vercel/analytics/astro';
 import PostHog from './PostHog.astro';
+import { SITE_URL } from '../lib/site';
 
 interface Props {
   title: string;
@@ -32,7 +33,7 @@ const ui = await getInterface(locale);
 const desc = description ?? ui.metadonnees.description;
 const titre = title.includes(ui.metadonnees.site) ? title : `${title} · ${ui.metadonnees.site}`;
 
-const site = Astro.site ?? new URL('https://florianbutour.com');
+const site = Astro.site ?? new URL(SITE_URL);
 const canonical = new URL(Astro.url.pathname, site).href;
 const alternateUrl = alternate ? new URL(alternate, site).href : undefined;
 const urls = { [locale]: canonical, ...(alternateUrl && { [otherLocale(locale)]: alternateUrl }) } as Partial<

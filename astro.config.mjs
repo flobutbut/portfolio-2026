@@ -1,9 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { SITE_URL } from './src/lib/site';
 
 // https://docs.astro.build/en/reference/configuration-reference/
 export default defineConfig({
-  site: 'https://florianbutour.com',
+  site: SITE_URL,
   trailingSlash: 'never',
   build: {
     // Le CSS du site est court : l'intégrer évite une requête bloquante.

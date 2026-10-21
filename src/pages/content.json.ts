@@ -1,12 +1,13 @@
 import type { APIRoute } from 'astro';
 import { lister } from '../lib/contenu';
+import { SITE_URL } from '../lib/site';
 
 /**
  * Export structuré des cas et écrits, pour les agents.
  * Généré au build depuis les mêmes fichiers que les pages ; seuls les contenus publiés en production.
  */
 export const GET: APIRoute = async ({ site }) => {
-  const base = site ?? new URL('https://florianbutour.com');
+  const base = site ?? new URL(SITE_URL);
   const url = (p: string) => new URL(p, base).href;
   const langues = ['fr', 'en'] as const;
   const sortie: Record<string, unknown> = { site: base.href, genere: new Date().toISOString(), langues: {} };

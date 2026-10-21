@@ -6,12 +6,12 @@
 import { path, type Locale } from '../i18n/routes';
 import { getInterface } from '../i18n/ui';
 import { getAccueil } from './contenu';
+import { SITE_URL } from './site';
 
 export type Noeud = Record<string, unknown>;
 
-const SITE = 'https://florianbutour.com';
-const url = (chemin: string) => new URL(chemin, SITE).href;
-const ids = { personne: `${SITE}/#person`, site: `${SITE}/#website` } as const;
+const url = (chemin: string) => new URL(chemin, SITE_URL).href;
+const ids = { personne: `${SITE_URL}/#person`, site: `${SITE_URL}/#website` } as const;
 
 const PROFIL = {
   nom: 'Florian Butour',

@@ -2,13 +2,14 @@ import type { APIRoute } from 'astro';
 import { getAccueil, lireAgent, lister } from '../lib/contenu';
 import { getInterface } from '../i18n/ui';
 import { fichiersAgents, path, versionMarkdown } from '../i18n/routes';
+import { SITE_URL } from '../lib/site';
 
 /**
  * llms.txt (https://llmstxt.org, v2), généré au build.
  * Renvoie d'abord vers /agent.md, puis vers la version Markdown de chaque cas et de chaque écrit.
  */
 export const GET: APIRoute = async ({ site }) => {
-  const base = site ?? new URL('https://florianbutour.com');
+  const base = site ?? new URL(SITE_URL);
   const url = (p: string) => new URL(p, base).href;
   const md = (p: string) => url(versionMarkdown(p));
   const accueil = await getAccueil('fr');
