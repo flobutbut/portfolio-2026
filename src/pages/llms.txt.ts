@@ -27,6 +27,8 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     `${accueil.strates.introduction}`,
     '',
+    'Chez Qlik, je travaille aussi sur le parcours de création de data products assisté par IA (travail en cours).',
+    '',
     'Chaque cas et chaque écrit existe en HTML et en Markdown : la version Markdown est à la même adresse, suivie de « .md ».',
     '',
     '## Version pour les agents',
