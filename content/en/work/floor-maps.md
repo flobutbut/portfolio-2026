@@ -105,7 +105,7 @@ etapes:
 
 For the graphic style, I started from the architect’s plans shown in pre-sales rather than from technical drawings. This plan is used to choose where to work. It has to make people want to come in, not just list workstations. Hence the textures, the plants to bring some life, and an icon system that identifies spaces without a legend. Usage rules frame every component and every texture, so that two designers produce the same plan.
 
-![Complete floor plan in the Origin style: a U-shaped building around a wooded garden, with its workstations, rooms and circulation](/images/plans-d-etage/plan.webp "Fig. 06 · A complete floor, Origin style")
+![Close-up of the Aquarell style: grained beige floor, marble restrooms, terrazzo booths, glass walkway, garden and trees painted in watercolour, furniture and space icons](/images/plans-d-etage/plan.webp "Fig. 06 · The Aquarell style up close: textured floors, marble, terrazzo and a watercolour garden")
 
 I explored several styles on this same plan. From one style to the next, only the backgrounds, partitions and greenery change appearance: the layout stays identical. Since the index is carried by the components, not by their appearance, changing style does not affect indexing.
 

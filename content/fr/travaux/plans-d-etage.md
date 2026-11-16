@@ -105,7 +105,7 @@ etapes:
 
 Pour le style graphique, je suis parti des plans d’architecte présentés en avant-vente plutôt que des plans techniques. Ce plan sert à choisir où travailler. Il doit donner envie de venir, pas seulement inventorier des postes. D’où les textures, les plantes pour amener de la vie, et un système d’icônes qui désigne les espaces sans légende. Des règles d’usage encadrent chaque composant et chaque texture, pour que deux designers produisent le même plan.
 
-![Plan d’étage complet en style Origin : un bâtiment en U autour d’un jardin arboré, avec ses postes, ses salles et ses circulations](/images/plans-d-etage/plan.webp "Fig. 06 · Un étage complet, style Origin")
+![Plan rapproché en style Aquarell : sol beige grainé, sanitaires en marbre, cabines en terrazzo, verrière, jardin et arbres peints à l’aquarelle, mobilier et icônes des espaces](/images/plans-d-etage/plan.webp "Fig. 06 · Le style Aquarell de près : sols texturés, marbre, terrazzo et jardin à l’aquarelle")
 
 J’ai exploré plusieurs styles sur ce même plan. D’un style à l’autre, seuls les fonds, les cloisons et la végétation changent d’aspect : la disposition reste identique. L’index étant porté par les composants, et non par leur apparence, changer de style ne touche pas à l’indexation.
 
