@@ -15,6 +15,9 @@ strates:
 entree:
   titre: "Un plan d’étage qui s’indexe en se dessinant"
   description: "Un design system de fond de carte qui porte la structure des espaces, et deux exports pour deux lecteurs : l’humain et la machine."
+visuel:
+  src: /images/plans-d-etage/apercu.svg
+  alt: "Illustration isométrique : un plan d’étage avec ses salles et ses bureaux, et au-dessus, dans le même cadre, le calque d’index où chaque espace est une forme bleue"
 cartouche:
   role: "Principal Product Designer"
   duree: "Trois mois, en parallèle d’autres sujets"

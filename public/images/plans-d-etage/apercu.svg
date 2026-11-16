@@ -1,0 +1,61 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M70.1 217L200 292L200 298L70.1 223Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M329.9 217L200 292L200 298L329.9 223Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M200 142L329.9 217L200 292L70.1 217Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M70.1 217L72.7 218.5L72.7 204.5L70.1 203Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M122.9 189.5L72.7 218.5L72.7 204.5L122.9 175.5Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M120.3 174L122.9 175.5L72.7 204.5L70.1 203Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M277.1 189.5L327.3 218.5L327.3 204.5L277.1 175.5Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M329.9 217L327.3 218.5L327.3 204.5L329.9 203Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M279.7 174L329.9 203L327.3 204.5L277.1 175.5Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M120.3 191L147.2 206.5L147.2 192.5L120.3 177Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M149.8 205L147.2 206.5L147.2 192.5L149.8 191Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M122.9 175.5L149.8 191L147.2 192.5L120.3 177Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M250.2 205L252.8 206.5L252.8 192.5L250.2 191Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M279.7 191L252.8 206.5L252.8 192.5L279.7 177Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M277.1 175.5L279.7 177L252.8 192.5L250.2 191Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M97.8 215L118.6 227L118.6 221L97.8 209Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M139.4 215L118.6 227L118.6 221L139.4 209Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M118.6 197L139.4 209L118.6 221L97.8 209Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M260.6 215L281.4 227L281.4 221L260.6 209Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M302.2 215L281.4 227L281.4 221L302.2 209Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M281.4 197L302.2 209L281.4 221L260.6 209Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M113.4 242L116 243.5L116 229.5L113.4 228Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M166.2 214.5L116 243.5L116 229.5L166.2 200.5Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M163.6 199L166.2 200.5L116 229.5L113.4 228Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M233.8 214.5L284 243.5L284 229.5L233.8 200.5Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M286.6 242L284 243.5L284 229.5L286.6 228Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M236.4 199L286.6 228L284 229.5L233.8 200.5Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M158.4 232L168.8 238L168.8 232L158.4 226Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M180.9 231L168.8 238L168.8 232L180.9 225Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M170.6 219L180.9 225L168.8 232L158.4 226Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M217.3 232L227.7 238L227.7 232L217.3 226Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M239.8 231L227.7 238L227.7 232L239.8 225Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M229.4 219L239.8 225L227.7 232L217.3 226Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M168.8 238L179.2 244L179.2 238L168.8 232Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M191.3 237L179.2 244L179.2 238L191.3 231Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M180.9 225L191.3 231L179.2 238L168.8 232Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M227.7 238L238.1 244L238.1 238L227.7 232Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M250.2 237L238.1 244L238.1 238L250.2 231Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M239.8 225L250.2 231L238.1 238L227.7 232Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M187.9 249L198.3 255L198.3 249L187.9 243Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M210.4 248L198.3 255L198.3 249L210.4 242Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M200 236L210.4 242L198.3 249L187.9 243Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M198.3 255L208.7 261L208.7 255L198.3 249Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M220.8 254L208.7 261L208.7 255L220.8 248Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M210.4 242L220.8 248L208.7 255L198.3 249Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M70.1 217V129" stroke="#0D0D0D" stroke-dasharray="3 3"/>
+<path d="M200 292V204" stroke="#0D0D0D" stroke-dasharray="3 3"/>
+<path d="M329.9 217V129" stroke="#0D0D0D" stroke-dasharray="3 3"/>
+<path d="M70.1 125L200 200L200 204L70.1 129Z" fill="#E7E7E7" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M329.9 125L200 200L200 204L329.9 129Z" fill="#D4D4D4" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M200 50L329.9 125L200 200L70.1 125Z" fill="white" stroke="#0D0D0D" stroke-linejoin="round"/>
+<path d="M120.3 99L161 122.5L116 148.5L75.3 125Z" fill="#1F2BE0"/>
+<path d="M279.7 99L324.7 125L284 148.5L239 122.5Z" fill="#1F2BE0"/>
+<path d="M170.6 134L179.2 139L168.8 145L160.2 140Z" fill="#1F2BE0"/>
+<path d="M180.9 140L189.6 145L179.2 151L170.6 146Z" fill="#1F2BE0"/>
+<path d="M229.4 134L238.1 139L227.7 145L219.1 140Z" fill="#1F2BE0"/>
+<path d="M239.8 140L248.5 145L238.1 151L229.4 146Z" fill="#1F2BE0"/>
+<path d="M200 151L208.7 156L198.3 162L189.6 157Z" fill="#1F2BE0"/>
+<path d="M210.4 157L219.1 162L208.7 168L200 163Z" fill="#1F2BE0"/>
+</svg>

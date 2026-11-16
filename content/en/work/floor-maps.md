@@ -15,6 +15,9 @@ strates:
 entree:
   titre: "A floor map that indexes itself as it is drawn"
   description: "A base map design system that carries the structure of spaces, and two exports for two readers: the human and the machine."
+visuel:
+  src: /images/plans-d-etage/apercu.svg
+  alt: "Isometric illustration: a floor plan with its rooms and desks, and above it, in the same frame, the index layer where every space is a blue shape"
 cartouche:
   role: "Principal Product Designer"
   duree: "Three months, alongside other projects"
