@@ -20,7 +20,7 @@ cartouche:
   equipe: "Design system team, Head of Design"
   livrables: "Architecture proposal, page templates"
 ecritsLies: [1, 3]
-casSuivant: 1
+casSuivant: 5
 ---
 
 I work on it with Qlik’s design system team and Head of Design, as part of the unified experience across the Talend and Qlik products.
